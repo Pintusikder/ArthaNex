@@ -746,7 +746,8 @@
             <section id="outstanding" class="view">
                 <div class="card">
                     <h3 style="margin-bottom: 15px; color: var(--primary);">Outstanding Summary</h3>
-                    <div class="dashboard-container" style="margin-bottom: 10px; padding:0; border:none; background:transparent;">
+                    <!-- FIXED: Added grid-template-columns: 1fr 1fr; to ensure 2 columns -->
+                    <div class="dashboard-container" style="margin-bottom: 10px; padding:0; border:none; background:transparent; grid-template-columns: 1fr 1fr;">
                         <div class="stat-card">
                             <div class="stat-label">To Receive</div>
                             <div class="stat-val" style="color:var(--text-income)" id="dueReceivable">0</div>
