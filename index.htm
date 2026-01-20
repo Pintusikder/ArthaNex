@@ -4,70 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
-    <!-- PWA & SEO Meta Tags -->
-    <title>ArthaNex - Offline Khata Book, Daily Cash Collection & Ledger App</title>
+    <title>ArthaNex - Offline Khata Book</title>
     <meta name="description" content="ArthaNex is best free offline Khata book and daily cash collection app. Manage small business ledger, party dues, and expenses without internet. Simple business calculator.">
-    <meta name="keywords" content="Offline Khata Book, Daily Cash Collection App, Small Business Ledger, Party Ledger Manager, Business Calculator, ArthaNex, Cash Book App, Local Business Tracker">
-    <meta name="author" content="Pintu Sikder">
-    <meta name="robots" content="index, follow">
-    
-    <!-- PWA Links -->
-    <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="https://via.placeholder.com/192/F36C21/FFFFFF?text=A">
     <meta name="theme-color" content="#F36C21">
     
-    <!-- Open Graph Tags -->
-    <meta property="og:title" content="ArthaNex - Free Offline Khata Book">
-    <meta property="og:description" content="Daily cash collection & ledger manager for small businesses. 100% offline.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://arthixa.com">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="https://z-cdn-media.chatglm.cn/files/af039fbb-879d-471f-a2d8-a6fbaac11f8b.png?auth_key=1868816468-3c27614d0d374d62a8d011ef8cc50a8f-0-db6fd19e4def068c453c4c8f2352a472">
     
-    <!-- Schema.org JSON-LD -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "ArthaNex",
-      "operatingSystem": "Web, Android, iOS",
-      "applicationCategory": "BusinessApplication",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.9",
-        "ratingCount": "500"
-      },
-      "description": "Professional Cash Collection & Khata Book App for small businesses. Features offline mode, denomination calculator, and party ledger."
-    }
-    </script>
-
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <style>
-        /* --------------------------------------------------
-           1. CSS VARIABLES & RESET
-           -------------------------------------------------- */
         :root {
             --primary: #F36C21;       
             --primary-hover: #D65612;
             --accent: #FF8A3D;        
             --secondary: #1C1C1C;     
             --neutral: #6B6E63;       
-            
-            /* Backgrounds & Cards */
             --light-bg: #F5F5F5;      
             --card-bg: #FFFFFF;
             --input-bg: #FFFFFF;
             --text-color: #1C1C1C;
             --border: #999999;      
             
-            /* Status Colors */
             --bg-income: #e8f5e9;
             --text-income: #2e7d32;
             --bg-expense: #ffebee;
@@ -75,7 +35,6 @@
             --bg-balance: #e3f2fd;
             --text-balance: #1565c0;
             
-            /* Shapes & Shadows */
             --radius-sm: 6px;
             --radius-md: 10px;
             --radius-lg: 16px;
@@ -84,8 +43,6 @@
             
             --history-text: #444444; 
             --transition: all 0.3s ease;
-            
-            /* CALENDAR THEME SUPPORT (LIGHT) */
             color-scheme: light;
         }
 
@@ -103,8 +60,6 @@
             --text-expense: #ef5350;
             --bg-balance: #0f2847;
             --text-balance: #42a5f5;
-            
-            /* CALENDAR THEME SUPPORT (DARK) */
             color-scheme: dark;
         }
 
@@ -121,7 +76,6 @@
             overflow: hidden;
         }
 
-        /* MAIN RESPONSIVE CONTAINER */
         #app-container {
             width: 100%;
             max-width: 600px; 
@@ -134,13 +88,11 @@
             position: relative;
         }
 
-        /* --------------------------------------------------
-           2. LAYOUT & DASHBOARD
-           -------------------------------------------------- */
+        /* HEADER */
         header {
             background-color: var(--primary);
             color: #fff;
-            padding: 1rem;
+            padding:1rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -152,17 +104,23 @@
         .brand h1 { font-size: 1.25rem; font-weight: 700; margin: 0; line-height: 1; }
         
         .brand-icon { 
-            width: 36px; 
-            height: 36px; 
-            border-radius: 50%; 
+            width: 40px; 
+            height: 40px; 
+            border-radius: 8px; 
             display: flex; 
             align-items: center; 
             justify-content: center;
-            background: rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.2); 
             overflow: hidden;
-            flex-shrink: 0; /* Prevent shrinking */
+            flex-shrink: 0;
         }
-        .brand-icon img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .brand-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; 
+            display: block;
+            padding: 2px; 
+        }
 
         .header-actions button { background: none; border: none; color: #fff; font-size: 1.2rem; cursor: pointer; padding: 5px; margin-left: 5px; transition: var(--transition); }
         .header-actions button:hover { transform: scale(1.1); }
@@ -204,6 +162,7 @@
         .stat-card.expense .stat-label, .stat-card.expense .stat-val { color: var(--text-expense); }
         .stat-card.balance .stat-label, .stat-card.balance .stat-val { color: var(--text-balance); }
 
+        /* NAVIGATION (UPDATED) */
         nav {
             background-color: var(--card-bg);
             border-bottom: 1px solid var(--border);
@@ -217,9 +176,9 @@
         nav::-webkit-scrollbar { display: none; }
 
         .nav-btn {
-            background: none; border: none; padding: 0.6rem 1rem; font-weight: 600;
+            background: none; border: none; padding: 0.5rem 0.8rem; font-weight: 600;
             color: var(--neutral); border-radius: var(--radius-md); cursor: pointer;
-            transition: var(--transition); flex: 1; white-space: nowrap; font-size: 0.9rem;
+            transition: var(--transition); flex: 1; white-space: nowrap; font-size: 0.85rem;
         }
         .nav-btn.active { 
             background-color: rgba(243, 108, 33, 0.2); 
@@ -229,19 +188,151 @@
             box-shadow: 0 2px 4px rgba(243, 108, 33, 0.15);
         }
 
-        main { flex: 1; overflow-y: auto; padding: 1rem; position: relative; }
-        .view { display: none; animation: fadeIn 0.3s ease; padding-bottom: 80px; }
+        main { flex: 1; overflow-y: auto; padding: 1rem; position: relative; padding-bottom: 100px; }
+        .view { display: none; animation: fadeIn 0.3s ease; padding-bottom: 20px; }
         .view.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* --------------------------------------------------
-           3. COMPONENTS
+           HOME PAGE (IMAGE/POSTER STYLE)
+           -------------------------------------------------- */
+        .home-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .home-hero {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: #fff;
+            padding: 2.5rem 1.5rem;
+            border-radius: var(--radius-lg);
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(243, 108, 33, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        /* Decorative circle behind */
+        .home-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+            z-index: 0;
+        }
+
+        .home-logo-big {
+            width: 80px;
+            height: 80px;
+            background: #fff;
+            border-radius: 16px;
+            padding: 10px;
+            margin: 0 auto 1rem auto;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 1;
+        }
+        .home-logo-big img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .home-title {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+            letter-spacing: -0.5px;
+        }
+
+        .home-subtitle {
+            font-size: 1.1rem;
+            font-weight: 500;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 1.5rem;
+        }
+
+        .home-desc {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+            max-width: 80%;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        .feature-poster {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 1.5rem 1rem;
+            border-radius: var(--radius-md);
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.2s;
+        }
+        .feature-poster:active { transform: scale(0.98); }
+        .feature-icon-lg {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        .feature-poster h4 {
+            color: var(--text-color);
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+        .feature-poster p {
+            color: var(--neutral);
+            font-size: 0.75rem;
+            line-height: 1.3;
+            margin: 0;
+        }
+
+        .home-credits {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            background: var(--card-bg);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+        }
+        .home-credits h3 {
+            color: var(--primary);
+            font-size: 1rem;
+            margin-bottom: 0.2rem;
+        }
+        .home-credits p {
+            color: var(--neutral);
+            font-size: 0.75rem;
+            margin: 0;
+        }
+        .home-credits a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* --------------------------------------------------
+           OTHER STYLES
            -------------------------------------------------- */
         .card { background: var(--card-bg); border-radius: var(--radius-md); padding: 1.25rem; margin-bottom: 1rem; box-shadow: var(--shadow-sm); border: 1px solid var(--border); }
-        
         .form-group { margin-bottom: 1rem; }
         .form-group label { display: block; margin-bottom: 0.5rem; font-size: 0.85rem; color: var(--neutral); font-weight: 500; word-break: break-word; }
-        
         .form-control { 
             width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: var(--radius-sm); 
             font-size: 1rem; font-family: inherit; background-color: var(--input-bg); color: var(--text-color); transition: var(--transition); 
@@ -249,8 +340,7 @@
         .form-control:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(243, 108, 33, 0.2); }
         .form-control.error { border-color: #dc3545; background-color: rgba(220, 53, 69, 0.1); }
         .form-control:disabled { opacity: 0.5; cursor: not-allowed; background: var(--light-bg); }
-        
-        input[type="date"]::-webkit-calendar-picker-indicator { cursor: pointer; color: var(--primary); opacity: 1; filter: var(--calendar-filter); }
+        input[type="date"]::-webkit-calendar-picker-indicator { cursor: pointer; color: var(--primary); opacity: 1; }
 
         .radio-group, .checkbox-wrapper {
             display: flex;
@@ -260,7 +350,7 @@
             background: var(--light-bg);
             border-radius: var(--radius-sm);
             border: 1px solid var(--border);
-            flex-wrap: wrap; /* Wrap on small screens */
+            flex-wrap: wrap;
         }
         .radio-group label, .checkbox-wrapper label {
             margin: 0; font-size: 0.9rem; font-weight: 500; color: var(--text-color); cursor: pointer; display: flex; align-items: center; gap: 6px;
@@ -280,7 +370,7 @@
         }
         .denom-subtotal { font-size: 0.7rem; color: var(--primary); font-weight: 500; }
 
-        .total-display { background: linear-gradient(135deg, var(--primary), var(--accent)); color: #fff; padding: 1.5rem; border-radius: var(--radius-lg); text-align: center; margin-bottom: 1.5rem; box-shadow: var(--shadow-md); }
+        .total-display { background: linear-gradient(135deg, var(--primary), var(--accent)); color: #fff; padding: 1.5rem; border-radius: var(--radius-lg); text-align: center; margin-bottom:1.5rem; box-shadow: var(--shadow-md); }
         .total-label { font-size: 0.9rem; opacity: 0.9; text-transform: uppercase; letter-spacing: 1px; }
         .total-amount { font-size: 2.2rem; font-weight: 700; margin: 0.5rem 0; font-family: 'Roboto Mono', monospace; word-break: break-all; }
         .total-words { font-style: italic; opacity: 0.9; font-size: 0.9rem; word-break: break-word; }
@@ -296,17 +386,13 @@
         .modal.open { display: flex; }
         .modal-content { background: var(--card-bg); padding: 2rem; border-radius: var(--radius-lg); width: 100%; max-width: 420px; max-height: 90vh; overflow-y: auto; position: relative; color: var(--text-color); }
         .modal-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--neutral); }
-        
-        .credits-container { padding: 1rem; text-align: center; }
-        .company-link { color: var(--primary); text-decoration: none; font-weight: 600; border-bottom: 1px dashed var(--primary); }
-        .company-link:hover { color: var(--primary-hover); border-bottom-style: solid; }
 
         .history-list { list-style: none; }
         .history-item { 
             background: var(--card-bg); border-bottom: 1px solid var(--border); padding: 1rem; 
             display: flex; justify-content: space-between; align-items: flex-start; position: relative;
         }
-        .h-left { flex: 1; padding-right: 15px; min-width: 0; } /* min-width: 0 allows text truncation to work */
+        .h-left { flex: 1; padding-right: 15px; min-width: 0; }
         .h-name { font-weight: 700; font-size: 1.05rem; color: var(--secondary); margin-bottom: 4px; display: block; word-break: break-word; line-height: 1.3;}
         .h-details { display: flex; flex-direction: column; gap: 3px; font-size: 0.8rem; color: var(--history-text); font-weight: 500; }
         .h-detail-row { display: flex; align-items: center; gap: 6px; }
@@ -319,19 +405,11 @@
         [data-theme="dark"] .badge.due { background-color: #5d4037; color: #ffcc80; }
         [data-theme="dark"] .badge.expense { background-color: #5c2b2b; color: #ef9a9a; }
 
-        .h-right { 
-            display: flex; flex-direction: column; align-items: flex-end; justify-content: flex-start; 
-            min-width: 80px; margin-left: 10px;
-        }
+        .h-right { display: flex; flex-direction: column; align-items: flex-end; justify-content: flex-start; min-width: 80px; margin-left: 10px; }
         .h-amount { font-weight: 700; font-size: 1.1rem; margin-bottom: 2px; white-space: nowrap;}
         .amount-income { color: var(--primary); }
         .amount-expense { color: var(--text-expense); }
-        
-        .h-words { 
-            font-size: 0.7rem; font-style: italic; color: var(--history-text); text-align: right; 
-            margin-bottom: 4px; line-height: 1.1; width: 100%; overflow: hidden; text-overflow: ellipsis;
-            white-space: nowrap;
-        }
+        .h-words { font-size: 0.7rem; font-style: italic; color: var(--history-text); text-align: right; margin-bottom: 4px; line-height: 1.1; width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         
         .menu-container { position: relative; display: inline-block; margin-top: auto; flex-shrink: 0; }
         .btn-menu { background: none; border: none; color: var(--history-text); font-size: 1.5rem; cursor: pointer; padding: 0; line-height: 1; }
@@ -354,71 +432,51 @@
         @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
         @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
         
-        @media print {
-            header, nav, .dashboard-container, .btn, .filter-container, .modal, .menu-container, .btn-menu, body { height: auto; overflow: visible; background: #fff; padding-bottom: 100px; }
-            main { padding: 0; overflow: visible; }
-            .view { display: block !important; }
-            .card { border: none; box-shadow: none; padding: 0; margin: 0; }
-            .print-header { display: block !important; text-align: center; margin-bottom: 20px; border-bottom: 2px solid #000; padding-bottom: 10px; }
-            .print-header h2 { margin: 0; font-size: 1.5rem; color: #000; }
-            .print-header p { margin: 5px 0; color: #000; font-size: 0.9rem; }
-            .dashboard-container { display: grid !important; position: fixed; bottom: 0; left: 0; width: 100%; border-top: 3px solid #000; background: #fff; padding: 10px 1rem; z-index: 9999; }
-            .stat-card { background: none !important; border: none !important; box-shadow: none !important; color: #000 !important; padding: 5px; justify-content: center; min-height: auto; }
-            .stat-label, .stat-val { color: #000 !important; font-weight: 700; }
-            .stat-label { font-size: 0.8rem; text-transform: uppercase; border-bottom: 1px solid #ddd; margin-bottom: 5px; padding-bottom: 2px; }
-            .stat-val { font-size: 1.2rem; }
+        /* PWA INSTALL BANNER */
+        #pwa-install-banner {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--primary);
+            color: #fff;
+            padding: 1rem;
+            box-shadow: 0 -4px 12px rgba(0,0,0,0.15);
+            z-index: 9999;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            animation: slideUp 0.5s ease-out;
         }
-        .print-header { display: none; }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
 
-        /* FILTER SEGMENTED CONTROL (Responsive & UI Improvement) */
-        .filter-container {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        
-        .filter-tabs {
-            display: flex;
-            background: var(--light-bg);
-            padding: 4px;
-            border-radius: var(--radius-md);
-            border: 1px solid var(--border);
-        }
-        
-        .filter-tabs input[type="radio"] { display: none; }
-        
-        .filter-tabs label {
-            flex: 1;
-            text-align: center;
-            padding: 8px 5px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--neutral);
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            transition: all 0.2s ease;
-            white-space: nowrap;
-        }
-        
-        .filter-tabs input[type="radio"]:checked + label {
-            background-color: var(--card-bg);
+        .pwa-content { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+        .pwa-title { font-weight: 700; font-size: 1rem; margin-bottom: 2px; }
+        .pwa-desc { font-size: 0.8rem; opacity: 0.9; }
+
+        .btn-install {
+            background-color: #fff;
             color: var(--primary);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-        
-        .filter-input-wrapper { width: 100%; }
-        
-        .filter-input {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid var(--border);
+            border: none;
+            padding: 8px 16px;
             border-radius: var(--radius-sm);
-            background: var(--input-bg);
-            color: var(--text-color);
-            font-family: inherit;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
+        .btn-close-pwa { background: none; border: none; color: #fff; font-size: 1.2rem; cursor: pointer; padding: 0; line-height: 1; }
 
-        /* CUSTOM SEARCHABLE DROPDOWN */
+        .filter-container { display: flex; flex-direction: column; gap: 10px; }
+        .filter-tabs { display: flex; background: var(--light-bg); padding: 4px; border-radius: var(--radius-md); border: 1px solid var(--border); }
+        .filter-tabs input[type="radio"] { display: none; }
+        .filter-tabs label { flex: 1; text-align: center; padding: 8px 5px; font-size: 0.8rem; font-weight: 600; color: var(--neutral); border-radius: var(--radius-sm); cursor: pointer; transition: all 0.2s ease; white-space: nowrap; }
+        .filter-tabs input[type="radio"]:checked + label { background-color: var(--card-bg); color: var(--primary); box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .filter-input-wrapper { width: 100%; }
+        .filter-input { width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--input-bg); color: var(--text-color); font-family: inherit; }
+
         .custom-select-wrapper { position: relative; user-select: none; width: 100%; }
         .custom-select { position: relative; display: flex; flex-direction: column; }
         .custom-select__trigger {
@@ -436,10 +494,7 @@
         }
         .custom-select.open .custom-select__options { opacity: 1; visibility: visible; pointer-events: all; }
         .custom-select__search { padding: 10px; border-bottom: 1px solid var(--border); background: var(--card-bg); position: sticky; top: 0; z-index: 10; }
-        .custom-select__search input {
-            width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 4px;
-            background: var(--input-bg); color: var(--text-color);
-        }
+        .custom-select__search input { width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 4px; background: var(--input-bg); color: var(--text-color); }
         .custom-option {
             position: relative; display: block; padding: 0.75rem 1rem; font-size: 0.9rem;
             font-weight: 400; color: var(--text-color); cursor: pointer; transition: all 0.2s;
@@ -457,57 +512,7 @@
         .arrow::after { left: 3px; transform: rotate(45deg); background-color: var(--neutral); }
         .open .arrow::before { left: -3px; transform: rotate(45deg); }
         .open .arrow::after { left: 3px; transform: rotate(-45deg); }
-
-        /* Search Hint Text */
-        .search-hint {
-            font-size: 0.75rem;
-            color: var(--neutral);
-            margin-top: 5px;
-            font-style: italic;
-        }
-
-        /* Settings Specific Styles */
-        .about-section {
-            margin-top: 2rem;
-            border-top: 1px solid var(--border);
-            padding-top: 1rem;
-        }
-        .about-section h3 {
-            color: var(--primary);
-            font-size: 1rem;
-            margin-bottom: 0.5rem;
-            text-align: center;
-        }
-        .about-section p {
-            font-size: 0.85rem;
-            color: var(--history-text);
-            line-height: 1.4;
-            text-align: center;
-            margin-bottom: 1rem;
-        }
-        .features-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr; 
-            gap: 10px;
-            margin-bottom: 1rem;
-        }
-        .feature-card {
-            background: var(--light-bg);
-            padding: 10px;
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border);
-            text-align: center;
-        }
-        .feature-card h4 {
-            color: var(--primary);
-            font-size: 0.8rem;
-            margin-bottom: 4px;
-        }
-        .feature-card p {
-            font-size: 0.7rem;
-            color: var(--neutral);
-            margin: 0;
-        }
+        .search-hint { font-size: 0.75rem; color: var(--neutral); margin-top: 5px; font-style: italic; }
     </style>
 </head>
 <body data-theme="light">
@@ -546,16 +551,70 @@
             </div>
         </div>
 
+        <!-- UPDATED NAVIGATION -->
         <nav>
-            <button class="nav-btn active" onclick="app.switchTab('entry')">Entry</button>
+            <button class="nav-btn" onclick="app.switchTab('home')">Home</button>
+            <button class="nav-btn" onclick="app.switchTab('entry')">Entry</button>
             <button class="nav-btn" onclick="app.switchTab('history')">History</button>
             <button class="nav-btn" onclick="app.switchTab('outstanding')">Dues</button>
             <button class="nav-btn" onclick="app.switchTab('ledger')">Ledger</button>
         </nav>
 
         <main>
+            <!-- NEW HOME SECTION (POSTER STYLE) -->
+            <section id="home" class="view active">
+                <div class="home-container">
+                    
+                    <!-- Hero Section -->
+                    <div class="home-hero">
+                        <div class="home-logo-big">
+                            <img src="https://z-cdn-media.chatglm.cn/files/af039fbb-879d-471f-a2d8-a6fbaac11f8b.png?auth_key=1868816468-3c27614d0d374d62a8d011ef8cc50a8f-0-db6fd19e4def068c453c4c8f2352a472" alt="ArthaNex">
+                        </div>
+                        <h2 class="home-title">ArthaNex</h2>
+                        <div class="home-subtitle">Best Offline Khata Book</div>
+                        <p class="home-desc">The ultimate Offline Khata Book & Daily Cash Collection App for small businesses. Track Income & Expenses, manage Party Ledger & Dues without internet. Best Billing & Collection Tracker for local shops.</p>
+                    </div>
+
+                    <!-- Features Grid -->
+                    <div class="features-grid">
+                        <div class="feature-poster">
+                            <span class="feature-icon-lg">📱</span>
+                            <h4>Offline Khata Book</h4>
+                            <p>Track Cash & Expenses 100% Offline.</p>
+                        </div>
+                        <div class="feature-poster">
+                            <span class="feature-icon-lg">💰</span>
+                            <h4>Denomination Calculator</h4>
+                            <p>Fast Cash Counting & Tally Tool.</p>
+                        </div>
+                        <div class="feature-poster">
+                            <span class="feature-icon-lg">📊</span>
+                            <h4>Party Ledger Manager</h4>
+                            <p>Customer Accounts & Credit/Debit.</p>
+                        </div>
+                        <div class="feature-poster">
+                            <span class="feature-icon-lg">🔒</span>
+                            <h4>Secure Data Privacy</h4>
+                            <p>Data stored locally on your device.</p>
+                        </div>
+                    </div>
+
+                    <!-- Quick Start Button -->
+                    <button class="btn btn-primary" onclick="app.switchTab('entry')" style="margin-top: 1rem; font-size: 1.1rem; padding: 1rem;">
+                        ➕ Start New Entry
+                    </button>
+
+                    <!-- Footer Credits -->
+                    <div class="home-credits">
+                        <h3>ArthaNex v2.0.4</h3>
+                        <p>Author: Pintu Sikder</p>
+                        <p>Company: <a href="https://arthixa.com" target="_blank">Arthixa</a></p>
+                    </div>
+                </div>
+            </section>
+
             <!-- SECTION 1: CASH ENTRY -->
-            <section id="entry" class="view active">
+            <section id="entry" class="view">
                 <div class="card">
                     <div class="form-group">
                         <label>Country & Currency</label>
@@ -651,13 +710,7 @@
 
             <!-- SECTION 2: HISTORY -->
             <section id="history" class="view">
-                <div class="print-header">
-                    <h2>ArthaNex Report</h2>
-                    <p><strong>Date:</strong> <span id="printDate"></span></p>
-                </div>
-
                 <div class="card">
-                    <!-- Improved Filter UI -->
                     <div class="filter-container">
                         <div class="filter-tabs">
                             <input type="radio" id="filter-name" name="filterType" value="name" onchange="app.setFilterMode('name')" checked>
@@ -791,7 +844,6 @@
                     </div>
                 </div>
                 
-                <!-- Auto Delete Feature -->
                 <div class="form-group">
                     <div class="checkbox-wrapper" style="justify-content: space-between;" onclick="app.toggleAutoDelete()">
                         <label for="autoDeleteToggle" style="cursor: pointer;">Auto-delete records older than 90 days</label>
@@ -800,31 +852,7 @@
                     <div style="font-size: 0.75rem; color: var(--neutral); margin-top: 5px;">When enabled, records older than 90 days are automatically deleted on app reload.</div>
                 </div>
 
-                <!-- About ArthaNex -->
-                <div class="about-section">
-                    <h3>ArthaNex: Professional Cash Collection App</h3>
-                    <p>The ultimate offline cash book (Khata) solution for small businesses and daily collectors. Track income, expenses, and party ledgers without needing an internet connection.</p>
-                    
-                    <div class="features-grid">
-                        <div class="feature-card">
-                            <h4>📱 100% Offline</h4>
-                            <p>Works without internet.</p>
-                        </div>
-                        <div class="feature-card">
-                            <h4>💰 Denomination Calculator</h4>
-                            <p>Auto-calculate totals.</p>
-                        </div>
-                        <div class="feature-card">
-                            <h4>📊 Smart Ledger</h4>
-                            <p>Party-wise tracking.</p>
-                        </div>
-                        <div class="feature-card">
-                            <h4>🔒 Secure Data</h4>
-                            <p>Stored on device only.</p>
-                        </div>
-                    </div>
-                </div>
-
+                <!-- Compact About Section for Settings -->
                 <hr style="margin: 1.5rem 0; border: 0; border-top: 1px solid var(--border);">
                 <div class="credits-container">
                     <h3>ArthaNex</h3>
@@ -856,21 +884,48 @@
         </div>
 
         <div id="toast">Message here</div>
+        
+        <!-- PWA INSTALL BANNER UI -->
+        <div id="pwa-install-banner">
+            <div class="pwa-content">
+                <div class="pwa-title">Install as App</div>
+                <div class="pwa-desc">Add to Home Screen for quick access</div>
+            </div>
+            <button id="installBtn" class="btn-install">Install</button>
+            <button id="closePrompt" class="btn-close-pwa">&times;</button>
+        </div>
+
     </div>
 
     <script>
-        // PWA Service Worker Registration
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js')
-                .then(registration => {
-                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
-                }, err => {
-                    console.log('ServiceWorker registration failed: ', err);
-                });
-            });
-        }
+        // PWA Install Prompt Logic
+        let deferredPrompt;
+        const installBanner = document.getElementById('pwa-install-banner');
+        const installBtn = document.getElementById('installBtn');
+        const closePrompt = document.getElementById('closePrompt');
 
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installBanner.style.display = 'flex';
+        });
+
+        installBtn.addEventListener('click', (e) => {
+            installBanner.style.display = 'none';
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    deferredPrompt = null;
+                });
+            }
+        });
+
+        closePrompt.addEventListener('click', () => {
+            installBanner.style.display = 'none';
+            deferredPrompt = null;
+        });
+
+        // App Logic
         const app = {
             state: {
                 currentTheme: 'light',
@@ -948,7 +1003,6 @@
                 const now = new Date();
                 document.getElementById('entryDate').valueAsDate = now;
                 document.getElementById('entryTime').value = now.toTimeString().substring(0,5);
-                document.getElementById('printDate').textContent = now.toLocaleDateString();
 
                 const todayStr = now.toISOString().split('T')[0];
                 document.getElementById('entryDate').max = todayStr;
@@ -967,14 +1021,13 @@
                     if (e.target.classList.contains('modal')) e.target.classList.remove('open');
                 });
 
-                this.renderOutstanding('all');
+                // Load Home View by default
+                this.switchTab('home');
             },
 
             togglePayable: function() {
                 const cb = document.getElementById('entryPayable');
-                if (cb) {
-                    cb.checked = !cb.checked;
-                }
+                if (cb) { cb.checked = !cb.checked; }
             },
             
             toggleAutoDelete: function() {
@@ -1112,14 +1165,12 @@
                 this.state.currentTheme = theme;
                 document.body.setAttribute('data-theme', theme);
                 document.documentElement.setAttribute('color-scheme', theme);
-                
                 document.getElementById('themeSelect').value = theme;
                 localStorage.setItem('arthaNex_theme', theme);
             },
             loadSettings: function() {
                 const savedTheme = localStorage.getItem('arthaNex_theme');
                 if(savedTheme) this.setTheme(savedTheme);
-                
                 const autoDelete = localStorage.getItem('arthaNex_autoDelete');
                 if (autoDelete !== null) {
                     this.state.autoDeleteEnabled = (autoDelete === 'true');
@@ -1135,7 +1186,7 @@
                 document.querySelectorAll('.nav-btn').forEach(e => e.classList.remove('active'));
                 document.getElementById(id).classList.add('active');
                 
-                const btnIndex = ['entry','history','outstanding','ledger'].indexOf(id);
+                const btnIndex = ['home','entry','history','outstanding','ledger'].indexOf(id);
                 if(btnIndex >= 0) document.querySelectorAll('.nav-btn')[btnIndex].classList.add('active');
 
                 if(id === 'history') this.renderHistory();
@@ -1246,7 +1297,6 @@
             },
             cleanupOldRecords: function() {
                 if (!this.state.autoDeleteEnabled) return;
-
                 const now = Date.now();
                 const threeMonths = 90 * 24 * 60 * 60 * 1000;
                 const filtered = this.state.records.filter(r => (now - r.timestamp) < threeMonths);
@@ -1272,19 +1322,14 @@
                 document.getElementById('entryTime').value = now.toTimeString().substring(0,5);
             },
 
-            /* --- OUTSTANDING LOGIC --- */
             renderOutstanding: function(filterType) {
                 const list = document.getElementById('outstandingList');
                 const empty = document.getElementById('outstandingEmpty');
                 list.innerHTML = '';
                 
                 let dues = this.state.records.filter(r => r.status === 'Due');
-                
-                if (filterType === 'receivable') {
-                    dues = dues.filter(r => r.type === 'income');
-                } else if (filterType === 'payable') {
-                    dues = dues.filter(r => r.type === 'expense');
-                }
+                if (filterType === 'receivable') { dues = dues.filter(r => r.type === 'income'); } 
+                else if (filterType === 'payable') { dues = dues.filter(r => r.type === 'expense'); }
                 
                 if (dues.length === 0) {
                     empty.style.display = 'block';
@@ -1327,7 +1372,6 @@
                 }
             },
 
-            /* --- LEDGER LOGIC --- */
             suggestLedgerName: function(val) {
                 const container = document.getElementById('ledgerSuggestions');
                 container.innerHTML = '';
@@ -1395,7 +1439,6 @@
                 document.getElementById('ledgerSuggestions').innerHTML = '';
             },
 
-            /* --- HISTORY & EXPORT --- */
             setFilterMode: function(mode) {
                 this.state.filters.mode = mode;
                 const inputs = document.querySelectorAll('.filter-input');
@@ -1482,7 +1525,6 @@
                 const endISO = today.toISOString().split('T')[0];
                 const filtered = this.state.records.filter(r => r.date >= startISO && r.date <= endISO);
                 if(filtered.length === 0) return this.showToast("No records in last 30 days.");
-                
                 const list = document.getElementById('historyList');
                 const originalContent = list.innerHTML;
                 list.innerHTML = filtered.map(r => `
@@ -1490,7 +1532,6 @@
                         <div class="h-left"><span class="h-name">${r.name}</span><div class="h-details"><div class="h-detail-row"><span>Date:</span> <span>${r.date}</span></div></div></div>
                         <div class="h-right"><span class="h-amount">${r.symbol} ${r.total.toLocaleString()}</span></div>
                     </li>`).join('');
-                document.getElementById('printDate').textContent = `${startISO} to ${endISO}`;
                 const originalTitle = document.title; document.title = "ArthaNex_Report"; window.print();
                 setTimeout(() => { document.title = originalTitle; this.renderHistory(); }, 1000);
             },
@@ -1511,7 +1552,6 @@
                         <div class="h-left"><span class="h-name">${r.name}</span><div class="h-details"><div class="h-detail-row"><span>Date:</span> <span>${r.date}</span></div></div></div>
                         <div class="h-right"><span class="h-amount">${r.symbol} ${r.total.toLocaleString()}</span></div>
                     </li>`).join('');
-                document.getElementById('printDate').textContent = `${start} to ${end}`;
                 const originalTitle = document.title; document.title = "ArthaNex_Report"; window.print();
                 setTimeout(() => { document.title = originalTitle; this.renderHistory(); this.toggleModal('dateRangeModal'); }, 1000);
             },
@@ -1529,11 +1569,8 @@
                 const statusBadge = r.status === 'Due' ? '<span class="badge due">Due</span>' : '';
 
                 let transactionText = "";
-                if(r.type === 'income') {
-                    transactionText = (r.status === 'Paid') ? "Received From" : "Receivable From";
-                } else {
-                    transactionText = (r.status === 'Paid') ? "Paid To" : "Payable To";
-                }
+                if(r.type === 'income') { transactionText = (r.status === 'Paid') ? "Received From" : "Receivable From"; } 
+                else { transactionText = (r.status === 'Paid') ? "Paid To" : "Payable To"; }
 
                 document.getElementById('detailContent').innerHTML = `
                     <div class="detail-row" style="font-size:1rem; border-bottom: 2px solid var(--border); margin-bottom:12px;">
@@ -1554,11 +1591,8 @@
                 if(!r) return;
                 
                 let transactionText = "";
-                if(r.type === 'income') {
-                    transactionText = (r.status === 'Paid') ? "Received From" : "Receivable From";
-                } else {
-                    transactionText = (r.status === 'Paid') ? "Paid To" : "Payable To";
-                }
+                if(r.type === 'income') { transactionText = (r.status === 'Paid') ? "Received From" : "Receivable From"; } 
+                else { transactionText = (r.status === 'Paid') ? "Paid To" : "Payable To"; }
                 
                 const text = `Transaction: ${transactionText} ${r.name}\nAmount: ${r.symbol}${r.total}\nStatus: ${r.status}\nDate: ${r.date}\nRemarks: ${r.remarks}`;
                 if (navigator.clipboard) navigator.clipboard.writeText(text).then(() => this.showToast("Copied!")).catch(() => this.showToast("Failed"));
@@ -1569,11 +1603,8 @@
                 if(!r) return;
 
                 let transactionText = "";
-                if(r.type === 'income') {
-                    transactionText = (r.status === 'Paid') ? "Received From" : "Receivable From";
-                } else {
-                    transactionText = (r.status === 'Paid') ? "Paid To" : "Payable To";
-                }
+                if(r.type === 'income') { transactionText = (r.status === 'Paid') ? "Received From" : "Receivable From"; } 
+                else { transactionText = (r.status === 'Paid') ? "Paid To" : "Payable To"; }
 
                 const msg = `ArthaNex:\nTransaction: ${transactionText} ${r.name}\nAmount: ${r.symbol}${r.total}\nDate: ${r.date}\n\nDownload App: https://arthixa.com`;
                 if (navigator.share) navigator.share({ title: 'Record', text: msg }).catch(console.error);
@@ -1622,6 +1653,19 @@
         document.addEventListener('DOMContentLoaded', () => {
             app.init();
         });
+    </script>
+    
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                .then(registration => {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, err => {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
     </script>
 </body>
 </html>
