@@ -8,7 +8,6 @@
     <meta name="description" content="ArthaNex is best free offline Khata book and daily cash collection app. Manage small business ledger, party dues, and expenses without internet. Simple business calculator.">
     <meta name="theme-color" content="#F36C21">
     
-    <!-- PWA MANIFEST LINK -->
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="https://z-cdn-media.chatglm.cn/files/af039fbb-879d-471f-a2d8-a6fbaac11f8b.png?auth_key=1868816468-3c27614d0d374d62a8d011ef8cc50a8f-0-db6fd19e4def068c453c4c8f2352a472">
     
@@ -102,7 +101,7 @@
 
         .brand { display: flex; align-items: center; gap: 10px; flex-direction: column; align-items: flex-start; }
         .brand-top { display: flex; align-items: center; gap: 10px; }
-        .brand h1 { font-size: 1.25rem; font-weight: 700; margin: 0; line-height: 1; }
+        .brand h1 { font-size:1.25rem; font-weight: 700; margin: 0; line-height: 1; }
         
         .brand-icon { 
             width: 40px; 
@@ -221,7 +220,7 @@
         .home-container {
             display: flex;
             flex-direction: column;
-            gap:1.5rem;
+            gap: 1.5rem;
         }
 
         .home-hero {
@@ -392,7 +391,7 @@
         }
         .denom-subtotal { font-size: 0.7rem; color: var(--primary); font-weight: 500; }
 
-        .total-display { background: linear-gradient(135deg, var(--primary), var(--accent)); color: #fff; padding: 1.5rem; border-radius: var(--radius-lg); text-align: center; margin-bottom:1.5rem; box-shadow: var(--shadow-md); }
+        .total-display { background: linear-gradient(135deg, var(--primary), var(--accent)); color: #fff; padding: 1.5rem; border-radius: var(--radius-lg); text-align: center; margin-bottom: 1.5rem; box-shadow: var(--shadow-md); }
         .total-label { font-size: 0.9rem; opacity: 0.9; text-transform: uppercase; letter-spacing: 1px; }
         .total-amount { font-size: 2.2rem; font-weight: 700; margin: 0.5rem 0; font-family: 'Roboto Mono', monospace; word-break: break-all; }
         .total-words { font-style: italic; opacity: 0.9; font-size: 0.9rem; word-break: break-word; }
@@ -1669,15 +1668,15 @@
                 const a = ['','One ','Two ','Three ','Four ','Five ','Six ','Seven ','Eight ','Nine ','Ten ','Eleven ','Twelve ','Thirteen ','Fourteen ','Fifteen ','Sixteen ','Seventeen ','Eighteen ','Nineteen '];
                 const b = ['', '', 'Twenty','Thirty','Forty','Fifty','Sixty','Seventy','Eighty','Ninety'];
                 
-                // Updated: Removed length check to prevent "overflow" message.
-                // Supports up to 12 digits (Hundreds of Crores / Arab).
-                // Regex now matches: (Arab) (Crore) (Lakh) (Thousand) (Hundred) (Units)
-                
+                // FIX: Ensure padding matches the regex length (11 digits total for Indian system)
+                // Supports up to 99,99,99,99,999
                 const numStr = num.toString();
-                // Pad with 12 zeros to ensure we have enough digits for regex
-                const n = ('000000000000' + numStr).substr(-12).match(/^(\d{2})(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
+                // Pad with 11 zeros
+                const n = ('00000000000' + numStr).substr(-11).match(/^(\d{2})(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
                 
-                if (!n) return; 
+                // FIX: If regex fails (e.g. number too huge), return number as string to avoid "undefined"
+                if (!n) return numStr; 
+                
                 let str = '';
                 
                 // Arab (Hundreds of Crores)
