@@ -3,9 +3,10 @@
   "short_name": "ArthaNex",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#F36C21",
+  "background_color": "#F5F5F5",
   "theme_color": "#F36C21",
   "orientation": "portrait",
+  "scope": "./",
   "icons": [
     {
       "src": "https://z-cdn-media.chatglm.cn/files/af039fbb-879d-471f-a2d8-a6fbaac11f8b.png?auth_key=1868816468-3c27614d0d374d62a8d011ef8cc50a8f-0-db6fd19e4def068c453c4c8f2352a472",
@@ -16,8 +17,7 @@
     {
       "src": "https://z-cdn-media.chatglm.cn/files/af039fbb-879d-471f-a2d8-a6fbaac11f8b.png?auth_key=1868816468-3c27614d0d374d62a8d011ef8cc50a8f-0-db6fd19e4def068c453c4c8f2352a472",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/png"
     }
   ]
 }
