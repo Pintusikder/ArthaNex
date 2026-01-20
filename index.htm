@@ -539,6 +539,28 @@
         .open .arrow::before { left: -3px; transform: rotate(45deg); }
         .open .arrow::after { left: 3px; transform: rotate(-45deg); }
         .search-hint { font-size: 0.75rem; color: var(--neutral); margin-top: 5px; font-style: italic; }
+
+        /* CREDITS IN SETTINGS MODAL - CENTER ALIGNMENT */
+        .credits-container {
+            text-align: center;
+            margin-top: 1.5rem;
+            padding-top: 0.5rem;
+        }
+        .credits-container h3 {
+            color: var(--primary);
+            font-size: 1.1rem;
+            margin-bottom: 0.2rem;
+        }
+        .credits-container p {
+            font-size: 0.9rem;
+            color: var(--neutral);
+            margin: 0.2rem 0;
+        }
+        .credits-container a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body data-theme="light">
@@ -883,9 +905,9 @@
                 <hr style="margin: 1.5rem 0; border: 0; border-top: 1px solid var(--border);">
                 <div class="credits-container">
                     <h3>ArthaNex</h3>
-                    <p style="font-size: 0.9rem; color: var(--neutral);">Version 2.0.4</p>
-                    <p style="font-size: 0.8rem; margin-top: 5px;">Author: Pintu Sikder</p>
-                    <p style="font-size: 0.8rem;">Company: <a href="https://arthixa.com" target="_blank" class="company-link">Arthixa</a></p>
+                    <p>Version 2.0.4</p>
+                    <p>Author: Pintu Sikder</p>
+                    <p>Company: <a href="https://arthixa.com" target="_blank" class="company-link">Arthixa</a></p>
                 </div>
             </div>
         </div>
@@ -1670,7 +1692,7 @@
                 const a = ['','One ','Two ','Three ','Four ','Five ','Six ','Seven ','Eight ','Nine ','Ten ','Eleven ','Twelve ','Thirteen ','Fourteen ','Fifteen ','Sixteen ','Seventeen ','Eighteen ','Nineteen '];
                 const b = ['', '', 'Twenty','Thirty','Forty','Fifty','Sixty','Seventy','Eighty','Ninety'];
                 
-                // FIX: Ensure padding matches the regex length (11 digits total for Indian system)
+                // FIX: Ensure padding matches regex length (11 digits total for Indian system)
                 // Supports up to 99,99,99,99,999
                 const numStr = num.toString();
                 // Pad with 11 zeros
