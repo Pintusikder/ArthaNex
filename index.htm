@@ -54,7 +54,6 @@
            1. CSS VARIABLES & RESET
            -------------------------------------------------- */
         :root {
-            /* Theme Colors */
             --primary: #F36C21;       
             --primary-hover: #D65612;
             --accent: #FF8A3D;        
@@ -96,7 +95,7 @@
             --card-bg: #1e1e1e;       
             --input-bg: #2c2c2c;      
             --text-color: #F5F5F5;     
-            --border: #444444; /* Slightly lighter for dark mode */
+            --border: #444444; 
             --history-text: #cccccc; 
             --bg-income: #1b3320;
             --text-income: #66bb6a;
@@ -125,13 +124,13 @@
         /* MAIN RESPONSIVE CONTAINER */
         #app-container {
             width: 100%;
-            max-width: 600px; /* Desktop constraint */
+            max-width: 600px; 
             margin: 0 auto;
             height: 100%;
             display: flex;
             flex-direction: column;
             background-color: var(--light-bg);
-            box-shadow: 0 0 20px rgba(0,0,0,0.1); /* Subtle shadow on desktop */
+            box-shadow: 0 0 20px rgba(0,0,0,0.1); 
             position: relative;
         }
 
@@ -161,6 +160,7 @@
             justify-content: center;
             background: rgba(255,255,255,0.2);
             overflow: hidden;
+            flex-shrink: 0; /* Prevent shrinking */
         }
         .brand-icon img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
@@ -170,6 +170,7 @@
         .brand a {
             color: rgba(255,255,255,0.9); text-decoration: none; font-size: 0.7rem; opacity: 0.9; cursor: pointer;
             border-bottom: 1px dashed rgba(255,255,255,0.5);
+            white-space: nowrap;
         }
         .brand a:hover { opacity: 1; color: #fff; }
 
@@ -199,7 +200,7 @@
         .stat-card.expense { background-color: var(--bg-expense); border-color: var(--text-expense); }
         .stat-card.balance { background-color: var(--bg-balance); border-color: var(--text-balance); }
         .stat-label { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; opacity: 0.8; margin-bottom:5px; color: var(--text-income); }
-        .stat-val { font-size: 1rem; font-weight: 700; font-family: 'Roboto Mono', monospace; color: var(--text-income); }
+        .stat-val { font-size: 1rem; font-weight: 700; font-family: 'Roboto Mono', monospace; color: var(--text-income); word-break: break-all; }
         .stat-card.expense .stat-label, .stat-card.expense .stat-val { color: var(--text-expense); }
         .stat-card.balance .stat-label, .stat-card.balance .stat-val { color: var(--text-balance); }
 
@@ -239,7 +240,7 @@
         .card { background: var(--card-bg); border-radius: var(--radius-md); padding: 1.25rem; margin-bottom: 1rem; box-shadow: var(--shadow-sm); border: 1px solid var(--border); }
         
         .form-group { margin-bottom: 1rem; }
-        .form-group label { display: block; margin-bottom: 0.5rem; font-size: 0.85rem; color: var(--neutral); font-weight: 500; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-size: 0.85rem; color: var(--neutral); font-weight: 500; word-break: break-word; }
         
         .form-control { 
             width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: var(--radius-sm); 
@@ -249,13 +250,7 @@
         .form-control.error { border-color: #dc3545; background-color: rgba(220, 53, 69, 0.1); }
         .form-control:disabled { opacity: 0.5; cursor: not-allowed; background: var(--light-bg); }
         
-        /* Calendar Icon Color */
-        input[type="date"]::-webkit-calendar-picker-indicator { 
-            cursor: pointer; 
-            color: var(--primary); 
-            opacity: 1; 
-            filter: var(--calendar-filter);
-        }
+        input[type="date"]::-webkit-calendar-picker-indicator { cursor: pointer; color: var(--primary); opacity: 1; filter: var(--calendar-filter); }
 
         .radio-group, .checkbox-wrapper {
             display: flex;
@@ -265,6 +260,7 @@
             background: var(--light-bg);
             border-radius: var(--radius-sm);
             border: 1px solid var(--border);
+            flex-wrap: wrap; /* Wrap on small screens */
         }
         .radio-group label, .checkbox-wrapper label {
             margin: 0; font-size: 0.9rem; font-weight: 500; color: var(--text-color); cursor: pointer; display: flex; align-items: center; gap: 6px;
@@ -286,10 +282,10 @@
 
         .total-display { background: linear-gradient(135deg, var(--primary), var(--accent)); color: #fff; padding: 1.5rem; border-radius: var(--radius-lg); text-align: center; margin-bottom: 1.5rem; box-shadow: var(--shadow-md); }
         .total-label { font-size: 0.9rem; opacity: 0.9; text-transform: uppercase; letter-spacing: 1px; }
-        .total-amount { font-size: 2.2rem; font-weight: 700; margin: 0.5rem 0; font-family: 'Roboto Mono', monospace; }
-        .total-words { font-style: italic; opacity: 0.9; font-size: 0.9rem; }
+        .total-amount { font-size: 2.2rem; font-weight: 700; margin: 0.5rem 0; font-family: 'Roboto Mono', monospace; word-break: break-all; }
+        .total-words { font-style: italic; opacity: 0.9; font-size: 0.9rem; word-break: break-word; }
 
-        .btn { border: none; padding: 0.8rem 1.5rem; border-radius: var(--radius-md); font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-size: 1rem; transition: var(--transition); width: 100%; }
+        .btn { border: none; padding: 0.8rem 1.5rem; border-radius: var(--radius-md); font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-size: 1rem; transition: var(--transition); width: 100%; white-space: nowrap;}
         .btn-primary { background-color: var(--primary); color: #fff; }
         .btn-primary:hover { background-color: var(--primary-hover); transform: translateY(-1px); }
         .btn-secondary { background-color: var(--neutral); color: #fff; }
@@ -310,13 +306,13 @@
             background: var(--card-bg); border-bottom: 1px solid var(--border); padding: 1rem; 
             display: flex; justify-content: space-between; align-items: flex-start; position: relative;
         }
-        .h-left { flex: 1; padding-right: 15px; }
-        .h-name { font-weight: 700; font-size: 1.05rem; color: var(--secondary); margin-bottom: 4px; display: block; }
+        .h-left { flex: 1; padding-right: 15px; min-width: 0; } /* min-width: 0 allows text truncation to work */
+        .h-name { font-weight: 700; font-size: 1.05rem; color: var(--secondary); margin-bottom: 4px; display: block; word-break: break-word; line-height: 1.3;}
         .h-details { display: flex; flex-direction: column; gap: 3px; font-size: 0.8rem; color: var(--history-text); font-weight: 500; }
         .h-detail-row { display: flex; align-items: center; gap: 6px; }
-        .h-detail-row span { line-height: 1.2; }
+        .h-detail-row span { line-height: 1.2; word-break: break-word; }
         
-        .badge { display: inline-block; padding: 2px 6px; border-radius: 4px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; margin-right: 5px; }
+        .badge { display: inline-block; padding: 2px 6px; border-radius: 4px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; margin-right: 5px; white-space: nowrap;}
         .badge.due { background-color: #ffe0b2; color: #e65100; }
         .badge.expense { background-color: #ffcdd2; color: #c62828; }
         .badge.receivable { background-color: #e8f5e9; color: #2e7d32; }
@@ -327,32 +323,32 @@
             display: flex; flex-direction: column; align-items: flex-end; justify-content: flex-start; 
             min-width: 80px; margin-left: 10px;
         }
-        .h-amount { font-weight: 700; font-size: 1.1rem; margin-bottom: 2px; }
+        .h-amount { font-weight: 700; font-size: 1.1rem; margin-bottom: 2px; white-space: nowrap;}
         .amount-income { color: var(--primary); }
         .amount-expense { color: var(--text-expense); }
         
         .h-words { 
             font-size: 0.7rem; font-style: italic; color: var(--history-text); text-align: right; 
-            margin-bottom: 4px; line-height: 1.1; max-width: 130px; overflow: hidden; text-overflow: ellipsis;
-            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+            margin-bottom: 4px; line-height: 1.1; width: 100%; overflow: hidden; text-overflow: ellipsis;
+            white-space: nowrap;
         }
         
-        .menu-container { position: relative; display: inline-block; margin-top: auto; }
+        .menu-container { position: relative; display: inline-block; margin-top: auto; flex-shrink: 0; }
         .btn-menu { background: none; border: none; color: var(--history-text); font-size: 1.5rem; cursor: pointer; padding: 0; line-height: 1; }
         .btn-menu:hover { color: var(--primary); }
         .item-menu { display: none; position: absolute; right: 0; top: 100%; background: var(--card-bg); border: 1px solid var(--border); box-shadow: var(--shadow-md); border-radius: var(--radius-sm); z-index: 200; min-width: 140px; overflow: hidden; pointer-events: none; }
         .item-menu.show { display: block; pointer-events: auto; }
-        .menu-opt { display: block; width: 100%; padding: 10px 15px; text-align: left; background: none; border: none; cursor: pointer; font-size: 0.9rem; color: var(--text-color); transition: background 0.2s; }
+        .menu-opt { display: block; width: 100%; padding: 10px 15px; text-align: left; background: none; border: none; cursor: pointer; font-size: 0.9rem; color: var(--text-color); transition: background 0.2s; white-space: nowrap;}
         .menu-opt:hover { background-color: var(--light-bg); }
         .menu-opt.delete { color: #dc3545; border-top: 1px solid var(--border); }
         
         .detail-row { display: flex; justify-content: space-between; margin-bottom: 8px; border-bottom: 1px dashed var(--border); padding-bottom: 4px; font-size: 0.9rem; }
-        .detail-row span:last-child { font-weight: 600; font-family: 'Roboto Mono', monospace; }
+        .detail-row span:last-child { font-weight: 600; font-family: 'Roboto Mono', monospace; word-break: break-word; text-align: right; }
         .denom-breakdown { margin-top: 1rem; max-height: 200px; overflow-y: auto; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px; background: var(--light-bg); }
         .denom-br-row { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid rgba(0,0,0,0.05); font-size: 0.85rem; }
         [data-theme="dark"] .denom-br-row { border-bottom: 1px solid rgba(255,255,255,0.05); }
         
-        #toast { visibility: hidden; min-width: 250px; background-color: var(--secondary); color: var(--card-bg); text-align: center; border-radius: var(--radius-md); padding: 16px; position: fixed; z-index: 2000; left: 50%; bottom: 30px; transform: translateX(-50%); box-shadow: var(--shadow-md); }
+        #toast { visibility: hidden; min-width: 250px; background-color: var(--secondary); color: var(--card-bg); text-align: center; border-radius: var(--radius-md); padding: 16px; position: fixed; z-index: 2000; left: 50%; bottom: 30px; transform: translateX(-50%); box-shadow: var(--shadow-md); width: max-content; max-width: 90%; }
         [data-theme="dark"] #toast { background-color: #F5F5F5; color: #121212; } 
         #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
         @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
@@ -389,9 +385,7 @@
             border: 1px solid var(--border);
         }
         
-        .filter-tabs input[type="radio"] {
-            display: none;
-        }
+        .filter-tabs input[type="radio"] { display: none; }
         
         .filter-tabs label {
             flex: 1;
@@ -403,6 +397,7 @@
             border-radius: var(--radius-sm);
             cursor: pointer;
             transition: all 0.2s ease;
+            white-space: nowrap;
         }
         
         .filter-tabs input[type="radio"]:checked + label {
@@ -411,9 +406,7 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
         
-        .filter-input-wrapper {
-            width: 100%;
-        }
+        .filter-input-wrapper { width: 100%; }
         
         .filter-input {
             width: 100%;
@@ -450,7 +443,7 @@
         .custom-option {
             position: relative; display: block; padding: 0.75rem 1rem; font-size: 0.9rem;
             font-weight: 400; color: var(--text-color); cursor: pointer; transition: all 0.2s;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
+            border-bottom: 1px solid rgba(0,0,0,0.05); word-break: break-word;
         }
         [data-theme="dark"] .custom-option { border-bottom: 1px solid rgba(255,255,255,0.05); }
         .custom-option:hover { background-color: rgba(243, 108, 33, 0.1); color: var(--primary); }
@@ -464,6 +457,14 @@
         .arrow::after { left: 3px; transform: rotate(45deg); background-color: var(--neutral); }
         .open .arrow::before { left: -3px; transform: rotate(45deg); }
         .open .arrow::after { left: 3px; transform: rotate(-45deg); }
+
+        /* Search Hint Text */
+        .search-hint {
+            font-size: 0.75rem;
+            color: var(--neutral);
+            margin-top: 5px;
+            font-style: italic;
+        }
 
         /* Settings Specific Styles */
         .about-section {
@@ -563,7 +564,10 @@
                                 <div class="custom-select__trigger"><span>Select Country</span><div class="arrow"></div></div>
                                 <div class="custom-select__options">
                                     <div class="custom-select__search">
-                                        <input type="text" placeholder="Search..." id="countrySearchInput">
+                                        <input type="text" placeholder="Ex: India, USD, Euro..." id="countrySearchInput">
+                                    </div>
+                                    <div style="padding: 0 10px 10px 10px; font-size: 0.75rem; color: var(--neutral); font-style: italic;">
+                                        Try typing country name (e.g., "India") or Currency Code (e.g., "USD").
                                     </div>
                                     <div class="options-container" id="countryOptionsList"></div>
                                 </div>
@@ -657,17 +661,17 @@
                     <div class="filter-container">
                         <div class="filter-tabs">
                             <input type="radio" id="filter-name" name="filterType" value="name" onchange="app.setFilterMode('name')" checked>
-                            <label for="filter-name">Filter by Name</label>
+                            <label for="filter-name">Name</label>
                             
                             <input type="radio" id="filter-date" name="filterType" value="date" onchange="app.setFilterMode('date')">
-                            <label for="filter-date">Filter by Date</label>
+                            <label for="filter-date">Date</label>
                             
                             <input type="radio" id="filter-amount" name="filterType" value="amount" onchange="app.setFilterMode('amount')">
-                            <label for="filter-amount">Filter by Amount</label>
+                            <label for="filter-amount">Amount</label>
                         </div>
                         
                         <div class="filter-input-wrapper">
-                            <input type="text" id="filterName" class="filter-input" placeholder="Enter Name..." onkeyup="app.handleFilter('name', this.value)">
+                            <input type="text" id="filterName" class="filter-input" placeholder="Search by Name (e.g. Rahul)..." onkeyup="app.handleFilter('name', this.value)">
                             <input type="date" id="filterDate" class="filter-input" style="display:none;" onchange="app.handleFilter('date', this.value)">
                             <input type="number" id="filterAmount" class="filter-input" placeholder="Enter Amount..." style="display:none;" onkeyup="app.handleFilter('amount', this.value)">
                         </div>
@@ -718,15 +722,16 @@
                 <div class="card">
                     <label>Search Customer / Party</label>
                     <div style="display:flex; gap:10px;">
-                        <input type="text" id="ledgerSearch" class="form-control" placeholder="Enter Name..." oninput="app.suggestLedgerName(this.value)">
+                        <input type="text" id="ledgerSearch" class="form-control" placeholder="Ex: Rahul, Priya..." oninput="app.suggestLedgerName(this.value)">
                     </div>
                     <div id="ledgerSuggestions" style="margin-top:5px; display:flex; flex-wrap:wrap; gap:5px;"></div>
+                    <div class="search-hint">Type customer name to see their ledger.</div>
                 </div>
 
                 <div id="ledgerDetails" style="display:none;">
                     <div class="card">
                         <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <h3 id="ledgerCustomerName" style="color:var(--primary); margin:0;">Customer Name</h3>
+                            <h3 id="ledgerCustomerName" style="color:var(--primary); margin:0; word-break: break-word;">Customer Name</h3>
                             <button class="btn btn-outline" style="width:auto; padding:5px 10px; font-size:0.8rem;" onclick="app.clearLedger()">Clear</button>
                         </div>
                         
@@ -775,7 +780,10 @@
                             <div class="custom-select__trigger"><span>Select Country</span><div class="arrow"></div></div>
                             <div class="custom-select__options">
                                 <div class="custom-select__search">
-                                    <input type="text" placeholder="Search country..." id="settingsSearchInput">
+                                    <input type="text" placeholder="Ex: India, USD, Euro..." id="settingsSearchInput">
+                                </div>
+                                <div style="padding: 0 10px 10px 10px; font-size: 0.75rem; color: var(--neutral); font-style: italic;">
+                                    Try typing country name or Currency Code.
                                 </div>
                                 <div class="options-container" id="settingsOptionsList"></div>
                             </div>
@@ -1102,9 +1110,7 @@
             
             setTheme: function(theme) {
                 this.state.currentTheme = theme;
-                // Apply data-theme to body for CSS variables
                 document.body.setAttribute('data-theme', theme);
-                // Apply color-scheme to root for native controls (Calendar, Scrollbars)
                 document.documentElement.setAttribute('color-scheme', theme);
                 
                 document.getElementById('themeSelect').value = theme;
@@ -1331,7 +1337,7 @@
                 names.forEach(name => {
                     const tag = document.createElement('span');
                     tag.textContent = name;
-                    tag.style.cssText = "background:var(--light-bg); padding:4px 8px; border-radius:4px; font-size:0.8rem; border:1px solid var(--border); cursor:pointer;";
+                    tag.style.cssText = "background:var(--light-bg); padding:4px 8px; border-radius:4px; font-size:0.8rem; border:1px solid var(--border); cursor:pointer; word-break: break-word;";
                     tag.onclick = () => {
                         document.getElementById('ledgerSearch').value = name;
                         this.loadLedger(name);
