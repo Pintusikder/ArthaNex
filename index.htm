@@ -129,14 +129,13 @@
         }
         .brand a:hover { opacity: 1; color: #fff; }
 
-        /* UPDATED: Header Actions Button Styling */
         .header-actions button { 
             background: none; 
             border: none; 
             color: #fff; 
-            font-size: 1.6rem; /* Increased size from 1.2rem */
+            font-size: 1.6rem; 
             cursor: pointer; 
-            padding: 8px 12px; /* Increased padding for better touch target */
+            padding: 8px 12px; 
             margin-left: 8px; 
             transition: var(--transition); 
             line-height: 1;
@@ -169,7 +168,18 @@
         .stat-card.expense { background-color: var(--bg-expense); border-color: var(--text-expense); }
         .stat-card.balance { background-color: var(--bg-balance); border-color: var(--text-balance); }
         .stat-label { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; opacity: 0.8; margin-bottom:5px; color: var(--text-income); }
-        .stat-val { font-size: 1rem; font-weight: 700; font-family: 'Roboto Mono', monospace; color: var(--text-income); word-break: break-all; }
+        
+        /* FIXED: Text overflow issues */
+        .stat-val { 
+            font-size: 1rem; 
+            font-weight: 700; 
+            font-family: 'Roboto Mono', monospace; 
+            color: var(--text-income); 
+            word-break: break-all; 
+            overflow-wrap: break-word;
+            min-width: 0; /* Allows grid item to shrink below content size */
+        }
+        
         .stat-card.expense .stat-label, .stat-card.expense .stat-val { color: var(--text-expense); }
         .stat-card.balance .stat-label, .stat-card.balance .stat-val { color: var(--text-balance); }
 
@@ -757,7 +767,6 @@
             <section id="outstanding" class="view">
                 <div class="card">
                     <h3 style="margin-bottom: 15px; color: var(--primary);">Outstanding Summary</h3>
-                    <!-- FIXED: Added grid-template-columns: 1fr 1fr; to ensure 2 columns -->
                     <div class="dashboard-container" style="margin-bottom: 10px; padding:0; border:none; background:transparent; grid-template-columns: 1fr 1fr;">
                         <div class="stat-card">
                             <div class="stat-label">To Receive</div>
@@ -1649,15 +1658,31 @@
                 if (num === 0) return "Zero";
                 const a = ['','One ','Two ','Three ','Four ','Five ','Six ','Seven ','Eight ','Nine ','Ten ','Eleven ','Twelve ','Thirteen ','Fourteen ','Fifteen ','Sixteen ','Seventeen ','Eighteen ','Nineteen '];
                 const b = ['', '', 'Twenty','Thirty','Forty','Fifty','Sixty','Seventy','Eighty','Ninety'];
-                if ((num = num.toString()).length > 9) return 'overflow';
-                const n = ('000000000' + num).substr(-9).match(/^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
+                
+                // Updated: Removed length check to prevent "overflow" message.
+                // Supports up to 12 digits (Hundreds of Crores / Arab).
+                // Regex now matches: (Arab) (Crore) (Lakh) (Thousand) (Hundred) (Units)
+                
+                const numStr = num.toString();
+                // Pad with 12 zeros to ensure we have enough digits for the regex
+                const n = ('000000000000' + numStr).substr(-12).match(/^(\d{2})(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
+                
                 if (!n) return; 
                 let str = '';
-                str += (n[1] != 0) ? (a[Number(n[1])] || b[n[1][0]] + ' ' + a[n[1][1]]) + 'Crore ' : '';
-                str += (n[2] != 0) ? (a[Number(n[2])] || b[n[2][0]] + ' ' + a[n[2][1]]) + 'Lakh ' : '';
-                str += (n[3] != 0) ? (a[Number(n[3])] || b[n[3][0]] + ' ' + a[n[3][1]]) + 'Thousand ' : '';
-                str += (n[4] != 0) ? (a[Number(n[4])] || b[n[4][0]] + ' ' + a[n[4][1]]) + 'Hundred ' : '';
-                str += (n[5] != 0) ? ((str != '') ? 'and ' : '') + (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) : '';
+                
+                // Arab (Hundreds of Crores)
+                str += (n[1] != 0) ? (a[Number(n[1])] || b[n[1][0]] + ' ' + a[n[1][1]]) + 'Arab ' : '';
+                // Crore
+                str += (n[2] != 0) ? (a[Number(n[2])] || b[n[2][0]] + ' ' + a[n[2][1]]) + 'Crore ' : '';
+                // Lakh
+                str += (n[3] != 0) ? (a[Number(n[3])] || b[n[3][0]] + ' ' + a[n[3][1]]) + 'Lakh ' : '';
+                // Thousand
+                str += (n[4] != 0) ? (a[Number(n[4])] || b[n[4][0]] + ' ' + a[n[4][1]]) + 'Thousand ' : '';
+                // Hundred
+                str += (n[5] != 0) ? (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) + 'Hundred ' : '';
+                // Units
+                str += (n[6] != 0) ? ((str != '') ? 'and ' : '') + (a[Number(n[6])] || b[n[6][0]] + ' ' + a[n[6][1]]) : '';
+                
                 return str.trim();
             }
         };
