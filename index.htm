@@ -8,6 +8,7 @@
     <meta name="description" content="ArthaNex is best free offline Khata book and daily cash collection app. Manage small business ledger, party dues, and expenses without internet. Simple business calculator.">
     <meta name="theme-color" content="#F36C21">
     
+    <!-- PWA MANIFEST LINK -->
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="https://z-cdn-media.chatglm.cn/files/af039fbb-879d-471f-a2d8-a6fbaac11f8b.png?auth_key=1868816468-3c27614d0d374d62a8d011ef8cc50a8f-0-db6fd19e4def068c453c4c8f2352a472">
     
@@ -220,7 +221,7 @@
         .home-container {
             display: flex;
             flex-direction: column;
-            gap: 1.5rem;
+            gap:1.5rem;
         }
 
         .home-hero {
@@ -926,16 +927,25 @@
         const closePrompt = document.getElementById('closePrompt');
 
         window.addEventListener('beforeinstallprompt', (e) => {
+            // Prevent the mini-infobar from appearing on mobile
             e.preventDefault();
+            // Stash the event so it can be triggered later.
             deferredPrompt = e;
+            // Update UI notify the user they can add to home screen
             installBanner.style.display = 'flex';
         });
 
         installBtn.addEventListener('click', (e) => {
+            // Hide the app provided install promotion
             installBanner.style.display = 'none';
+            // Show the install prompt
             if (deferredPrompt) {
                 deferredPrompt.prompt();
+                // Wait for the user to respond to the prompt
                 deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the A2HS prompt');
+                    }
                     deferredPrompt = null;
                 });
             }
@@ -1664,7 +1674,7 @@
                 // Regex now matches: (Arab) (Crore) (Lakh) (Thousand) (Hundred) (Units)
                 
                 const numStr = num.toString();
-                // Pad with 12 zeros to ensure we have enough digits for the regex
+                // Pad with 12 zeros to ensure we have enough digits for regex
                 const n = ('000000000000' + numStr).substr(-12).match(/^(\d{2})(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
                 
                 if (!n) return; 
