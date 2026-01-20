@@ -122,15 +122,26 @@
             padding: 2px; 
         }
 
-        .header-actions button { background: none; border: none; color: #fff; font-size: 1.2rem; cursor: pointer; padding: 5px; margin-left: 5px; transition: var(--transition); }
-        .header-actions button:hover { transform: scale(1.1); }
-
         .brand a {
             color: rgba(255,255,255,0.9); text-decoration: none; font-size: 0.7rem; opacity: 0.9; cursor: pointer;
             border-bottom: 1px dashed rgba(255,255,255,0.5);
             white-space: nowrap;
         }
         .brand a:hover { opacity: 1; color: #fff; }
+
+        /* UPDATED: Header Actions Button Styling */
+        .header-actions button { 
+            background: none; 
+            border: none; 
+            color: #fff; 
+            font-size: 1.6rem; /* Increased size from 1.2rem */
+            cursor: pointer; 
+            padding: 8px 12px; /* Increased padding for better touch target */
+            margin-left: 8px; 
+            transition: var(--transition); 
+            line-height: 1;
+        }
+        .header-actions button:hover { transform: scale(1.1); }
 
         .dashboard-container {
             display: grid;
