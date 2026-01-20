@@ -5,45 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
     <!-- PWA & SEO Meta Tags -->
-    <title>ArthaNex - Offline Khata Book, Daily Cash Collection & Ledger App</title>
-    <meta name="description" content="ArthaNex is best free offline Khata book and daily cash collection app. Manage small business ledger, party dues, and expenses without internet. Simple business calculator.">
-    <meta name="keywords" content="Offline Khata Book, Daily Cash Collection App, Small Business Ledger, Party Ledger Manager, Business Calculator, ArthaNex, Cash Book App, Local Business Tracker">
-    <meta name="author" content="Pintu Sikder">
-    <meta name="robots" content="index, follow">
-    
-    <!-- PWA Links -->
-    <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="https://via.placeholder.com/192/F36C21/FFFFFF?text=A">
+    <title>ArthaNex - Offline Khata Book</title>
+    <meta name="description" content="ArthaNex is best free offline Khata book and daily cash collection app. Manage small business ledger, party dues, and expenses without internet.">
     <meta name="theme-color" content="#F36C21">
     
-    <!-- Open Graph Tags -->
-    <meta property="og:title" content="ArthaNex - Free Offline Khata Book">
-    <meta property="og:description" content="Daily cash collection & ledger manager for small businesses. 100% offline.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://arthixa.com">
+    <!-- PWA Manifest Link -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="https://z-cdn-media.chatglm.cn/files/af039fbb-879d-471f-a2d8-a6fbaac11f8b.png?auth_key=1868816468-3c27614d0d374d62a8d011ef8cc50a8f-0-db6fd19e4def068c453c4c8f2352a472">
     
-    <!-- Schema.org JSON-LD -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "ArthaNex",
-      "operatingSystem": "Web, Android, iOS",
-      "applicationCategory": "BusinessApplication",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.9",
-        "ratingCount": "500"
-      },
-      "description": "Professional Cash Collection & Khata Book App for small businesses. Features offline mode, denomination calculator, and party ledger."
-    }
-    </script>
-
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -84,8 +53,6 @@
             
             --history-text: #444444; 
             --transition: all 0.3s ease;
-            
-            /* CALENDAR THEME SUPPORT (LIGHT) */
             color-scheme: light;
         }
 
@@ -103,8 +70,6 @@
             --text-expense: #ef5350;
             --bg-balance: #0f2847;
             --text-balance: #42a5f5;
-            
-            /* CALENDAR THEME SUPPORT (DARK) */
             color-scheme: dark;
         }
 
@@ -151,18 +116,25 @@
         .brand-top { display: flex; align-items: center; gap: 10px; }
         .brand h1 { font-size: 1.25rem; font-weight: 700; margin: 0; line-height: 1; }
         
+        /* LOGO FIX: Square with rounded corners, no cropping */
         .brand-icon { 
-            width: 36px; 
-            height: 36px; 
-            border-radius: 50%; 
+            width: 40px; /* Slightly larger for better visibility */
+            height: 40px; 
+            border-radius: 8px; /* Square shape with slight rounding */
             display: flex; 
             align-items: center; 
             justify-content: center;
-            background: rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.2); 
             overflow: hidden;
-            flex-shrink: 0; /* Prevent shrinking */
+            flex-shrink: 0;
         }
-        .brand-icon img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .brand-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Ensures full logo is visible without cropping */
+            display: block;
+            padding: 2px; /* Small padding to prevent edge touching */
+        }
 
         .header-actions button { background: none; border: none; color: #fff; font-size: 1.2rem; cursor: pointer; padding: 5px; margin-left: 5px; transition: var(--transition); }
         .header-actions button:hover { transform: scale(1.1); }
@@ -229,8 +201,8 @@
             box-shadow: 0 2px 4px rgba(243, 108, 33, 0.15);
         }
 
-        main { flex: 1; overflow-y: auto; padding: 1rem; position: relative; }
-        .view { display: none; animation: fadeIn 0.3s ease; padding-bottom: 80px; }
+        main { flex: 1; overflow-y: auto; padding: 1rem; position: relative; padding-bottom: 100px; /* Space for install banner */ }
+        .view { display: none; animation: fadeIn 0.3s ease; padding-bottom: 20px; }
         .view.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -250,7 +222,7 @@
         .form-control.error { border-color: #dc3545; background-color: rgba(220, 53, 69, 0.1); }
         .form-control:disabled { opacity: 0.5; cursor: not-allowed; background: var(--light-bg); }
         
-        input[type="date"]::-webkit-calendar-picker-indicator { cursor: pointer; color: var(--primary); opacity: 1; filter: var(--calendar-filter); }
+        input[type="date"]::-webkit-calendar-picker-indicator { cursor: pointer; color: var(--primary); opacity: 1; }
 
         .radio-group, .checkbox-wrapper {
             display: flex;
@@ -260,7 +232,7 @@
             background: var(--light-bg);
             border-radius: var(--radius-sm);
             border: 1px solid var(--border);
-            flex-wrap: wrap; /* Wrap on small screens */
+            flex-wrap: wrap;
         }
         .radio-group label, .checkbox-wrapper label {
             margin: 0; font-size: 0.9rem; font-weight: 500; color: var(--text-color); cursor: pointer; display: flex; align-items: center; gap: 6px;
@@ -280,7 +252,7 @@
         }
         .denom-subtotal { font-size: 0.7rem; color: var(--primary); font-weight: 500; }
 
-        .total-display { background: linear-gradient(135deg, var(--primary), var(--accent)); color: #fff; padding: 1.5rem; border-radius: var(--radius-lg); text-align: center; margin-bottom: 1.5rem; box-shadow: var(--shadow-md); }
+        .total-display { background: linear-gradient(135deg, var(--primary), var(--accent)); color: #fff; padding: 1.5rem; border-radius: var(--radius-lg); text-align: center; margin-bottom:1.5rem; box-shadow: var(--shadow-md); }
         .total-label { font-size: 0.9rem; opacity: 0.9; text-transform: uppercase; letter-spacing: 1px; }
         .total-amount { font-size: 2.2rem; font-weight: 700; margin: 0.5rem 0; font-family: 'Roboto Mono', monospace; word-break: break-all; }
         .total-words { font-style: italic; opacity: 0.9; font-size: 0.9rem; word-break: break-word; }
@@ -306,7 +278,7 @@
             background: var(--card-bg); border-bottom: 1px solid var(--border); padding: 1rem; 
             display: flex; justify-content: space-between; align-items: flex-start; position: relative;
         }
-        .h-left { flex: 1; padding-right: 15px; min-width: 0; } /* min-width: 0 allows text truncation to work */
+        .h-left { flex: 1; padding-right: 15px; min-width: 0; }
         .h-name { font-weight: 700; font-size: 1.05rem; color: var(--secondary); margin-bottom: 4px; display: block; word-break: break-word; line-height: 1.3;}
         .h-details { display: flex; flex-direction: column; gap: 3px; font-size: 0.8rem; color: var(--history-text); font-weight: 500; }
         .h-detail-row { display: flex; align-items: center; gap: 6px; }
@@ -354,71 +326,69 @@
         @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
         @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
         
-        @media print {
-            header, nav, .dashboard-container, .btn, .filter-container, .modal, .menu-container, .btn-menu, body { height: auto; overflow: visible; background: #fff; padding-bottom: 100px; }
-            main { padding: 0; overflow: visible; }
-            .view { display: block !important; }
-            .card { border: none; box-shadow: none; padding: 0; margin: 0; }
-            .print-header { display: block !important; text-align: center; margin-bottom: 20px; border-bottom: 2px solid #000; padding-bottom: 10px; }
-            .print-header h2 { margin: 0; font-size: 1.5rem; color: #000; }
-            .print-header p { margin: 5px 0; color: #000; font-size: 0.9rem; }
-            .dashboard-container { display: grid !important; position: fixed; bottom: 0; left: 0; width: 100%; border-top: 3px solid #000; background: #fff; padding: 10px 1rem; z-index: 9999; }
-            .stat-card { background: none !important; border: none !important; box-shadow: none !important; color: #000 !important; padding: 5px; justify-content: center; min-height: auto; }
-            .stat-label, .stat-val { color: #000 !important; font-weight: 700; }
-            .stat-label { font-size: 0.8rem; text-transform: uppercase; border-bottom: 1px solid #ddd; margin-bottom: 5px; padding-bottom: 2px; }
-            .stat-val { font-size: 1.2rem; }
+        /* PWA INSTALL BANNER */
+        #pwa-install-banner {
+            display: none; /* Hidden by default */
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--primary);
+            color: #fff;
+            padding: 1rem;
+            box-shadow: 0 -4px 12px rgba(0,0,0,0.15);
+            z-index: 9999;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            animation: slideUp 0.5s ease-out;
         }
-        .print-header { display: none; }
+        
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
 
-        /* FILTER SEGMENTED CONTROL (Responsive & UI Improvement) */
-        .filter-container {
+        .pwa-content {
+            flex: 1;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            justify-content: center;
         }
-        
-        .filter-tabs {
-            display: flex;
-            background: var(--light-bg);
-            padding: 4px;
-            border-radius: var(--radius-md);
-            border: 1px solid var(--border);
-        }
-        
-        .filter-tabs input[type="radio"] { display: none; }
-        
-        .filter-tabs label {
-            flex: 1;
-            text-align: center;
-            padding: 8px 5px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--neutral);
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            transition: all 0.2s ease;
-            white-space: nowrap;
-        }
-        
-        .filter-tabs input[type="radio"]:checked + label {
-            background-color: var(--card-bg);
+        .pwa-title { font-weight: 700; font-size: 1rem; margin-bottom: 2px; }
+        .pwa-desc { font-size: 0.8rem; opacity: 0.9; }
+
+        .btn-install {
+            background-color: #fff;
             color: var(--primary);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border: none;
+            padding: 8px 16px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
         
-        .filter-input-wrapper { width: 100%; }
-        
-        .filter-input {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-            background: var(--input-bg);
-            color: var(--text-color);
-            font-family: inherit;
+        .btn-close-pwa {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0;
+            line-height: 1;
         }
 
-        /* CUSTOM SEARCHABLE DROPDOWN */
+        .filter-container { display: flex; flex-direction: column; gap: 10px; }
+        .filter-tabs { display: flex; background: var(--light-bg); padding: 4px; border-radius: var(--radius-md); border: 1px solid var(--border); }
+        .filter-tabs input[type="radio"] { display: none; }
+        .filter-tabs label { flex: 1; text-align: center; padding: 8px 5px; font-size: 0.8rem; font-weight: 600; color: var(--neutral); border-radius: var(--radius-sm); cursor: pointer; transition: all 0.2s ease; white-space: nowrap; }
+        .filter-tabs input[type="radio"]:checked + label { background-color: var(--card-bg); color: var(--primary); box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .filter-input-wrapper { width: 100%; }
+        .filter-input { width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--input-bg); color: var(--text-color); font-family: inherit; }
+
         .custom-select-wrapper { position: relative; user-select: none; width: 100%; }
         .custom-select { position: relative; display: flex; flex-direction: column; }
         .custom-select__trigger {
@@ -436,10 +406,7 @@
         }
         .custom-select.open .custom-select__options { opacity: 1; visibility: visible; pointer-events: all; }
         .custom-select__search { padding: 10px; border-bottom: 1px solid var(--border); background: var(--card-bg); position: sticky; top: 0; z-index: 10; }
-        .custom-select__search input {
-            width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 4px;
-            background: var(--input-bg); color: var(--text-color);
-        }
+        .custom-select__search input { width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 4px; background: var(--input-bg); color: var(--text-color); }
         .custom-option {
             position: relative; display: block; padding: 0.75rem 1rem; font-size: 0.9rem;
             font-weight: 400; color: var(--text-color); cursor: pointer; transition: all 0.2s;
@@ -457,57 +424,7 @@
         .arrow::after { left: 3px; transform: rotate(45deg); background-color: var(--neutral); }
         .open .arrow::before { left: -3px; transform: rotate(45deg); }
         .open .arrow::after { left: 3px; transform: rotate(-45deg); }
-
-        /* Search Hint Text */
-        .search-hint {
-            font-size: 0.75rem;
-            color: var(--neutral);
-            margin-top: 5px;
-            font-style: italic;
-        }
-
-        /* Settings Specific Styles */
-        .about-section {
-            margin-top: 2rem;
-            border-top: 1px solid var(--border);
-            padding-top: 1rem;
-        }
-        .about-section h3 {
-            color: var(--primary);
-            font-size: 1rem;
-            margin-bottom: 0.5rem;
-            text-align: center;
-        }
-        .about-section p {
-            font-size: 0.85rem;
-            color: var(--history-text);
-            line-height: 1.4;
-            text-align: center;
-            margin-bottom: 1rem;
-        }
-        .features-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr; 
-            gap: 10px;
-            margin-bottom: 1rem;
-        }
-        .feature-card {
-            background: var(--light-bg);
-            padding: 10px;
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border);
-            text-align: center;
-        }
-        .feature-card h4 {
-            color: var(--primary);
-            font-size: 0.8rem;
-            margin-bottom: 4px;
-        }
-        .feature-card p {
-            font-size: 0.7rem;
-            color: var(--neutral);
-            margin: 0;
-        }
+        .search-hint { font-size: 0.75rem; color: var(--neutral); margin-top: 5px; font-style: italic; }
     </style>
 </head>
 <body data-theme="light">
@@ -517,6 +434,7 @@
             <div class="brand">
                 <div class="brand-top">
                     <div class="brand-icon">
+                        <!-- Using the provided URL -->
                         <img src="https://z-cdn-media.chatglm.cn/files/af039fbb-879d-471f-a2d8-a6fbaac11f8b.png?auth_key=1868816468-3c27614d0d374d62a8d011ef8cc50a8f-0-db6fd19e4def068c453c4c8f2352a472" alt="ArthaNex Logo">
                     </div>
                     <div>
@@ -651,13 +569,7 @@
 
             <!-- SECTION 2: HISTORY -->
             <section id="history" class="view">
-                <div class="print-header">
-                    <h2>ArthaNex Report</h2>
-                    <p><strong>Date:</strong> <span id="printDate"></span></p>
-                </div>
-
                 <div class="card">
-                    <!-- Improved Filter UI -->
                     <div class="filter-container">
                         <div class="filter-tabs">
                             <input type="radio" id="filter-name" name="filterType" value="name" onchange="app.setFilterMode('name')" checked>
@@ -791,38 +703,12 @@
                     </div>
                 </div>
                 
-                <!-- Auto Delete Feature -->
                 <div class="form-group">
                     <div class="checkbox-wrapper" style="justify-content: space-between;" onclick="app.toggleAutoDelete()">
                         <label for="autoDeleteToggle" style="cursor: pointer;">Auto-delete records older than 90 days</label>
                         <input type="checkbox" id="autoDeleteToggle">
                     </div>
                     <div style="font-size: 0.75rem; color: var(--neutral); margin-top: 5px;">When enabled, records older than 90 days are automatically deleted on app reload.</div>
-                </div>
-
-                <!-- About ArthaNex -->
-                <div class="about-section">
-                    <h3>ArthaNex: Professional Cash Collection App</h3>
-                    <p>The ultimate offline cash book (Khata) solution for small businesses and daily collectors. Track income, expenses, and party ledgers without needing an internet connection.</p>
-                    
-                    <div class="features-grid">
-                        <div class="feature-card">
-                            <h4>📱 100% Offline</h4>
-                            <p>Works without internet.</p>
-                        </div>
-                        <div class="feature-card">
-                            <h4>💰 Denomination Calculator</h4>
-                            <p>Auto-calculate totals.</p>
-                        </div>
-                        <div class="feature-card">
-                            <h4>📊 Smart Ledger</h4>
-                            <p>Party-wise tracking.</p>
-                        </div>
-                        <div class="feature-card">
-                            <h4>🔒 Secure Data</h4>
-                            <p>Stored on device only.</p>
-                        </div>
-                    </div>
                 </div>
 
                 <hr style="margin: 1.5rem 0; border: 0; border-top: 1px solid var(--border);">
@@ -856,21 +742,60 @@
         </div>
 
         <div id="toast">Message here</div>
+        
+        <!-- PWA INSTALL BANNER UI -->
+        <div id="pwa-install-banner">
+            <div class="pwa-content">
+                <div class="pwa-title">Install as App</div>
+                <div class="pwa-desc">Add to Home Screen for quick access</div>
+            </div>
+            <button id="installBtn" class="btn-install">Install</button>
+            <button id="closePrompt" class="btn-close-pwa">&times;</button>
+        </div>
+
     </div>
 
     <script>
-        // PWA Service Worker Registration
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js')
-                .then(registration => {
-                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
-                }, err => {
-                    console.log('ServiceWorker registration failed: ', err);
-                });
-            });
-        }
+        // PWA Install Prompt Logic
+        let deferredPrompt;
+        const installBanner = document.getElementById('pwa-install-banner');
+        const installBtn = document.getElementById('installBtn');
+        const closePrompt = document.getElementById('closePrompt');
 
+        window.addEventListener('beforeinstallprompt', (e) => {
+            // Prevent Chrome 67 and earlier from automatically showing the prompt
+            e.preventDefault();
+            // Stash the event so it can be triggered later.
+            deferredPrompt = e;
+            // Update UI to notify the user they can add to home screen
+            installBanner.style.display = 'flex';
+        });
+
+        installBtn.addEventListener('click', (e) => {
+            // Hide the app provided install promotion
+            installBanner.style.display = 'none';
+            // Show the install prompt
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                // Wait for the user to respond to the prompt
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the A2HS prompt');
+                    } else {
+                        console.log('User dismissed the A2HS prompt');
+                    }
+                    deferredPrompt = null;
+                });
+            }
+        });
+
+        closePrompt.addEventListener('click', () => {
+            installBanner.style.display = 'none';
+            // Clear the deferredPrompt so it isn't triggered again if they accidentally dismiss
+            deferredPrompt = null;
+        });
+
+        // App Logic
         const app = {
             state: {
                 currentTheme: 'light',
@@ -948,7 +873,6 @@
                 const now = new Date();
                 document.getElementById('entryDate').valueAsDate = now;
                 document.getElementById('entryTime').value = now.toTimeString().substring(0,5);
-                document.getElementById('printDate').textContent = now.toLocaleDateString();
 
                 const todayStr = now.toISOString().split('T')[0];
                 document.getElementById('entryDate').max = todayStr;
@@ -972,9 +896,7 @@
 
             togglePayable: function() {
                 const cb = document.getElementById('entryPayable');
-                if (cb) {
-                    cb.checked = !cb.checked;
-                }
+                if (cb) { cb.checked = !cb.checked; }
             },
             
             toggleAutoDelete: function() {
@@ -1112,14 +1034,12 @@
                 this.state.currentTheme = theme;
                 document.body.setAttribute('data-theme', theme);
                 document.documentElement.setAttribute('color-scheme', theme);
-                
                 document.getElementById('themeSelect').value = theme;
                 localStorage.setItem('arthaNex_theme', theme);
             },
             loadSettings: function() {
                 const savedTheme = localStorage.getItem('arthaNex_theme');
                 if(savedTheme) this.setTheme(savedTheme);
-                
                 const autoDelete = localStorage.getItem('arthaNex_autoDelete');
                 if (autoDelete !== null) {
                     this.state.autoDeleteEnabled = (autoDelete === 'true');
@@ -1134,10 +1054,8 @@
                 document.querySelectorAll('.view').forEach(e => e.classList.remove('active'));
                 document.querySelectorAll('.nav-btn').forEach(e => e.classList.remove('active'));
                 document.getElementById(id).classList.add('active');
-                
                 const btnIndex = ['entry','history','outstanding','ledger'].indexOf(id);
                 if(btnIndex >= 0) document.querySelectorAll('.nav-btn')[btnIndex].classList.add('active');
-
                 if(id === 'history') this.renderHistory();
                 if(id === 'outstanding') {
                     this.updateDashboard(); 
@@ -1246,7 +1164,6 @@
             },
             cleanupOldRecords: function() {
                 if (!this.state.autoDeleteEnabled) return;
-
                 const now = Date.now();
                 const threeMonths = 90 * 24 * 60 * 60 * 1000;
                 const filtered = this.state.records.filter(r => (now - r.timestamp) < threeMonths);
@@ -1272,19 +1189,14 @@
                 document.getElementById('entryTime').value = now.toTimeString().substring(0,5);
             },
 
-            /* --- OUTSTANDING LOGIC --- */
             renderOutstanding: function(filterType) {
                 const list = document.getElementById('outstandingList');
                 const empty = document.getElementById('outstandingEmpty');
                 list.innerHTML = '';
                 
                 let dues = this.state.records.filter(r => r.status === 'Due');
-                
-                if (filterType === 'receivable') {
-                    dues = dues.filter(r => r.type === 'income');
-                } else if (filterType === 'payable') {
-                    dues = dues.filter(r => r.type === 'expense');
-                }
+                if (filterType === 'receivable') { dues = dues.filter(r => r.type === 'income'); } 
+                else if (filterType === 'payable') { dues = dues.filter(r => r.type === 'expense'); }
                 
                 if (dues.length === 0) {
                     empty.style.display = 'block';
@@ -1327,7 +1239,6 @@
                 }
             },
 
-            /* --- LEDGER LOGIC --- */
             suggestLedgerName: function(val) {
                 const container = document.getElementById('ledgerSuggestions');
                 container.innerHTML = '';
@@ -1395,7 +1306,6 @@
                 document.getElementById('ledgerSuggestions').innerHTML = '';
             },
 
-            /* --- HISTORY & EXPORT --- */
             setFilterMode: function(mode) {
                 this.state.filters.mode = mode;
                 const inputs = document.querySelectorAll('.filter-input');
@@ -1482,7 +1392,6 @@
                 const endISO = today.toISOString().split('T')[0];
                 const filtered = this.state.records.filter(r => r.date >= startISO && r.date <= endISO);
                 if(filtered.length === 0) return this.showToast("No records in last 30 days.");
-                
                 const list = document.getElementById('historyList');
                 const originalContent = list.innerHTML;
                 list.innerHTML = filtered.map(r => `
@@ -1490,7 +1399,6 @@
                         <div class="h-left"><span class="h-name">${r.name}</span><div class="h-details"><div class="h-detail-row"><span>Date:</span> <span>${r.date}</span></div></div></div>
                         <div class="h-right"><span class="h-amount">${r.symbol} ${r.total.toLocaleString()}</span></div>
                     </li>`).join('');
-                document.getElementById('printDate').textContent = `${startISO} to ${endISO}`;
                 const originalTitle = document.title; document.title = "ArthaNex_Report"; window.print();
                 setTimeout(() => { document.title = originalTitle; this.renderHistory(); }, 1000);
             },
@@ -1511,7 +1419,6 @@
                         <div class="h-left"><span class="h-name">${r.name}</span><div class="h-details"><div class="h-detail-row"><span>Date:</span> <span>${r.date}</span></div></div></div>
                         <div class="h-right"><span class="h-amount">${r.symbol} ${r.total.toLocaleString()}</span></div>
                     </li>`).join('');
-                document.getElementById('printDate').textContent = `${start} to ${end}`;
                 const originalTitle = document.title; document.title = "ArthaNex_Report"; window.print();
                 setTimeout(() => { document.title = originalTitle; this.renderHistory(); this.toggleModal('dateRangeModal'); }, 1000);
             },
@@ -1529,11 +1436,8 @@
                 const statusBadge = r.status === 'Due' ? '<span class="badge due">Due</span>' : '';
 
                 let transactionText = "";
-                if(r.type === 'income') {
-                    transactionText = (r.status === 'Paid') ? "Received From" : "Receivable From";
-                } else {
-                    transactionText = (r.status === 'Paid') ? "Paid To" : "Payable To";
-                }
+                if(r.type === 'income') { transactionText = (r.status === 'Paid') ? "Received From" : "Receivable From"; } 
+                else { transactionText = (r.status === 'Paid') ? "Paid To" : "Payable To"; }
 
                 document.getElementById('detailContent').innerHTML = `
                     <div class="detail-row" style="font-size:1rem; border-bottom: 2px solid var(--border); margin-bottom:12px;">
@@ -1554,11 +1458,8 @@
                 if(!r) return;
                 
                 let transactionText = "";
-                if(r.type === 'income') {
-                    transactionText = (r.status === 'Paid') ? "Received From" : "Receivable From";
-                } else {
-                    transactionText = (r.status === 'Paid') ? "Paid To" : "Payable To";
-                }
+                if(r.type === 'income') { transactionText = (r.status === 'Paid') ? "Received From" : "Receivable From"; } 
+                else { transactionText = (r.status === 'Paid') ? "Paid To" : "Payable To"; }
                 
                 const text = `Transaction: ${transactionText} ${r.name}\nAmount: ${r.symbol}${r.total}\nStatus: ${r.status}\nDate: ${r.date}\nRemarks: ${r.remarks}`;
                 if (navigator.clipboard) navigator.clipboard.writeText(text).then(() => this.showToast("Copied!")).catch(() => this.showToast("Failed"));
@@ -1569,11 +1470,8 @@
                 if(!r) return;
 
                 let transactionText = "";
-                if(r.type === 'income') {
-                    transactionText = (r.status === 'Paid') ? "Received From" : "Receivable From";
-                } else {
-                    transactionText = (r.status === 'Paid') ? "Paid To" : "Payable To";
-                }
+                if(r.type === 'income') { transactionText = (r.status === 'Paid') ? "Received From" : "Receivable From"; } 
+                else { transactionText = (r.status === 'Paid') ? "Paid To" : "Payable To"; }
 
                 const msg = `ArthaNex:\nTransaction: ${transactionText} ${r.name}\nAmount: ${r.symbol}${r.total}\nDate: ${r.date}\n\nDownload App: https://arthixa.com`;
                 if (navigator.share) navigator.share({ title: 'Record', text: msg }).catch(console.error);
@@ -1622,6 +1520,20 @@
         document.addEventListener('DOMContentLoaded', () => {
             app.init();
         });
+    </script>
+    
+    <!-- PWA Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                .then(registration => {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, err => {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
     </script>
 </body>
 </html>
