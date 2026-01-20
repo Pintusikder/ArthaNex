@@ -557,7 +557,6 @@
                 <a href="https://arthixa.com" target="_blank">by Arthixa</a>
             </div>
             <div class="header-actions">
-                <button id="themeToggle" aria-label="Toggle Theme">◑</button>
                 <button id="settingsBtn" aria-label="Settings">⚙</button>
             </div>
         </header>
@@ -931,9 +930,9 @@
         const closePrompt = document.getElementById('closePrompt');
 
         window.addEventListener('beforeinstallprompt', (e) => {
-            // Prevent the mini-infobar from appearing on mobile
+            // Prevent mini-infobar from appearing on mobile
             e.preventDefault();
-            // Stash the event so it can be triggered later.
+            // Stash event so it can be triggered later.
             deferredPrompt = e;
             // Update UI notify the user they can add to home screen
             installBanner.style.display = 'flex';
@@ -948,7 +947,7 @@
                 // Wait for the user to respond to the prompt
                 deferredPrompt.userChoice.then((choiceResult) => {
                     if (choiceResult.outcome === 'accepted') {
-                        console.log('User accepted the A2HS prompt');
+                        console.log('User accepted A2HS prompt');
                     }
                     deferredPrompt = null;
                 });
@@ -1045,10 +1044,6 @@
                 document.getElementById('rangeStart').max = todayStr;
                 document.getElementById('rangeEnd').max = todayStr;
 
-                document.getElementById('themeToggle').addEventListener('click', () => {
-                    const newTheme = this.state.currentTheme === 'light' ? 'dark' : 'light';
-                    this.setTheme(newTheme);
-                });
                 document.getElementById('settingsBtn').addEventListener('click', () => this.toggleModal('settingsModal'));
                 
                 window.addEventListener('click', (e) => {
