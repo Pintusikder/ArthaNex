@@ -9,7 +9,7 @@
     <meta name="apple-mobile-web-app-title" content="ArthaNex">
     
     <title>ArthaNex - Offline Khata Book</title>
-    <meta name="description" content="The ultimate Offline Khata Book & Daily Cash Collection App for small businesses. Track Income & Expenses, manage Party Ledger & Dues without internet. Best Billing & Collection Tracker for local shops.">
+    <meta name="description" content="The ultimate Offline Khata Book & Daily Cash Collection App for small businesses.">
     <meta name="theme-color" content="#F36C21">
     
     <!-- Manifest Link -->
@@ -24,6 +24,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
     <style>
+        /* --- APP STYLES --- */
         :root {
             --primary: #F36C21;       /* Gerua / Orange */
             --primary-hover: #D65612;
@@ -241,9 +242,7 @@
         .view.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --------------------------------------------------
-           HOME PAGE
-           -------------------------------------------------- */
+        /* HOME PAGE */
         .home-container { display: flex; flex-direction: column; gap: 1.5rem; }
         .home-hero {
             background: linear-gradient(135deg, var(--primary), var(--accent));
@@ -279,9 +278,7 @@
         .home-credits p { color: var(--neutral); font-size: 0.75rem; margin: 0; }
         .home-credits a { color: var(--primary); text-decoration: none; font-weight: 600; }
 
-        /* --------------------------------------------------
-           FORM STYLES
-           -------------------------------------------------- */
+        /* FORM STYLES */
         .card { background: var(--card-bg); border-radius: var(--radius-md); padding: 1.25rem; margin-bottom: 1rem; box-shadow: var(--shadow-sm); border: 1px solid var(--border); }
         .form-group { margin-bottom: 1rem; }
         .form-group label { display: block; margin-bottom: 0.5rem; font-size: 0.85rem; color: var(--neutral); font-weight: 500; word-break: break-word; }
@@ -445,193 +442,305 @@
         .credits-container a { color: var(--primary); text-decoration: none; font-weight: 600; }
 
         /* --------------------------------------------------
-           PROFESSIONAL PDF STYLES
+           PROFESSIONAL INVOICE PDF STYLES
            -------------------------------------------------- */
-        .pdf-paper {
+        .invoice-paper {
             font-family: 'Helvetica', 'Arial', sans-serif;
             color: #000;
             background: #fff;
-            padding: 20px;
+            padding: 0;
             width: 100%;
-            max-width: 1000px; /* Wider for reports */
+            max-width: 800px; /* Constrain width for A4 readability */
             margin: 0 auto;
             box-sizing: border-box;
-            line-height: 1.3;
-            position: relative;
+            line-height: 1.4;
+            font-size: 12pt;
         }
 
-        /* Header */
-        .pdf-header {
+        /* Invoice Header */
+        .inv-header {
+            padding: 20px 40px 20px 40px;
+            margin-bottom: 20px;
+        }
+
+        .inv-top-row {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #F36C21;
-            padding-bottom: 15px;
+            align-items: center;
+            margin-bottom: 15px;
         }
 
-        .pdf-brand {
+        .inv-brand {
             display: flex;
             align-items: center;
             gap: 15px;
         }
 
-        .pdf-logo {
+        .inv-logo {
             width: 50px;
             height: 50px;
             object-fit: contain;
         }
 
-        .pdf-brand-text h1 {
-            font-size: 18pt;
-            color: #F36C21;
+        .inv-brand-text h1 {
+            font-size: 24pt;
+            color: #F36C21; /* Gerua */
             margin: 0;
             line-height: 1.1;
-            font-weight: 700;
+            font-weight: 800;
+            letter-spacing: -0.5px;
         }
 
-        .pdf-brand-text p {
-            margin: 4px 0 0 0;
-            font-size: 9pt;
-            color: #666;
+        .inv-brand-text p {
+            margin: 2px 0 0 0;
+            font-size: 10pt;
+            color: #777;
             font-style: italic;
         }
 
-        .pdf-title-block {
+        .inv-title-block {
             text-align: right;
         }
 
-        .pdf-main-title {
-            font-size: 16pt;
+        .inv-title {
+            font-size: 32pt;
             font-weight: 800;
             text-transform: uppercase;
             color: #333;
             margin: 0 0 10px 0;
+            letter-spacing: 1px;
+        }
+
+        .inv-meta-row {
+            font-size: 11pt;
+            color: #555;
+            margin-bottom: 4px;
+        }
+
+        .inv-meta-row strong {
+            display: inline-block;
+            width: 110px;
+            color: #333;
+        }
+
+        .inv-divider {
+            border-bottom: 3px solid #F36C21; /* Gerua Line */
+            margin: 0 40px 20px 40px;
+        }
+
+        /* Billing Info */
+        .inv-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin: 0 40px 30px 40px;
+        }
+
+        .inv-info-box h3 {
+            font-size: 11pt;
+            text-transform: uppercase;
+            color: #F36C21;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .inv-info-content {
+            font-size: 11pt;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .inv-info-row {
+            margin-bottom: 6px;
+        }
+
+        .inv-info-row span {
+            font-weight: 600;
+            color: #555;
+        }
+
+        /* Status Logic (Colors) */
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 10pt;
             letter-spacing: 0.5px;
         }
 
-        .pdf-date-info {
-            font-size: 9pt;
-            color: #555;
-            line-height: 1.4;
+        .status-paid {
+            background-color: #e8f5e9;
+            color: #2e7d32; /* Green */
+            border: 1px solid #c8e6c9;
         }
 
-        .pdf-date-info span {
-            display: block;
-            font-weight: 500;
+        .status-due-rec {
+            background-color: #ffebee;
+            color: #c62828; /* Red */
+            border: 1px solid #ffcdd2;
         }
 
-        /* Table */
-        .pdf-table {
+        .status-due-pay {
+            background-color: #fff3e0;
+            color: #e65100; /* Orange */
+            border: 1px solid #ffe0b2;
+        }
+
+        /* Transaction Table */
+        .inv-table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 20px;
-            font-size: 9pt;
-            border: 1px solid #ccc;
+            margin: 0 40px 30px 40px;
+            font-size: 11pt;
         }
 
-        .pdf-table th {
-            background-color: #F36C21; 
+        .inv-table th {
+            background-color: #F36C21; /* Gerua Header */
             color: #fff;
-            padding: 8px 6px;
+            padding: 12px 15px;
             text-align: left;
             font-weight: 600;
+            text-transform: uppercase;
             border: 1px solid #F36C21;
-            font-size: 9pt;
         }
 
-        .pdf-table td {
-            padding: 6px;
-            border: 1px solid #ddd;
+        .inv-table td {
+            padding: 12px 15px;
+            border: 1px solid #eee;
             vertical-align: middle;
-            word-wrap: break-word;
         }
 
         .text-right { text-align: right !important; }
         .text-center { text-align: center !important; }
 
-        /* Row Colors */
-        .row-green {
-            background-color: #e8f5e9; /* Light Green */
-        }
-        .row-orange {
-            background-color: #fff3e0; /* Light Orange */
-        }
-        .row-red {
-            background-color: #ffebee; /* Light Red */
+        /* Total Summary */
+        .inv-summary-section {
+            display: flex;
+            justify-content: flex-end;
+            padding: 0 40px 30px 40px;
         }
 
-        .status-paid { color: #2e7d32; font-weight: bold; }
-        .status-due-rec { color: #c62828; font-weight: bold; }
-        .status-due-pay { color: #e65100; font-weight: bold; }
-
-        /* Summary Section */
-        .pdf-summary {
-            border: 1px solid #333;
-            background-color: #fcfcfc;
-            padding: 15px;
-            border-radius: 4px;
-            margin-top: 20px;
-            margin-bottom: 20px;
+        .inv-summary-box {
+            width: 50%;
+            min-width: 250px;
         }
 
-        .summary-title {
-            font-size: 11pt;
-            font-weight: 700;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 5px;
-            color: #333;
-        }
-
-        .summary-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-
-        .summary-item {
+        .inv-summary-row {
             display: flex;
             justify-content: space-between;
-            font-size: 10pt;
-            border-bottom: 1px dotted #ccc;
-            padding-bottom: 2px;
-            margin-bottom: 5px;
-        }
-
-        .summary-item.total-balance {
-            border-bottom: none;
-            border-top: 2px solid #333;
-            padding-top: 5px;
-            font-weight: 700;
+            padding: 8px 0;
+            border-bottom: 1px dashed #ccc;
             font-size: 11pt;
-            color: #F36C21;
+            color: #555;
         }
 
-        .summary-label { font-weight: 500; color: #555; }
-        .summary-val { font-family: 'Roboto Mono', monospace; font-weight: 600; }
+        .inv-summary-row.grand-total {
+            border-bottom: none;
+            border-top: 2px solid #F36C21;
+            font-size: 14pt;
+            font-weight: 800;
+            color: #F36C21;
+            margin-top: 10px;
+            padding-top: 10px;
+        }
+
+        .inv-amount-words {
+            margin-top: 10px;
+            font-style: italic;
+            color: #666;
+            font-size: 10pt;
+            text-align: right;
+            background: #fcfcfc;
+            padding: 10px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+        }
+
+        /* Denomination Breakdown */
+        .inv-denom-section {
+            margin: 0 40px 40px 40px;
+            padding: 20px;
+            background-color: #fcfcfc;
+            border: 1px solid #eee;
+            border-radius: 8px;
+        }
+
+        .inv-denom-section h4 {
+            font-size: 11pt;
+            margin: 0 0 15px 0;
+            color: #333;
+            text-transform: uppercase;
+            border-bottom: 2px solid #F36C21;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        .inv-denom-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 10pt;
+        }
+
+        .inv-denom-table th {
+            background-color: #f5f5f5;
+            color: #555;
+            padding: 8px;
+            border: 1px solid #ddd;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .inv-denom-table td {
+            padding: 8px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
 
         /* Footer */
-        .pdf-footer {
-            margin-top: 30px;
-            padding-top: 10px;
+        .inv-footer {
+            margin: 40px 40px 20px 40px;
+            padding-top: 20px;
             border-top: 1px solid #eee;
-            font-size: 8pt;
+            font-size: 9pt;
             color: #777;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
 
-        .empty-state-msg {
+        .inv-terms ul {
+            padding-left: 20px;
+            margin: 5px 0;
+        }
+
+        .inv-signature {
+            text-align: right;
+            margin: 40px 0;
+        }
+
+        .inv-sign-line {
+            display: inline-block;
+            width: 250px;
+            border-top: 1px solid #000;
+            padding-top: 5px;
+            font-weight: bold;
+            color: #000;
+            font-size: 10pt;
+        }
+
+        .inv-branding {
             text-align: center;
-            padding: 50px 20px;
-            color: #666;
-            font-size: 14pt;
-            font-style: italic;
-            border: 2px dashed #ddd;
-            margin: 50px 20px;
+            margin-top: 30px;
+            color: #F36C21;
+            font-weight: 700;
+        }
+
+        .inv-page-no {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 8pt;
+            color: #aaa;
         }
 
         @media print {
@@ -646,12 +755,12 @@
                 opacity: 1; 
                 z-index: 9999;
                 background: white;
+                height: auto;
             }
-            .pdf-paper { 
-                padding: 10px;
+            .invoice-paper { 
+                padding: 0;
                 width: 100%;
-                max-width: none;
-                margin: 0;
+                max-width: 100%;
             }
         }
     </style>
@@ -1672,7 +1781,7 @@
             },
 
             // --------------------------------------------------
-            // PDF GENERATION LOGIC
+            // PROFESSIONAL INVOICE GENERATION
             // --------------------------------------------------
             downloadInvoice: function(id) {
                 const r = this.state.records.find(rec => rec.id === id);
@@ -1680,56 +1789,58 @@
 
                 this.showToast("Generating Invoice...");
 
-                // 1. Invoice Title Logic
-                let title = "INVOICE";
-                if(r.status === 'Due') {
-                    if(r.type === 'income') title = "INVOICE (DUE)";
-                    else title = "BILL (DUE)";
-                } else {
-                    if(r.type === 'income') title = "RECEIPT";
-                    else title = "PAYMENT RECEIPT";
-                }
+                // 1. Date Formatting (DD-MM-YYYY)
+                const formatDate = (dateStr) => {
+                    const [y, m, d] = dateStr.split('-');
+                    return `${d}-${m}-${y}`;
+                };
 
-                // 2. Status Color Logic
+                // 2. Status Color & Text Logic
                 let statusClass = '';
                 let statusText = '';
                 if (r.status === 'Paid') {
                     statusClass = 'status-paid'; // Green
                     statusText = 'PAID';
-                } else {
+                } else if (r.status === 'Due') {
                     if (r.type === 'expense') {
-                        statusClass = 'status-due-pay'; // Orange
+                        statusClass = 'status-due-pay'; // Orange (Payable)
                         statusText = 'DUE (PAYABLE)';
                     } else {
-                        statusClass = 'status-due-rec'; // Red
+                        statusClass = 'status-due-rec'; // Red (Receivable)
                         statusText = 'DUE (RECEIVABLE)';
                     }
                 }
 
+                // 3. Transaction Type Text
                 const typeLabel = r.type === 'income' ? 'Credit / Receivable' : 'Debit / Payable';
+                
+                // 4. Amount in Words
                 const inWords = this.numberToWords(r.total) + " " + r.currency + " Only";
 
-                // 3. Denominations Table (Only if exists)
+                // 5. Denominations Logic
                 let denomSectionHtml = '';
                 let denomRows = '';
+                let hasDenom = false;
+
                 Object.keys(r.denominations).forEach(denom => {
                     const count = r.denominations[denom];
                     if(count > 0) {
+                        hasDenom = true;
                         const subtotal = (count * denom);
-                        denomRows += `<tr><td>${r.symbol} ${denom}</td><td>${count}</td><td class="text-right">${r.symbol} ${subtotal.toLocaleString()}</td></tr>`;
+                        denomRows += `<tr><td>${r.symbol} ${denom}</td><td class="text-center">${count}</td><td class="text-right">${r.symbol} ${subtotal.toLocaleString()}</td></tr>`;
                     }
                 });
 
-                if(denomRows !== '') {
+                if(hasDenom) {
                     denomSectionHtml = `
-                        <div style="border: 1px dashed #ccc; padding: 15px; border-radius: 8px; margin-bottom: 40px; background-color: #fafafa;">
-                            <h4 style="font-size: 10pt; margin: 0 0 10px 0; color: #555; text-transform: uppercase;">Payment Breakdown / Denominations</h4>
-                            <table style="width: 100%; border-collapse: collapse; font-size: 9pt;">
+                        <div class="inv-denom-section">
+                            <h4>Payment Breakdown / Denominations</h4>
+                            <table class="inv-denom-table">
                                 <thead>
                                     <tr>
-                                        <th style="background-color: #f0f0f0; color: #333; padding: 6px; border: 1px solid #ddd; text-align: left;">Denomination</th>
-                                        <th style="background-color: #f0f0f0; color: #333; padding: 6px; border: 1px solid #ddd; text-align: left;">Count</th>
-                                        <th style="background-color: #f0f0f0; color: #333; padding: 6px; border: 1px solid #ddd; text-align: right;">Subtotal</th>
+                                        <th width="35%">Denomination</th>
+                                        <th width="20%" class="text-center">Count</th>
+                                        <th width="45%" class="text-right">Subtotal</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -1740,119 +1851,129 @@
                     `;
                 }
 
-                // 4. HTML Template
+                // 6. HTML Construction
                 const content = `
-                    <div class="pdf-paper">
-                        <!-- Header -->
-                        <div style="display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 20px; border-bottom: 3px solid #F36C21; margin-bottom: 30px;">
-                            <div style="display: flex; align-items: center; gap: 15px;">
-                                <img src="https://z-cdn-media.chatglm.cn/files/af039fbb-879d-471f-a2d8-a6fbaac11f8b.png?auth_key=1868816468-3c27614d0d374d62a8d011ef8cc50a8f-0-db6fd19e4def068c453c4c8f2352a472" style="width: 60px; height: 60px; object-fit: contain;" crossorigin="anonymous" alt="Logo">
-                                <div>
-                                    <h1 style="font-size: 24pt; color: #F36C21; margin: 0; line-height: 1.1; font-weight: 700;">ArthaNex</h1>
-                                    <p style="margin: 4px 0 0 0; font-size: 10pt; color: #666; font-style: italic;">by Arthixa</p>
+                    <div class="invoice-paper">
+                        <!-- HEADER -->
+                        <div class="inv-header">
+                            <div class="inv-top-row">
+                                <div class="inv-brand">
+                                    <img src="https://z-cdn-media.chatglm.cn/files/af039fbb-879d-471f-a2d8-a6fbaac11f8b.png?auth_key=1868816468-3c27614d0d374d62a8d011ef8cc50a8f-0-db6fd19e4def068c453c4c8f2352a472" class="inv-logo" alt="Logo" crossorigin="anonymous">
+                                    <div class="inv-brand-text">
+                                        <h1>ArthaNex</h1>
+                                        <p>by Arthixa</p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div style="text-align: right;">
-                                <div style="font-size: 28pt; font-weight: 800; text-transform: uppercase; color: #333; margin: 0 0 15px 0; letter-spacing: 1px;">${title}</div>
-                                <div style="font-size: 10pt; color: #555; margin-bottom: 6px;"><strong>Invoice #:</strong> ${r.id}</div>
-                                <div style="font-size: 10pt; color: #555; margin-bottom: 6px;"><strong>Date:</strong> ${r.date}</div>
-                                <div style="font-size: 10pt; color: #555;"><strong>Time:</strong> ${r.time}</div>
-                            </div>
-                        </div>
-
-                        <!-- Billing Info -->
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 30px;">
-                            <div>
-                                <h3 style="font-size: 10pt; text-transform: uppercase; color: #F36C21; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-bottom: 10px; font-weight: 700;">Bill To</h3>
-                                <div style="font-size: 10pt; color: #444;">
-                                    <strong style="display: block; font-size: 12pt; color: #000; margin-bottom: 2px;">${r.name}</strong>
-                                    ${r.mobile ? `<div style="margin-bottom: 4px;">Mobile: ${r.mobile}</div>` : ''}
-                                    <div>Country: ${r.country}</div>
-                                </div>
-                            </div>
-                            <div>
-                                <h3 style="font-size: 10pt; text-transform: uppercase; color: #F36C21; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-bottom: 10px; font-weight: 700;">Payment Details</h3>
-                                <div style="font-size: 10pt; color: #444;">
-                                    <div style="margin-bottom: 4px;"><strong>Status:</strong> <span class="${statusClass}">${statusText}</span></div>
-                                    <div style="margin-bottom: 4px;"><strong>Type:</strong> ${typeLabel}</div>
-                                    <div><strong>Currency:</strong> ${r.currency} (${r.symbol})</div>
+                                <div class="inv-title-block">
+                                    <div class="inv-title">INVOICE</div>
+                                    <div class="inv-meta-row"><strong>Invoice No:</strong> ${r.id}</div>
+                                    <div class="inv-meta-row"><strong>Invoice Date:</strong> ${formatDate(r.date)}</div>
+                                    <div class="inv-meta-row"><strong>Invoice Time:</strong> ${r.time}</div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Transaction Table -->
-                        <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px; font-size: 10pt;">
+                        <div class="inv-divider"></div>
+
+                        <!-- BILLING INFO -->
+                        <div class="inv-info-grid">
+                            <div class="inv-info-box">
+                                <h3>Bill To</h3>
+                                <div class="inv-info-content">
+                                    <div class="inv-info-row" style="font-size:14pt; font-weight:bold; color:#000; margin-bottom:8px;">${r.name}</div>
+                                    ${r.mobile ? `<div class="inv-info-row"><span>Mobile:</span> ${r.mobile}</div>` : ''}
+                                    <div class="inv-info-row"><span>Country:</span> ${r.country}</div>
+                                </div>
+                            </div>
+                            <div class="inv-info-box">
+                                <h3>Payment Details</h3>
+                                <div class="inv-info-content">
+                                    <div class="inv-info-row"><span>Status:</span> <span class="${statusClass}">${statusText}</span></div>
+                                    <div class="inv-info-row"><span>Transaction Type:</span> ${typeLabel}</div>
+                                    <div class="inv-info-row"><span>Currency:</span> ${r.currency} (${r.symbol})</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- TRANSACTION TABLE -->
+                        <table class="inv-table">
                             <thead>
                                 <tr>
-                                    <th style="background-color: #F36C21; color: #fff; padding: 12px 10px; text-align: left; font-weight: 600; border-bottom: 2px solid #F36C21; width: 60%;">Description</th>
-                                    <th style="background-color: #F36C21; color: #fff; padding: 12px 10px; text-align: center; font-weight: 600; border-bottom: 2px solid #F36C21; width: 20%;">Quantity</th>
-                                    <th style="background-color: #F36C21; color: #fff; padding: 12px 10px; text-align: right; font-weight: 600; border-bottom: 2px solid #F36C21; width: 20%;">Amount</th>
+                                    <th width="60%">Description</th>
+                                    <th width="15%" class="text-center">Quantity</th>
+                                    <th width="25%" class="text-right">Amount</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td style="border-bottom: 1px solid #eee; padding: 12px 10px; vertical-align: top;">
-                                        <strong>${r.remarks || 'Cash Collection'}</strong><br>
-                                        <span style="font-size: 8pt; color: #666;">
-                                            ${r.type === 'income' ? 'Amount Received from Customer' : 'Amount Paid to Customer'}
+                                    <td>
+                                        <strong>${r.remarks || 'Amount Received from Customer'}</strong><br>
+                                        <span style="color:#666; font-size:10pt;">
+                                            ${r.type === 'income' ? 'Transaction: Credit / Receivable' : 'Transaction: Debit / Payable'}
                                         </span>
                                     </td>
-                                    <td class="text-center" style="border-bottom: 1px solid #eee; padding: 12px 10px;">1</td>
-                                    <td class="text-right" style="border-bottom: 1px solid #eee; padding: 12px 10px;">${r.symbol} ${r.total.toLocaleString()}</td>
+                                    <td class="text-center">1</td>
+                                    <td class="text-right" style="font-weight:bold;">${r.symbol} ${r.total.toLocaleString()}</td>
                                 </tr>
                             </tbody>
                         </table>
 
-                        <!-- Totals -->
-                        <div style="display: flex; justify-content: flex-end; margin-bottom: 30px;">
-                            <div style="width: 50%;">
-                                <div style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #eee; font-size: 10pt;">
-                                    <span>Subtotal:</span><span>${r.symbol} ${r.total.toLocaleString()}</span>
+                        <!-- TOTAL SUMMARY -->
+                        <div class="inv-summary-section">
+                            <div class="inv-summary-box">
+                                <div class="inv-summary-row">
+                                    <span>Subtotal</span>
+                                    <span>${r.symbol} ${r.total.toLocaleString()}</span>
                                 </div>
-                                <div style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #eee; font-size: 10pt;">
-                                    <span>Tax / VAT:</span><span>${r.symbol} 0.00</span>
+                                <div class="inv-summary-row">
+                                    <span>Tax / VAT</span>
+                                    <span>${r.symbol} 0.00</span>
                                 </div>
-                                <div style="display: flex; justify-content: space-between; padding: 6px 0; border-top: 2px solid #333; border-bottom: none; font-size: 14pt; font-weight: 800; margin-top: 10px; padding-top: 10px; color: #F36C21;">
-                                    <span>Grand Total:</span><span>${r.symbol} ${r.total.toLocaleString()}</span>
+                                <div class="inv-summary-row grand-total">
+                                    <span>Grand Total</span>
+                                    <span>${r.symbol} ${r.total.toLocaleString()}</span>
                                 </div>
-                                <div style="font-style: italic; color: #666; font-size: 9pt; margin-top: 8px; text-align: right;">( ${inWords} )</div>
+                                <div class="inv-amount-words">
+                                    "${inWords}"
+                                </div>
                             </div>
                         </div>
 
+                        <!-- DENOMINATIONS -->
                         ${denomSectionHtml}
 
-                        <!-- Footer -->
-                        <div style="margin-top: 50px; padding-top: 20px; border-top: 1px solid #eee; font-size: 9pt; color: #777;">
-                            <div style="margin-bottom: 40px;">
+                        <!-- FOOTER -->
+                        <div class="inv-footer">
+                            <div class="inv-terms">
                                 <strong>Terms & Conditions</strong>
-                                <ul style="padding-left: 20px; margin: 5px 0;">
+                                <ul>
                                     <li>This is a computer-generated invoice.</li>
                                     <li>Please verify cash denomination details carefully.</li>
                                     <li>For queries, please contact the issuer.</li>
                                 </ul>
                             </div>
-                            <div style="text-align: right; margin-bottom: 30px;">
-                                <div style="display: inline-block; width: 200px; border-top: 1px solid #000; padding-top: 5px; font-weight: bold; color: #000;">Authorized Signature</div>
+                            <div class="inv-signature">
+                                <div class="inv-sign-line">Authorized Signature</div>
                             </div>
-                            <div style="text-align: center; font-weight: bold; color: #F36C21; margin-top: 20px;">
+                            <div class="inv-branding">
                                 Thank you for your business!<br>
                                 Generated by ArthaNex App
                             </div>
-                            <div style="text-align: center; margin-top: 10px; font-size: 8pt; color: #999;">
+                            <div class="inv-page-no">
                                 Page 1 of 1
                             </div>
                         </div>
                     </div>
                 `;
 
-                // 5. Render & Export
+                // 7. Render & Download
                 const container = document.getElementById('pdf-render-container');
                 container.innerHTML = content;
 
                 if (typeof html2pdf !== 'undefined') {
                     const opt = {
-                        margin:       [10, 10, 10, 10],
-                        filename:     `ArthaNex_${r.name}_${r.id}.pdf`,
+                        margin:       [10, 10, 10, 10], // A4 Margins
+                        filename:     `ArthaNex_Invoice_${r.name}_${r.id}.pdf`,
                         image:        { type: 'jpeg', quality: 0.98 },
                         html2canvas:  { scale: 2, useCORS: true },
                         jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
@@ -1860,7 +1981,7 @@
 
                     setTimeout(() => {
                         html2pdf().set(opt).from(container).save().then(() => {
-                            // Success
+                            // Success Callback
                         }).catch(err => {
                             console.error(err);
                             this.showToast("Error generating PDF. Trying Print...");
@@ -1869,14 +1990,12 @@
                     }, 500);
 
                 } else {
-                    // Fallback
+                    // Fallback for environments where library fails
                     setTimeout(() => window.print(), 500);
                 }
             },
 
-            // --------------------------------------------------
-            // NEW PDF REPORT LOGIC (Date Range & 30 Days)
-            // --------------------------------------------------
+            // Existing PDF Report Logic (30 Days) - Kept simple for reports
             exportLast30Days: function() {
                 const today = new Date();
                 const thirtyDaysAgo = new Date(); thirtyDaysAgo.setDate(today.getDate() - 30);
@@ -1885,7 +2004,7 @@
                 const filtered = this.state.records.filter(r => r.date >= startISO && r.date <= endISO);
                 if(filtered.length === 0) return this.showToast("No records in last 30 days.");
                 
-                this.generatePrintView(filtered, "30 Days Transaction Report", startISO, endISO);
+                this.generatePrintView(filtered, `Transactions: Last 30 Days (${startISO} to ${endISO})`);
             },
             executeRangeExport: function() {
                 const start = document.getElementById('rangeStart').value;
@@ -1895,174 +2014,88 @@
                 const filtered = this.state.records.filter(r => r.date >= start && r.date <= end);
                 if(filtered.length === 0) return this.showToast("No records found.");
 
-                this.generatePrintView(filtered, "Transaction Report (Date Range)", start, end);
+                this.generatePrintView(filtered, `Transactions: ${start} to ${end}`);
                 this.toggleModal('dateRangeModal');
             },
-            generatePrintView: function(records, titleText, startDateStr, endDateStr) {
+            generatePrintView: function(records, titleText) {
                 const container = document.getElementById('pdf-render-container');
                 this.showToast("Generating Report...");
-
-                if (!records || records.length === 0) {
-                    container.innerHTML = `
-                        <div class="pdf-paper">
-                            <div class="empty-state-msg">No transactions available for selected period</div>
-                        </div>`;
-                    this.downloadPDF(titleText);
-                    return;
-                }
-
-                // Helper: Format Date DD/MM/YYYY
-                const fmtDate = (dateStr) => {
-                    const parts = dateStr.split('-');
-                    return `${parts[2]}/${parts[1]}/${parts[0]}`;
-                };
-
-                // Current Generated Time
-                const generatedOn = new Date().toLocaleString();
-
-                // Currency Symbol
-                const currencySymbol = records[0].symbol || "";
-
-                // --- Calculations for Summary ---
-                const totalIncome = records.filter(r => r.type === 'income').reduce((sum, r) => sum + r.total, 0);
-                const totalExpense = records.filter(r => r.type === 'expense').reduce((sum, r) => sum + r.total, 0);
-                const totalReceivable = records.filter(r => r.type === 'income' && r.status === 'Due').reduce((sum, r) => sum + r.total, 0);
-                const totalPayable = records.filter(r => r.type === 'expense' && r.status === 'Due').reduce((sum, r) => sum + r.total, 0);
-                const netBalance = totalIncome - totalExpense;
-
-                // --- Build Table Rows ---
+                
                 let rowsHtml = '';
                 records.forEach((r, index) => {
-                    // Color Coding Logic
-                    let rowClass = '';
-                    let statusClass = '';
-                    
-                    if (r.status === 'Paid') {
-                        rowClass = 'row-green';
-                        statusClass = 'status-paid';
-                    } else if (r.status === 'Due' && r.type === 'expense') {
-                        rowClass = 'row-orange'; // Payable
-                        statusClass = 'status-due-pay';
-                    } else if (r.status === 'Due' && r.type === 'income') {
-                        rowClass = 'row-red'; // Receivable
-                        statusClass = 'status-due-rec';
-                    }
-
+                    const typeText = r.type === 'income' ? 'Received' : 'Paid';
                     const inWords = this.numberToWords(r.total) + " " + r.currency;
 
+                    let colorClass = '';
+                    if (r.status === 'Due') { colorClass = '#2e7d32'; }
+                    else if (r.type === 'expense') { colorClass = '#c62828'; }
+                    else { colorClass = '#FF8A3D'; }
+
                     rowsHtml += `
-                        <tr class="${rowClass}">
+                        <tr>
                             <td>${index + 1}</td>
-                            <td>${fmtDate(r.date)}</td>
+                            <td>${r.date}</td>
                             <td>${r.time}</td>
                             <td>${r.name}</td>
                             <td>${r.remarks || '-'}</td>
-                            <td style="font-weight:bold; text-transform:uppercase;">${r.type}</td>
-                            <td class="text-right" style="font-weight:bold;">${currencySymbol} ${r.total.toLocaleString()}</td>
+                            <td style="color: ${colorClass}; font-weight:bold;">${typeText} ${r.status === 'Due' ? '(Due)' : ''}</td>
+                            <td style="text-align:right;">${r.symbol} ${r.total.toLocaleString()}</td>
                             <td style="font-size: 8pt; color: #555; word-break: break-word;">${inWords}</td>
-                            <td class="text-center"><span class="${statusClass}">${r.status}</span></td>
+                            <td style="color: ${colorClass}; font-weight:bold;">${r.status}</td>
                         </tr>
                     `;
                 });
 
-                // --- HTML Construction ---
                 const content = `
                     <div class="pdf-paper">
-                        <!-- Header -->
-                        <div class="pdf-header">
-                            <div class="pdf-brand">
-                                <img src="https://z-cdn-media.chatglm.cn/files/af039fbb-879d-471f-a2d8-a6fbaac11f8b.png?auth_key=1868816468-3c27614d0d374d62a8d011ef8cc50a8f-0-db6fd19e4def068c453c4c8f2352a472" class="pdf-logo" alt="Logo" crossorigin="anonymous">
-                                <div class="pdf-brand-text">
-                                    <h1>ArthaNex</h1>
-                                    <p>by Arthixa</p>
-                                </div>
-                            </div>
-                            <div class="pdf-title-block">
-                                <div class="pdf-main-title">${titleText}</div>
-                                <div class="pdf-date-info">
-                                    <span>From: ${fmtDate(startDateStr)}</span>
-                                    <span>To: ${fmtDate(endDateStr)}</span>
-                                    <span style="margin-top:4px; font-style:italic;">Generated On: ${generatedOn}</span>
+                        <div class="pdf-header" style="margin-bottom: 20px; border: none;">
+                             <div class="pdf-inv-brand">
+                                <img src="https://z-cdn-media.chatglm.cn/files/af039fbb-879d-471f-a2d8-a6fbaac11f8b.png?auth_key=1868816468-3c27614d0d374d62a8d011ef8cc50a8f-0-db6fd19e4def068c453c4c8f2352a472" class="pdf-inv-logo" style="width: 40px; height: 40px;" crossorigin="anonymous">
+                                <div class="pdf-inv-company">
+                                    <h1 style="font-size: 18pt;">ArthaNex Report</h1>
+                                    <p style="font-size: 9pt;">${titleText}</p>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Table -->
-                        <table class="pdf-table">
+                        <table class="pdf-table" style="font-size: 8pt;">
                             <thead>
                                 <tr>
-                                    <th style="width: 5%;">Sl No</th>
-                                    <th style="width: 10%;">Date</th>
-                                    <th style="width: 8%;">Time</th>
-                                    <th style="width: 15%;">Name / Party</th>
-                                    <th style="width: 20%;">Remarks</th>
-                                    <th style="width: 10%;">Type</th>
-                                    <th style="width: 10%;" class="text-right">Amount</th>
-                                    <th style="width: 12%;">Amount (Words)</th>
-                                    <th style="width: 10%;">Status</th>
+                                    <th width="5%">Sl No</th>
+                                    <th width="12%">Date</th>
+                                    <th width="10%">Time</th>
+                                    <th width="15%">Name</th>
+                                    <th width="20%">Remarks</th>
+                                    <th width="13%">Transaction</th>
+                                    <th width="10%" style="text-align:right">Total</th>
+                                    <th width="10%">In Words</th>
+                                    <th width="5%">Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 ${rowsHtml}
                             </tbody>
                         </table>
-
-                        <!-- Summary Section -->
-                        <div class="pdf-summary">
-                            <div class="summary-title">Summary</div>
-                            <div class="summary-grid">
-                                <div class="summary-item">
-                                    <span class="summary-label">Total Income:</span>
-                                    <span class="summary-val" style="color: #2e7d32;">${currencySymbol} ${totalIncome.toLocaleString()}</span>
-                                </div>
-                                <div class="summary-item">
-                                    <span class="summary-label">Total Expense:</span>
-                                    <span class="summary-val" style="color: #c62828;">${currencySymbol} ${totalExpense.toLocaleString()}</span>
-                                </div>
-                                <div class="summary-item">
-                                    <span class="summary-label">Total Receivable (Due):</span>
-                                    <span class="summary-val" style="color: #c62828;">${currencySymbol} ${totalReceivable.toLocaleString()}</span>
-                                </div>
-                                <div class="summary-item">
-                                    <span class="summary-label">Total Payable (Due):</span>
-                                    <span class="summary-val" style="color: #e65100;">${currencySymbol} ${totalPayable.toLocaleString()}</span>
-                                </div>
-                                <div class="summary-item total-balance" style="grid-column: span 2;">
-                                    <span class="summary-label">Net Balance:</span>
-                                    <span class="summary-val">${currencySymbol} ${netBalance.toLocaleString()}</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Footer -->
-                        <div class="pdf-footer">
-                            <span>Generated by ArthaNex</span>
-                            <span>Page 1 of 1</span>
-                        </div>
                     </div>
                 `;
 
                 container.innerHTML = content;
-                this.downloadPDF(titleText);
-            },
-            
-            downloadPDF: function(filenamePrefix) {
+
                 if (typeof html2pdf !== 'undefined') {
                     const opt = {
                         margin:       [5, 5, 5, 5],
-                        filename:     `ArthaNex_Report_${filenamePrefix.replace(/ /g, '_')}.pdf`,
+                        filename:     `Report.pdf`,
                         image:        { type: 'jpeg', quality: 0.98 },
                         html2canvas:  { scale: 2, useCORS: true },
                         jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
                     };
                     setTimeout(() => {
-                        html2pdf().set(opt).from(document.getElementById('pdf-render-container')).save();
+                        html2pdf().set(opt).from(container).save();
                     }, 500);
                 } else {
                     setTimeout(() => window.print(), 500);
                 }
             },
-
             viewRecord: function(id) {
                 const r = this.state.records.find(rec => rec.id === id);
                 if(!r) return;
