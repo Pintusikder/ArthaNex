@@ -590,7 +590,7 @@
                 color: black;
                 height: auto;
                 overflow: visible;
-                font-size: 10pt; /* Smaller font for more columns */
+                font-size: 10pt;
                 counter-reset: page;
             }
             
@@ -604,10 +604,11 @@
             header, nav, .dashboard-container, .filter-container, .btn, .modal, .menu-container, .pwa-content, #toast, #pwa-install-banner, .header-actions, .search-hint, .custom-select__search {
                 display: none !important;
             }
-            /* Hide generic ad containers by targeting inline styles commonly used */
-            div[style*="text-align: center"] {
+            /* FIX: STRICTLY HIDE ADS */
+            .ad-container, div[style*="text-align: center"], div[style*="justify-content: center"], iframe {
                 display: none !important;
             }
+            
             main {
                 padding: 0;
                 overflow: visible;
@@ -638,6 +639,7 @@
                 height: 80px;
                 margin-bottom: 10px;
                 display: block;
+                object-fit: contain;
             }
             .print-title {
                 font-size: 20pt;
@@ -657,7 +659,7 @@
                 width: 100%;
                 border-collapse: collapse;
                 margin-bottom: 20px;
-                font-size: 9pt; /* Small font for many columns */
+                font-size: 9pt;
             }
             .print-table th, .print-table td {
                 border: 1px solid #000;
@@ -714,20 +716,19 @@
                 <button id="settingsBtn" aria-label="Settings">⚙</button>
             </div>
         </header>
-        <div style="width: 100%; text-align: center; margin: 10px 0; background-color: #fff; padding: 5px 0;">
-    
-    <script>
-  atOptions = {
-    'key' : '37aea13fbdf3f7cf958070dd70143f8d',
-    'format' : 'iframe',
-    'height' : 50,
-    'width' : 320,
-    'params' : {}
-  };
-</script>
-<script src="https://www.highperformanceformat.com/37aea13fbdf3f7cf958070dd70143f8d/invoke.js"></script>
-
-</div>
+        <!-- Ad Container Wrapper added class for print hiding -->
+        <div class="ad-container" style="width: 100%; text-align: center; margin: 10px 0; background-color: #fff; padding: 5px 0;">
+            <script>
+          atOptions = {
+            'key' : '37aea13fbdf3f7cf958070dd70143f8d',
+            'format' : 'iframe',
+            'height' : 50,
+            'width' : 320,
+            'params' : {}
+          };
+        </script>
+        <script src="https://www.highperformanceformat.com/37aea13fbdf3f7cf958070dd70143f8d/invoke.js"></script>
+        </div>
 
         <div class="dashboard-container">
             <div class="stat-card income">
@@ -797,18 +798,20 @@
                         </div>
                     </div>
 
-                    <div style="width: 100%; display: flex; justify-content: center; margin: 20px 0;">
-    <script>
-        atOptions = {
-            'key' : '37aea13fbdf3f7cf958070dd70143f8d',
-            'format' : 'iframe',
-            'height' : 50,
-            'width' : 320,
-            'params' : {}
-        };
-    </script>
-    <script src="https://www.highperformanceformat.com/37aea13fbdf3f7cf958070dd70143f8d/invoke.js"></script>
-</div>
+                    <!-- Ad Container Wrapper added class for print hiding -->
+                    <div class="ad-container" style="width: 100%; display: flex; justify-content: center; margin: 20px 0;">
+                        <script>
+                            atOptions = {
+                                'key' : '37aea13fbdf3f7cf958070dd70143f8d',
+                                'format' : 'iframe',
+                                'height' : 50,
+                                'width' : 320,
+                                'params' : {}
+                            };
+                        </script>
+                        <script src="https://www.highperformanceformat.com/37aea13fbdf3f7cf958070dd70143f8d/invoke.js"></script>
+                    </div>
+                    
                     <!-- Quick Start Button -->
                     <button class="btn btn-primary" onclick="app.switchTab('entry')" style="margin-top: 1rem; font-size: 1.1rem; padding: 1rem;">
                         ➕ Start New Entry
@@ -1745,6 +1748,9 @@
                     });
                 }
             },
+            openRangeModal: function() {
+                this.toggleModal('dateRangeModal');
+            },
             downloadInvoice: function(id) {
                 const r = this.state.records.find(rec => rec.id === id);
                 if(!r) return;
@@ -2009,28 +2015,16 @@
                 const a = ['','One ','Two ','Three ','Four ','Five ','Six ','Seven ','Eight ','Nine ','Ten ','Eleven ','Twelve ','Thirteen ','Fourteen ','Fifteen ','Sixteen ','Seventeen ','Eighteen ','Nineteen '];
                 const b = ['', '', 'Twenty','Thirty','Forty','Fifty','Sixty','Seventy','Eighty','Ninety'];
                 
-                // FIX: Ensure padding matches regex length (11 digits total for Indian system)
-                // Supports up to 99,99,99,99,999
                 const numStr = num.toString();
-                // Pad with 11 zeros
                 const n = ('00000000000' + numStr).substr(-11).match(/^(\d{2})(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
-                
-                // FIX: If regex fails (e.g. number too huge), return number as string to avoid "undefined"
                 if (!n) return numStr; 
                 
                 let str = '';
-                
-                // Arab (Hundreds of Crores)
                 str += (n[1] != 0) ? (a[Number(n[1])] || b[n[1][0]] + ' ' + a[n[1][1]]) + 'Arab ' : '';
-                // Crore
                 str += (n[2] != 0) ? (a[Number(n[2])] || b[n[2][0]] + ' ' + a[n[2][1]]) + 'Crore ' : '';
-                // Lakh
                 str += (n[3] != 0) ? (a[Number(n[3])] || b[n[3][0]] + ' ' + a[n[3][1]]) + 'Lakh ' : '';
-                // Thousand
                 str += (n[4] != 0) ? (a[Number(n[4])] || b[n[4][0]] + ' ' + a[n[4][1]]) + 'Thousand ' : '';
-                // Hundred
                 str += (n[5] != 0) ? (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) + 'Hundred ' : '';
-                // Units
                 str += (n[6] != 0) ? ((str != '') ? 'and ' : '') + (a[Number(n[6])] || b[n[6][0]] + ' ' + a[n[6][1]]) : '';
                 
                 return str.trim();
