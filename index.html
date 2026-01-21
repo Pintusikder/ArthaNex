@@ -437,7 +437,7 @@
         .credits-container a { color: var(--primary); text-decoration: none; font-weight: 600; }
 
         /* --------------------------------------------------
-           PDF STYLES (Used by html2pdf)
+           PDF STYLES (General)
            -------------------------------------------------- */
         .pdf-paper {
             font-family: 'Helvetica', 'Arial', sans-serif;
@@ -446,55 +446,65 @@
             padding: 20px;
             width: 100%;
             box-sizing: border-box;
+            position: relative;
         }
 
         .pdf-header {
             display: flex; justify-content: space-between; align-items: flex-start;
-            padding-bottom: 20px; border-bottom: 2px solid #F36C21; margin-bottom: 20px;
+            padding-bottom: 15px; border-bottom: 2px solid #F36C21; margin-bottom: 20px;
         }
         .pdf-inv-brand { display: flex; align-items: center; gap: 15px; }
-        .pdf-inv-logo { width: 60px; height: 60px; object-fit: contain; }
-        .pdf-inv-company h1 { font-size: 24pt; color: #F36C21; margin: 0; line-height: 1; }
-        .pdf-inv-company p { margin: 5px 0 0 0; font-size: 10pt; color: #666; }
-        .pdf-inv-title-box { text-align: right; }
-        .pdf-inv-title-box h2 { font-size: 32pt; color: #333; text-transform: uppercase; margin: 0; letter-spacing: 2px; }
-        .pdf-inv-meta { margin-top: 10px; text-align: right; font-size: 11pt; }
-        .pdf-inv-meta div { margin-bottom: 4px; }
-        .pdf-inv-meta strong { display: inline-block; width: 100px; color: #555; }
+        .pdf-inv-logo { width: 50px; height: 50px; object-fit: contain; }
+        .pdf-inv-company h1 { font-size: 20pt; color: #F36C21; margin: 0; line-height: 1; }
+        .pdf-inv-company p { margin: 5px 0 0 0; font-size: 9pt; color: #666; }
+        
+        .pdf-report-info { text-align: right; margin-bottom: 10px; }
+        .pdf-report-title { font-size: 18pt; font-weight: bold; color: #333; margin-bottom: 10px; }
+        .pdf-meta-line { font-size: 10pt; color: #555; margin: 2px 0; }
 
-        .pdf-bill-section { display: flex; justify-content: space-between; margin-bottom: 30px; }
-        .pdf-bill-col { width: 48%; }
-        .pdf-section-label {
-            font-size: 10pt; font-weight: bold; color: #777; text-transform: uppercase;
-            border-bottom: 1px solid #ddd; padding-bottom: 5px; margin-bottom: 10px; display: block;
-        }
-        .pdf-bill-content { font-size: 11pt; line-height: 1.5; }
-
-        .pdf-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-        .pdf-table th { background-color: #F36C21; color: #fff; padding: 12px 10px; text-align: left; font-size: 10pt; text-transform: uppercase; }
-        .pdf-table td { border-bottom: 1px solid #eee; padding: 12px 10px; font-size: 11pt; word-wrap: break-word; }
+        .pdf-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 9pt; }
+        .pdf-table th { background-color: #333; color: #fff; padding: 8px 5px; text-align: left; font-weight: bold; font-size: 8pt; border: 1px solid #333;}
+        .pdf-table td { border: 1px solid #ddd; padding: 6px 5px; vertical-align: top; word-wrap: break-word;}
         .pdf-table td.text-right { text-align: right; }
         .pdf-table td.text-center { text-align: center; }
 
-        .pdf-totals { display: flex; justify-content: flex-end; margin-bottom: 30px; }
-        .pdf-totals-box { width: 40%; }
-        .pdf-total-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eee; }
-        .pdf-total-row.final { border-top: 2px solid #333; border-bottom: none; font-weight: bold; font-size: 14pt; margin-top: 10px; padding-top: 10px; }
+        /* PDF Color Coding Rows */
+        .pdf-row-green { background-color: #e8f5e9; } /* Paid */
+        .pdf-row-orange { background-color: #fff3e0; } /* Due / Payable */
+        .pdf-row-red { background-color: #ffebee; } /* Due / Receivable */
 
-        .pdf-denom { margin-bottom: 40px; border: 1px solid #eee; padding: 20px; background-color: #f9f9f9; }
-        .pdf-denom h3 { font-size: 12pt; margin-bottom: 15px; color: #555; }
-        .pdf-denom-table { width: 100%; border-collapse: collapse; }
-        .pdf-denom-table th, .pdf-denom-table td { padding: 8px; border: 1px solid #ddd; text-align: center; font-size: 10pt; }
-        .pdf-denom-table th { background-color: #eee; }
+        .pdf-summary-box {
+            border: 2px solid #F36C21;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 30px;
+            background-color: #fffcf5;
+        }
+        .pdf-summary-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            text-align: center;
+        }
+        .pdf-sum-item strong { display: block; font-size: 8pt; color: #666; text-transform: uppercase; margin-bottom: 4px;}
+        .pdf-sum-item span { font-size: 14pt; font-weight: bold; font-family: 'Roboto Mono', monospace; }
+        .text-green { color: #2e7d32; }
+        .text-red { color: #c62828; }
+        .text-orange { color: #ef6c00; }
+        .text-blue { color: #1565c0; }
 
-        .pdf-footer { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 50px; padding-top: 20px; border-top: 1px solid #ddd; }
-        .pdf-terms { width: 60%; font-size: 9pt; color: #777; line-height: 1.4; }
-        .pdf-sign { width: 30%; text-align: center; }
-        .pdf-sign-line { margin-top: 40px; border-top: 1px solid #000; padding-top: 5px; font-size: 10pt; font-weight: bold; }
+        .pdf-footer { 
+            margin-top: 40px; 
+            border-top: 1px solid #ddd; 
+            padding-top: 10px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            font-size: 9pt; 
+            color: #777;
+        }
 
-        /* --------------------------------------------------
-           PRINT STYLES (Native Fallback)
-           -------------------------------------------------- */
+        /* PRINT STYLES */
         @media print {
             body, #app-container { display: none !important; }
             #pdf-render-container { position: static; left: auto; top: auto; width: 100%; display: block; }
@@ -1543,26 +1553,236 @@
                 this.toggleModal('dateRangeModal');
             },
 
-            // NEW PDF GENERATION FUNCTION
+            // --------------------------------------------------
+            // PDF GENERATION & EXPORT FUNCTIONS
+            // --------------------------------------------------
+            
+            exportLast30Days: function() {
+                const today = new Date();
+                const thirtyDaysAgo = new Date(); thirtyDaysAgo.setDate(today.getDate() - 30);
+                const startISO = thirtyDaysAgo.toISOString().split('T')[0];
+                const endISO = today.toISOString().split('T')[0];
+                const filtered = this.state.records.filter(r => r.date >= startISO && r.date <= endISO);
+                
+                this.generatePrintView(filtered, "30 Days Transaction Report", startISO, endISO);
+            },
+
+            executeRangeExport: function() {
+                const start = document.getElementById('rangeStart').value;
+                const end = document.getElementById('rangeEnd').value;
+                if(!start || !end) return this.showToast("Please select both dates.");
+                if(start > end) return this.showToast("Invalid date range.");
+                const filtered = this.state.records.filter(r => r.date >= start && r.date <= end);
+
+                this.generatePrintView(filtered, "Transaction Report (Date Range)", start, end);
+                this.toggleModal('dateRangeModal');
+            },
+
+            generatePrintView: function(records, title, startDate, endDate) {
+                const container = document.getElementById('pdf-render-container');
+                this.showToast("Generating PDF...");
+                
+                // Empty state handling
+                if (records.length === 0) {
+                    const content = `
+                        <div class="pdf-paper">
+                            <div class="pdf-header">
+                                <div class="pdf-inv-brand">
+                                    <img src="https://z-cdn-media.chatglm.cn/files/af039fbb-879d-471f-a2d8-a6fbaac11f8b.png?auth_key=1868816468-3c27614d0d374d62a8d011ef8cc50a8f-0-db6fd19e4def068c453c4c8f2352a472" class="pdf-inv-logo">
+                                    <div class="pdf-inv-company">
+                                        <h1>ArthaNex</h1>
+                                        <p>by Arthixa</p>
+                                    </div>
+                                </div>
+                                <div class="pdf-report-info">
+                                    <div class="pdf-report-title">${title}</div>
+                                    <div class="pdf-meta-line">From: ${startDate}</div>
+                                    <div class="pdf-meta-line">To: ${endDate}</div>
+                                    <div class="pdf-meta-line">Generated On: ${new Date().toLocaleString()}</div>
+                                </div>
+                            </div>
+                            <h3 style="text-align:center; padding: 50px; color: #666;">No transactions available for selected period.</h3>
+                            <div class="pdf-footer">
+                                <div>Generated by ArthaNex</div>
+                                <div>Page 1 of 1</div>
+                            </div>
+                        </div>
+                    `;
+                    container.innerHTML = content;
+                    setTimeout(() => window.print(), 500);
+                    return;
+                }
+
+                // Get currency info
+                const currencySymbol = records[0]?.symbol || '';
+                const currencyName = records[0]?.currency || '';
+
+                // Calculate Summaries
+                let totalIncome = 0;
+                let totalExpense = 0;
+                let totalReceivable = 0;
+                let totalPayable = 0;
+
+                records.forEach(r => {
+                    if(r.type === 'income') {
+                        totalIncome += r.total;
+                        if(r.status === 'Due') totalReceivable += r.total;
+                    } else {
+                        totalExpense += r.total;
+                        if(r.status === 'Due') totalPayable += r.total;
+                    }
+                });
+                const netBalance = totalIncome - totalExpense;
+
+                // Format Date Helper DD/MM/YYYY
+                const fmtDate = (d) => {
+                    const parts = d.split('-');
+                    return `${parts[2]}/${parts[1]}/${parts[0]}`;
+                };
+
+                // Build Rows
+                let rowsHtml = '';
+                records.forEach((r, index) => {
+                    // Color Coding Logic
+                    let rowClass = '';
+                    if (r.status === 'Paid') {
+                        rowClass = 'pdf-row-green'; // Fully Settled
+                    } else {
+                        if (r.type === 'expense') {
+                            rowClass = 'pdf-row-orange'; // Due & Payable (Cash Out)
+                        } else {
+                            rowClass = 'pdf-row-red'; // Due & Receivable (Cash In)
+                        }
+                    }
+
+                    const typeLabel = r.type === 'income' ? 'Income' : 'Expense';
+                    const incomeVal = r.type === 'income' ? `${currencySymbol} ${r.total.toLocaleString()}` : '-';
+                    const expenseVal = r.type === 'expense' ? `${currencySymbol} ${r.total.toLocaleString()}` : '-';
+                    const inWords = this.numberToWords(r.total) + " " + r.currency;
+
+                    rowsHtml += `
+                        <tr class="${rowClass}">
+                            <td>${index + 1}</td>
+                            <td>${fmtDate(r.date)}</td>
+                            <td>${r.time}</td>
+                            <td>${r.name}</td>
+                            <td>${r.remarks || '-'}</td>
+                            <td class="text-center">${typeLabel}</td>
+                            <td class="text-right" style="color: ${r.type === 'income' ? '#2e7d32' : 'inherit'}">${incomeVal}</td>
+                            <td class="text-right" style="color: ${r.type === 'expense' ? '#c62828' : 'inherit'}">${expenseVal}</td>
+                            <td class="text-right" style="font-weight:bold;">${currencySymbol} ${r.total.toLocaleString()}</td>
+                            <td style="font-size: 8pt; word-break: break-word;">${inWords}</td>
+                            <td class="text-center" style="font-weight:bold;">${r.status}</td>
+                        </tr>
+                    `;
+                });
+
+                const content = `
+                    <div class="pdf-paper">
+                        <div class="pdf-header">
+                            <div class="pdf-inv-brand">
+                                <img src="https://z-cdn-media.chatglm.cn/files/af039fbb-879d-471f-a2d8-a6fbaac11f8b.png?auth_key=1868816468-3c27614d0d374d62a8d011ef8cc50a8f-0-db6fd19e4def068c453c4c8f2352a472" class="pdf-inv-logo">
+                                <div class="pdf-inv-company">
+                                    <h1>ArthaNex</h1>
+                                    <p>by Arthixa</p>
+                                </div>
+                            </div>
+                            <div class="pdf-report-info">
+                                <div class="pdf-report-title">${title}</div>
+                                <div class="pdf-meta-line">From: ${fmtDate(startDate)}</div>
+                                <div class="pdf-meta-line">To: ${fmtDate(endDate)}</div>
+                                <div class="pdf-meta-line">Generated On: ${new Date().toLocaleString()}</div>
+                            </div>
+                        </div>
+
+                        <table class="pdf-table">
+                            <thead>
+                                <tr>
+                                    <th width="4%">Sl No</th>
+                                    <th width="9%">Date</th>
+                                    <th width="8%">Time</th>
+                                    <th width="12%">Name / Party</th>
+                                    <th width="14%">Remarks / Notes</th>
+                                    <th width="8%">Type</th>
+                                    <th width="9%">Income</th>
+                                    <th width="9%">Expense</th>
+                                    <th width="10%">Amount</th>
+                                    <th width="11%">In Words</th>
+                                    <th width="6%">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${rowsHtml}
+                            </tbody>
+                        </table>
+
+                        <div class="pdf-summary-box">
+                            <div class="pdf-summary-grid">
+                                <div class="pdf-sum-item">
+                                    <strong>Total Income</strong>
+                                    <span class="text-green">${currencySymbol} ${totalIncome.toLocaleString()}</span>
+                                </div>
+                                <div class="pdf-sum-item">
+                                    <strong>Total Expense</strong>
+                                    <span class="text-red">${currencySymbol} ${totalExpense.toLocaleString()}</span>
+                                </div>
+                                <div class="pdf-sum-item">
+                                    <strong>Receivable</strong>
+                                    <span class="text-red">${currencySymbol} ${totalReceivable.toLocaleString()}</span>
+                                </div>
+                                <div class="pdf-sum-item">
+                                    <strong>Payable</strong>
+                                    <span class="text-orange">${currencySymbol} ${totalPayable.toLocaleString()}</span>
+                                </div>
+                                <div class="pdf-sum-item">
+                                    <strong>Net Balance</strong>
+                                    <span class="text-blue">${currencySymbol} ${netBalance.toLocaleString()}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pdf-footer">
+                            <div>Generated by ArthaNex</div>
+                            <div>Page 1 of 1</div>
+                        </div>
+                    </div>
+                `;
+
+                container.innerHTML = content;
+
+                if (typeof html2pdf !== 'undefined') {
+                    const opt = {
+                        margin:       [5, 5, 5, 5],
+                        filename:     `ArthaNex_Report.pdf`,
+                        image:        { type: 'jpeg', quality: 0.98 },
+                        html2canvas:  { scale: 2, useCORS: true },
+                        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                    };
+                    setTimeout(() => {
+                        html2pdf().set(opt).from(container).save();
+                    }, 500);
+                } else {
+                    setTimeout(() => window.print(), 500);
+                }
+            },
+            
             downloadInvoice: function(id) {
                 const r = this.state.records.find(rec => rec.id === id);
                 if(!r) return;
 
-                // Show loading toast
-                this.showToast("Generating PDF...");
+                this.showToast("Generating Invoice...");
 
-                // Determine Status Color
                 let statusStyle = '';
                 let statusText = '';
                 if (r.status === 'Due') {
-                    statusStyle = 'color: #2e7d32; font-weight:bold;'; // Green
+                    statusStyle = 'color: #2e7d32; font-weight:bold;'; 
                     statusText = 'UNPAID';
                 } else {
                     if (r.type === 'expense') {
-                        statusStyle = 'color: #c62828; font-weight:bold;'; // Red
+                        statusStyle = 'color: #c62828; font-weight:bold;'; 
                         statusText = 'PAID OUT';
                     } else {
-                        statusStyle = 'color: #FF8A3D; font-weight:bold;'; // Orange
+                        statusStyle = 'color: #FF8A3D; font-weight:bold;'; 
                         statusText = 'PAID IN';
                     }
                 }
@@ -1579,7 +1799,6 @@
                     }
                 });
 
-                // Prepare HTML content for the hidden container
                 const content = `
                     <div class="pdf-paper">
                         <div class="pdf-header">
@@ -1693,12 +1912,10 @@
                     </div>
                 `;
 
-                // Use html2pdf if available
                 const container = document.getElementById('pdf-render-container');
                 container.innerHTML = content;
 
                 if (typeof html2pdf !== 'undefined') {
-                    // PDF GENERATION
                     const opt = {
                         margin:       [10, 10, 10, 10],
                         filename:     `Invoice_${r.id}.pdf`,
@@ -1706,12 +1923,8 @@
                         html2canvas:  { scale: 2, useCORS: true },
                         jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
                     };
-
-                    // Small delay to allow UI to render toast
                     setTimeout(() => {
-                        html2pdf().set(opt).from(container).save().then(() => {
-                            // Success callback
-                        }).catch(err => {
+                        html2pdf().set(opt).from(container).save().then(() => {}).catch(err => {
                             console.error(err);
                             this.showToast("Error generating PDF. Trying Print...");
                             setTimeout(() => window.print(), 1000);
@@ -1719,113 +1932,10 @@
                     }, 500);
 
                 } else {
-                    // FALLBACK: Native Print Dialog
-                    setTimeout(() => {
-                        window.print();
-                    }, 500);
-                }
-            },
-
-            exportLast30Days: function() {
-                const today = new Date();
-                const thirtyDaysAgo = new Date(); thirtyDaysAgo.setDate(today.getDate() - 30);
-                const startISO = thirtyDaysAgo.toISOString().split('T')[0];
-                const endISO = today.toISOString().split('T')[0];
-                const filtered = this.state.records.filter(r => r.date >= startISO && r.date <= endISO);
-                if(filtered.length === 0) return this.showToast("No records in last 30 days.");
-                
-                this.generatePrintView(filtered, `Transactions: Last 30 Days (${startISO} to ${endISO})`);
-            },
-            executeRangeExport: function() {
-                const start = document.getElementById('rangeStart').value;
-                const end = document.getElementById('rangeEnd').value;
-                if(!start || !end) return this.showToast("Please select both dates.");
-                if(start > end) return this.showToast("Invalid date range.");
-                const filtered = this.state.records.filter(r => r.date >= start && r.date <= end);
-                if(filtered.length === 0) return this.showToast("No records found.");
-
-                this.generatePrintView(filtered, `Transactions: ${start} to ${end}`);
-                this.toggleModal('dateRangeModal');
-            },
-            generatePrintView: function(records, titleText) {
-                const container = document.getElementById('pdf-render-container');
-                this.showToast("Generating Report...");
-                
-                let rowsHtml = '';
-                records.forEach((r, index) => {
-                    const typeText = r.type === 'income' ? 'Received' : 'Paid';
-                    const inWords = this.numberToWords(r.total) + " " + r.currency;
-
-                    let colorClass = '';
-                    if (r.status === 'Due') { colorClass = '#2e7d32'; }
-                    else if (r.type === 'expense') { colorClass = '#c62828'; }
-                    else { colorClass = '#FF8A3D'; }
-
-                    rowsHtml += `
-                        <tr>
-                            <td>${index + 1}</td>
-                            <td>${r.date}</td>
-                            <td>${r.time}</td>
-                            <td>${r.name}</td>
-                            <td>${r.remarks || '-'}</td>
-                            <td style="color: ${colorClass}; font-weight:bold;">${typeText} ${r.status === 'Due' ? '(Due)' : ''}</td>
-                            <td style="text-align:right;">${r.symbol} ${r.total.toLocaleString()}</td>
-                            <td style="font-size: 8pt; color: #555; word-break: break-word;">${inWords}</td>
-                            <td style="color: ${colorClass}; font-weight:bold;">${r.status}</td>
-                        </tr>
-                    `;
-                });
-
-                const content = `
-                    <div class="pdf-paper">
-                        <div class="pdf-header" style="margin-bottom: 20px; border: none;">
-                             <div class="pdf-inv-brand">
-                                <img src="https://z-cdn-media.chatglm.cn/files/af039fbb-879d-471f-a2d8-a6fbaac11f8b.png?auth_key=1868816468-3c27614d0d374d62a8d011ef8cc50a8f-0-db6fd19e4def068c453c4c8f2352a472" class="pdf-inv-logo" style="width: 40px; height: 40px;">
-                                <div class="pdf-inv-company">
-                                    <h1 style="font-size: 18pt;">ArthaNex Report</h1>
-                                    <p style="font-size: 9pt;">${titleText}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <table class="pdf-table">
-                            <thead>
-                                <tr>
-                                    <th width="5%">Sl No</th>
-                                    <th width="12%">Date</th>
-                                    <th width="10%">Time</th>
-                                    <th width="15%">Name</th>
-                                    <th width="20%">Remarks</th>
-                                    <th width="13%">Transaction</th>
-                                    <th width="10%" style="text-align:right">Total</th>
-                                    <th width="10%">In Words</th>
-                                    <th width="5%">Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${rowsHtml}
-                            </tbody>
-                        </table>
-                    </div>
-                `;
-
-                container.innerHTML = content;
-
-                if (typeof html2pdf !== 'undefined') {
-                    const opt = {
-                        margin:       [5, 5, 5, 5],
-                        filename:     `Report.pdf`,
-                        image:        { type: 'jpeg', quality: 0.98 },
-                        html2canvas:  { scale: 2, useCORS: true },
-                        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-                    };
-                    setTimeout(() => {
-                        html2pdf().set(opt).from(container).save();
-                    }, 500);
-                } else {
                     setTimeout(() => window.print(), 500);
                 }
             },
+            
             viewRecord: function(id) {
                 const r = this.state.records.find(rec => rec.id === id);
                 if(!r) return;
