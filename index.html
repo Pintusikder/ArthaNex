@@ -20,6 +20,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
 
+    <!-- HTML2PDF Library for Auto Download -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
     <style>
         :root {
             --primary: #F36C21;       
@@ -79,7 +82,18 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            counter-reset: page 1; /* Fix for Page 1 start */
+            counter-reset: page 1;
+        }
+
+        /* Container to hold content for PDF generation (Hidden by default) */
+        #pdf-render-container {
+            position: absolute;
+            left: -9999px;
+            top: 0;
+            width: 800px; /* Fixed width for PDF A4 */
+            background: #fff;
+            padding: 20px;
+            color: #000;
         }
 
         #app-container {
@@ -261,7 +275,7 @@
            FORM STYLES
            -------------------------------------------------- */
         .card { background: var(--card-bg); border-radius: var(--radius-md); padding: 1.25rem; margin-bottom: 1rem; box-shadow: var(--shadow-sm); border: 1px solid var(--border); }
-        .form-group { margin-bottom:1rem; }
+        .form-group { margin-bottom: 1rem; }
         .form-group label { display: block; margin-bottom: 0.5rem; font-size: 0.85rem; color: var(--neutral); font-weight: 500; word-break: break-word; }
         .form-control { 
             width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: var(--radius-sm); 
@@ -423,113 +437,75 @@
         .credits-container a { color: var(--primary); text-decoration: none; font-weight: 600; }
 
         /* --------------------------------------------------
-           PROFESSIONAL PRINT STYLES (INVOICE & REPORTS)
+           PDF STYLES (Used by html2pdf)
+           -------------------------------------------------- */
+        .pdf-paper {
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            color: #000;
+            background: #fff;
+            padding: 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .pdf-header {
+            display: flex; justify-content: space-between; align-items: flex-start;
+            padding-bottom: 20px; border-bottom: 2px solid #F36C21; margin-bottom: 20px;
+        }
+        .pdf-inv-brand { display: flex; align-items: center; gap: 15px; }
+        .pdf-inv-logo { width: 60px; height: 60px; object-fit: contain; }
+        .pdf-inv-company h1 { font-size: 24pt; color: #F36C21; margin: 0; line-height: 1; }
+        .pdf-inv-company p { margin: 5px 0 0 0; font-size: 10pt; color: #666; }
+        .pdf-inv-title-box { text-align: right; }
+        .pdf-inv-title-box h2 { font-size: 32pt; color: #333; text-transform: uppercase; margin: 0; letter-spacing: 2px; }
+        .pdf-inv-meta { margin-top: 10px; text-align: right; font-size: 11pt; }
+        .pdf-inv-meta div { margin-bottom: 4px; }
+        .pdf-inv-meta strong { display: inline-block; width: 100px; color: #555; }
+
+        .pdf-bill-section { display: flex; justify-content: space-between; margin-bottom: 30px; }
+        .pdf-bill-col { width: 48%; }
+        .pdf-section-label {
+            font-size: 10pt; font-weight: bold; color: #777; text-transform: uppercase;
+            border-bottom: 1px solid #ddd; padding-bottom: 5px; margin-bottom: 10px; display: block;
+        }
+        .pdf-bill-content { font-size: 11pt; line-height: 1.5; }
+
+        .pdf-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        .pdf-table th { background-color: #F36C21; color: #fff; padding: 12px 10px; text-align: left; font-size: 10pt; text-transform: uppercase; }
+        .pdf-table td { border-bottom: 1px solid #eee; padding: 12px 10px; font-size: 11pt; word-wrap: break-word; }
+        .pdf-table td.text-right { text-align: right; }
+        .pdf-table td.text-center { text-align: center; }
+
+        .pdf-totals { display: flex; justify-content: flex-end; margin-bottom: 30px; }
+        .pdf-totals-box { width: 40%; }
+        .pdf-total-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eee; }
+        .pdf-total-row.final { border-top: 2px solid #333; border-bottom: none; font-weight: bold; font-size: 14pt; margin-top: 10px; padding-top: 10px; }
+
+        .pdf-denom { margin-bottom: 40px; border: 1px solid #eee; padding: 20px; background-color: #f9f9f9; }
+        .pdf-denom h3 { font-size: 12pt; margin-bottom: 15px; color: #555; }
+        .pdf-denom-table { width: 100%; border-collapse: collapse; }
+        .pdf-denom-table th, .pdf-denom-table td { padding: 8px; border: 1px solid #ddd; text-align: center; font-size: 10pt; }
+        .pdf-denom-table th { background-color: #eee; }
+
+        .pdf-footer { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 50px; padding-top: 20px; border-top: 1px solid #ddd; }
+        .pdf-terms { width: 60%; font-size: 9pt; color: #777; line-height: 1.4; }
+        .pdf-sign { width: 30%; text-align: center; }
+        .pdf-sign-line { margin-top: 40px; border-top: 1px solid #000; padding-top: 5px; font-size: 10pt; font-weight: bold; }
+
+        /* --------------------------------------------------
+           PRINT STYLES (Native Fallback)
            -------------------------------------------------- */
         @media print {
-            body {
-                background: #fff; color: #000; height: auto; overflow: visible; font-size: 12pt;
-                -webkit-print-color-adjust: exact; margin: 0; padding: 0; width: 100%;
-            }
-            
-            /* Hide UI Elements */
-            #app-container, header, nav, .dashboard-container, .filter-container, .btn, .modal, 
-            .menu-container, .pwa-content, #toast, #pwa-install-banner, .header-actions, 
-            .search-hint, .custom-select__search, .ad-container, iframe {
-                display: none !important;
-            }
-            
-            main { padding: 0; overflow: visible; position: static; background: #fff; }
-
-            /* General Print Layout */
-            .invoice-paper, .print-container {
-                width: 100%; max-width: 100%; margin: 0 auto; padding: 0;
-                background: transparent; box-shadow: none; border: none;
-            }
-
-            /* Fix for long text wrapping in tables */
-            .print-table td, .invoice-table td, .print-table th, .invoice-table th {
-                word-wrap: break-word;
-                word-break: break-word;
-                hyphens: auto;
-            }
-
-            /* Invoice Styles */
-            .invoice-header {
-                display: flex; justify-content: space-between; align-items: flex-start;
-                padding-bottom: 20px; border-bottom: 2px solid #F36C21; margin-bottom: 30px;
-            }
-            .inv-brand { display: flex; align-items: center; gap: 15px; }
-            .inv-logo { width: 60px; height: 60px; object-fit: contain; }
-            .inv-company h1 { font-size: 24pt; color: #F36C21; margin: 0; line-height: 1; }
-            .inv-company p { margin: 5px 0 0 0; font-size: 10pt; color: #666; }
-            .inv-title-box { text-align: right; }
-            .inv-title-box h2 {
-                font-size: 32pt; color: #333; text-transform: uppercase; margin: 0; letter-spacing: 2px;
-            }
-            .inv-meta { margin-top: 10px; text-align: right; font-size: 11pt; }
-            .inv-meta div { margin-bottom: 4px; }
-            .inv-meta strong { display: inline-block; width: 100px; color: #555; }
-
-            .bill-to-section { display: flex; justify-content: space-between; margin-bottom: 30px; }
-            .bill-to, .ship-to { width: 48%; }
-            .section-label {
-                font-size: 10pt; font-weight: bold; color: #777; text-transform: uppercase;
-                border-bottom: 1px solid #ddd; padding-bottom: 5px; margin-bottom: 10px; display: block;
-            }
-            .bill-content { font-size: 11pt; line-height: 1.5; }
-
-            .invoice-table {
-                width: 100%; border-collapse: collapse; margin-bottom: 20px;
-            }
-            .invoice-table th {
-                background-color: #F36C21; color: #fff; padding: 12px 10px;
-                text-align: left; font-size: 10pt; text-transform: uppercase;
-            }
-            .invoice-table td {
-                border-bottom: 1px solid #eee; padding: 12px 10px; font-size: 11pt;
-                word-wrap: break-word; /* Critical for Remarks */
-            }
-            .invoice-table td.text-right { text-align: right; }
-            .invoice-table td.text-center { text-align: center; }
-
-            .invoice-totals { display: flex; justify-content: flex-end; margin-bottom: 30px; }
-            .totals-box { width: 40%; }
-            .total-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eee; }
-            .total-row.final {
-                border-top: 2px solid #333; border-bottom: none; font-weight: bold;
-                font-size: 14pt; margin-top: 10px; padding-top: 10px;
-            }
-
-            .denom-section {
-                margin-bottom: 40px; border: 1px solid #eee; padding: 20px; background-color: #f9f9f9;
-            }
-            .denom-section h3 { font-size: 12pt; margin-bottom: 15px; color: #555; }
-            .denom-print-table { width: 100%; border-collapse: collapse; }
-            .denom-print-table th, .denom-print-table td {
-                padding: 8px; border: 1px solid #ddd; text-align: center; font-size: 10pt;
-            }
-            .denom-print-table th { background-color: #eee; }
-
-            .invoice-footer {
-                display: flex; justify-content: space-between; align-items: flex-end;
-                margin-top: 50px; padding-top: 20px; border-top: 1px solid #ddd;
-            }
-            .terms { width: 60%; font-size: 9pt; color: #777; line-height: 1.4; }
-            .signature-box { width: 30%; text-align: center; }
-            .sign-line { margin-top: 40px; border-top: 1px solid #000; padding-top: 5px; font-size: 10pt; font-weight: bold; }
-
-            /* Footer Page Number */
-            .print-footer {
-                position: fixed; bottom: 0; width: 100%; text-align: center;
-                border-top: 1px solid #ccc; padding: 10px 0; font-size: 9pt; color: #555;
-            }
-            .page-number::before {
-                content: "Page No. " counter(page);
-            }
+            body, #app-container { display: none !important; }
+            #pdf-render-container { position: static; left: auto; top: auto; width: 100%; display: block; }
+            .pdf-paper { padding: 0; }
         }
     </style>
 </head>
 <body data-theme="light">
+
+    <!-- Hidden Container for PDF Generation -->
+    <div id="pdf-render-container"></div>
 
     <div id="app-container">
         <header>
@@ -1030,8 +1006,7 @@
                     name: "",
                     date: "",
                     amount: ""
-                },
-                isPrinting: false // Flag to prevent double restore
+                }
             },
 
             init: function() {
@@ -1058,17 +1033,6 @@
                     if (!e.target.closest('.menu-container')) this.closeAllMenus();
                     if (e.target.classList.contains('modal')) e.target.classList.remove('open');
                 });
-
-                // Print handling listeners to fix "spinning" issue
-                window.addEventListener('afterprint', this.restoreView.bind(this));
-                if (window.matchMedia) {
-                    const mediaQueryList = window.matchMedia('print');
-                    mediaQueryList.addListener((mql) => {
-                        if (!mql.matches) {
-                            this.restoreView();
-                        }
-                    });
-                }
 
                 const savedCurrency = localStorage.getItem('arthaNex_lastCountry');
                 if (savedCurrency) {
@@ -1579,19 +1543,17 @@
                 this.toggleModal('dateRangeModal');
             },
 
-            // IMPROVED DOWNLOAD LOGIC
+            // NEW PDF GENERATION FUNCTION
             downloadInvoice: function(id) {
                 const r = this.state.records.find(rec => rec.id === id);
                 if(!r) return;
-                
-                // Store original content to restore later
-                const list = document.getElementById('historyList');
-                this.state.printOriginalContent = list.innerHTML;
 
-                // STATUS COLOR LOGIC
+                // Show loading toast
+                this.showToast("Generating PDF...");
+
+                // Determine Status Color
                 let statusStyle = '';
                 let statusText = '';
-
                 if (r.status === 'Due') {
                     statusStyle = 'color: #2e7d32; font-weight:bold;'; // Green
                     statusText = 'UNPAID';
@@ -1608,7 +1570,6 @@
                 const typeLabel = r.type === 'income' ? (r.status === 'Paid' ? 'RECEIPT' : 'INVOICE') : (r.status === 'Paid' ? 'PAYMENT RECEIPT' : 'PAYMENT INVOICE');
                 const inWords = this.numberToWords(r.total) + " " + r.currency;
 
-                // Generate Denomination Table Rows
                 let denomRows = '';
                 Object.keys(r.denominations).forEach(denom => {
                     const count = r.denominations[denom];
@@ -1618,21 +1579,20 @@
                     }
                 });
 
-                // Generate HTML
-                const html = `
-                    <div class="invoice-paper">
-                        <!-- Header -->
-                        <div class="invoice-header">
-                            <div class="inv-brand">
-                                <img src="https://z-cdn-media.chatglm.cn/files/af039fbb-879d-471f-a2d8-a6fbaac11f8b.png?auth_key=1868816468-3c27614d0d374d62a8d011ef8cc50a8f-0-db6fd19e4def068c453c4c8f2352a472" class="inv-logo">
-                                <div class="inv-company">
+                // Prepare HTML content for the hidden container
+                const content = `
+                    <div class="pdf-paper">
+                        <div class="pdf-header">
+                            <div class="pdf-inv-brand">
+                                <img src="https://z-cdn-media.chatglm.cn/files/af039fbb-879d-471f-a2d8-a6fbaac11f8b.png?auth_key=1868816468-3c27614d0d374d62a8d011ef8cc50a8f-0-db6fd19e4def068c453c4c8f2352a472" class="pdf-inv-logo">
+                                <div class="pdf-inv-company">
                                     <h1>ArthaNex</h1>
                                     <p>by Arthixa</p>
                                 </div>
                             </div>
-                            <div class="inv-title-box">
+                            <div class="pdf-inv-title-box">
                                 <h2>${typeLabel}</h2>
-                                <div class="inv-meta">
+                                <div class="pdf-inv-meta">
                                     <div><strong>Invoice #:</strong> ${r.id}</div>
                                     <div><strong>Date:</strong> ${r.date}</div>
                                     <div><strong>Time:</strong> ${r.time}</div>
@@ -1640,19 +1600,18 @@
                             </div>
                         </div>
 
-                        <!-- Bill To -->
-                        <div class="bill-to-section">
-                            <div class="bill-to">
-                                <span class="section-label">Bill To:</span>
-                                <div class="bill-content">
+                        <div class="pdf-bill-section">
+                            <div class="pdf-bill-col">
+                                <span class="pdf-section-label">Bill To:</span>
+                                <div class="pdf-bill-content">
                                     <strong>${r.name}</strong><br>
                                     ${r.mobile ? `Mobile: ${r.mobile}<br>` : ''}
                                     ${r.country}
                                 </div>
                             </div>
-                            <div class="ship-to">
-                                <span class="section-label">Payment Details:</span>
-                                <div class="bill-content">
+                            <div class="pdf-bill-col">
+                                <span class="pdf-section-label">Payment Details:</span>
+                                <div class="pdf-bill-content">
                                     <strong>Status:</strong> <span style="${statusStyle}">${statusText}</span><br>
                                     ${r.type === 'income' ? 'Type: Credit / Receivable' : 'Type: Debit / Payable'}<br>
                                     Currency: ${r.currency}
@@ -1660,8 +1619,7 @@
                             </div>
                         </div>
 
-                        <!-- Main Invoice Table -->
-                        <table class="invoice-table">
+                        <table class="pdf-table">
                             <thead>
                                 <tr>
                                     <th width="60%">Description</th>
@@ -1681,18 +1639,17 @@
                             </tbody>
                         </table>
 
-                        <!-- Totals -->
-                        <div class="invoice-totals">
-                            <div class="totals-box">
-                                <div class="total-row">
+                        <div class="pdf-totals">
+                            <div class="pdf-totals-box">
+                                <div class="pdf-total-row">
                                     <span>Subtotal:</span>
                                     <span>${r.symbol} ${r.total.toLocaleString()}</span>
                                 </div>
-                                <div class="total-row">
+                                <div class="pdf-total-row">
                                     <span>Tax / Vat:</span>
                                     <span>${r.symbol} 0.00</span>
                                 </div>
-                                <div class="total-row final">
+                                <div class="pdf-total-row final">
                                     <span>Grand Total:</span>
                                     <span style="color: #F36C21;">${r.symbol} ${r.total.toLocaleString()}</span>
                                 </div>
@@ -1702,10 +1659,9 @@
                             </div>
                         </div>
 
-                        <!-- Denomination Breakdown -->
-                        <div class="denom-section">
+                        <div class="pdf-denom">
                             <h3>Payment Breakdown / Denominations</h3>
-                            <table class="denom-print-table">
+                            <table class="pdf-denom-table">
                                 <thead>
                                     <tr>
                                         <th>Denomination</th>
@@ -1719,16 +1675,15 @@
                             </table>
                         </div>
 
-                        <!-- Footer -->
-                        <div class="invoice-footer">
-                            <div class="terms">
+                        <div class="pdf-footer">
+                            <div class="pdf-terms">
                                 <strong>Terms & Conditions:</strong>
                                 <p>1. This is a computer generated invoice.</p>
                                 <p>2. Please check denomination details carefully.</p>
                                 <p>3. For queries, please contact to vendor.</p>
                             </div>
-                            <div class="signature-box">
-                                <div class="sign-line">Authorized Signature</div>
+                            <div class="pdf-sign">
+                                <div class="pdf-sign-line">Authorized Signature</div>
                             </div>
                         </div>
                         
@@ -1738,30 +1693,37 @@
                     </div>
                 `;
 
-                // Show loading toast immediately
-                this.showToast("Preparing Invoice...");
-                
-                // Inject HTML
-                list.innerHTML = html;
+                // Use html2pdf if available
+                const container = document.getElementById('pdf-render-container');
+                container.innerHTML = content;
 
-                // Set flag and print
-                this.state.isPrinting = true;
-                
-                // Use a timeout to allow UI to update (Toast to show)
-                setTimeout(() => {
-                    window.print();
-                    // Note: We do NOT restore here. We restore on 'afterprint' event.
-                }, 100);
-            },
+                if (typeof html2pdf !== 'undefined') {
+                    // PDF GENERATION
+                    const opt = {
+                        margin:       [10, 10, 10, 10],
+                        filename:     `Invoice_${r.id}.pdf`,
+                        image:        { type: 'jpeg', quality: 0.98 },
+                        html2canvas:  { scale: 2, useCORS: true },
+                        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                    };
 
-            restoreView: function() {
-                if (!this.state.isPrinting) return;
-                
-                const list = document.getElementById('historyList');
-                if (this.state.printOriginalContent) {
-                    list.innerHTML = this.state.printOriginalContent;
+                    // Small delay to allow UI to render toast
+                    setTimeout(() => {
+                        html2pdf().set(opt).from(container).save().then(() => {
+                            // Success callback
+                        }).catch(err => {
+                            console.error(err);
+                            this.showToast("Error generating PDF. Trying Print...");
+                            setTimeout(() => window.print(), 1000);
+                        });
+                    }, 500);
+
+                } else {
+                    // FALLBACK: Native Print Dialog
+                    setTimeout(() => {
+                        window.print();
+                    }, 500);
                 }
-                this.state.isPrinting = false;
             },
 
             exportLast30Days: function() {
@@ -1786,23 +1748,18 @@
                 this.toggleModal('dateRangeModal');
             },
             generatePrintView: function(records, titleText) {
-                const list = document.getElementById('historyList');
-                this.state.printOriginalContent = list.innerHTML;
+                const container = document.getElementById('pdf-render-container');
+                this.showToast("Generating Report...");
                 
                 let rowsHtml = '';
                 records.forEach((r, index) => {
                     const typeText = r.type === 'income' ? 'Received' : 'Paid';
                     const inWords = this.numberToWords(r.total) + " " + r.currency;
 
-                    // UPDATED COLOR LOGIC FOR REPORT
                     let colorClass = '';
-                    if (r.status === 'Due') {
-                        colorClass = '#2e7d32'; // Green (Unpaid)
-                    } else if (r.type === 'expense') {
-                        colorClass = '#c62828'; // Red (Paid to customer)
-                    } else {
-                        colorClass = '#FF8A3D'; // Orange (Customer Paid)
-                    }
+                    if (r.status === 'Due') { colorClass = '#2e7d32'; }
+                    else if (r.type === 'expense') { colorClass = '#c62828'; }
+                    else { colorClass = '#FF8A3D'; }
 
                     rowsHtml += `
                         <tr>
@@ -1819,19 +1776,19 @@
                     `;
                 });
 
-                const html = `
-                    <div class="print-container">
-                        <div class="invoice-header" style="margin-bottom: 20px; border: none;">
-                             <div class="inv-brand">
-                                <img src="https://z-cdn-media.chatglm.cn/files/af039fbb-879d-471f-a2d8-a6fbaac11f8b.png?auth_key=1868816468-3c27614d0d374d62a8d011ef8cc50a8f-0-db6fd19e4def068c453c4c8f2352a472" class="inv-logo" style="width: 40px; height: 40px;">
-                                <div class="inv-company">
+                const content = `
+                    <div class="pdf-paper">
+                        <div class="pdf-header" style="margin-bottom: 20px; border: none;">
+                             <div class="pdf-inv-brand">
+                                <img src="https://z-cdn-media.chatglm.cn/files/af039fbb-879d-471f-a2d8-a6fbaac11f8b.png?auth_key=1868816468-3c27614d0d374d62a8d011ef8cc50a8f-0-db6fd19e4def068c453c4c8f2352a472" class="pdf-inv-logo" style="width: 40px; height: 40px;">
+                                <div class="pdf-inv-company">
                                     <h1 style="font-size: 18pt;">ArthaNex Report</h1>
                                     <p style="font-size: 9pt;">${titleText}</p>
                                 </div>
                             </div>
                         </div>
 
-                        <table class="print-table">
+                        <table class="pdf-table">
                             <thead>
                                 <tr>
                                     <th width="5%">Sl No</th>
@@ -1850,25 +1807,24 @@
                             </tbody>
                         </table>
                     </div>
-
-                    <div class="print-footer">
-                        <span><strong>ArthaNex</strong> - Best Offline Khata Book</span>
-                        <span>Company: <strong>Arthixa</strong></span>
-                        <span>Website: https://arthixa.com</span>
-                        <span class="page-number"></span>
-                    </div>
                 `;
 
-                this.showToast("Generating Report...");
-                list.innerHTML = html;
-                this.state.isPrinting = true;
+                container.innerHTML = content;
 
-                setTimeout(() => {
-                    const originalTitle = document.title; document.title = "ArthaNex_Report"; 
-                    window.print();
-                    document.title = originalTitle;
-                    // Restore handled by afterprint listener
-                }, 100);
+                if (typeof html2pdf !== 'undefined') {
+                    const opt = {
+                        margin:       [5, 5, 5, 5],
+                        filename:     `Report.pdf`,
+                        image:        { type: 'jpeg', quality: 0.98 },
+                        html2canvas:  { scale: 2, useCORS: true },
+                        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                    };
+                    setTimeout(() => {
+                        html2pdf().set(opt).from(container).save();
+                    }, 500);
+                } else {
+                    setTimeout(() => window.print(), 500);
+                }
             },
             viewRecord: function(id) {
                 const r = this.state.records.find(rec => rec.id === id);
