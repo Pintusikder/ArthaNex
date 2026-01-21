@@ -381,6 +381,25 @@
         .radio-group label, .checkbox-wrapper label {
             margin: 0; font-size: 0.9rem; font-weight: 500; color: var(--text-color); cursor: pointer; display: flex; align-items: center; gap: 6px;
         }
+        
+        /* FIX: Specific styles for the Payable checkbox */
+        #paidOptions .checkbox-wrapper {
+            flex-wrap: nowrap !important;
+            padding: 8px;
+            background: transparent;
+            border: none;
+        }
+        #paidOptions .checkbox-wrapper input {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            margin: 0;
+        }
+        #paidOptions .checkbox-wrapper label {
+            width: auto;
+            cursor: pointer;
+        }
+
         .checkbox-wrapper { cursor: pointer; }
         .checkbox-wrapper label { cursor: pointer; width: 100%; }
 
@@ -396,7 +415,7 @@
         }
         .denom-subtotal { font-size: 0.7rem; color: var(--primary); font-weight: 500; }
 
-        .total-display { background: linear-gradient(135deg, var(--primary), var(--accent)); color: #fff; padding: 1.5rem; border-radius: var(--radius-lg); text-align: center; margin-bottom: 1.5rem; box-shadow: var(--shadow-md); }
+        .total-display { background: linear-gradient(135deg, var(--primary), var(--accent)); color: #fff; padding: 1.5rem; border-radius: var(--radius-lg); text-align: center; margin-bottom:1.5rem; box-shadow: var(--shadow-md); }
         .total-label { font-size: 0.9rem; opacity: 0.9; text-transform: uppercase; letter-spacing: 1px; }
         .total-amount { font-size: 2.2rem; font-weight: 700; margin: 0.5rem 0; font-family: 'Roboto Mono', monospace; word-break: break-all; }
         .total-words { font-style: italic; opacity: 0.9; font-size: 0.9rem; word-break: break-word; }
@@ -440,7 +459,7 @@
         .menu-container { position: relative; display: inline-block; margin-top: auto; flex-shrink: 0; }
         .btn-menu { background: none; border: none; color: var(--history-text); font-size: 1.5rem; cursor: pointer; padding: 0; line-height: 1; }
         .btn-menu:hover { color: var(--primary); }
-        .item-menu { display: none; position: absolute; right: 0; top: 100%; background: var(--card-bg); border: 1px solid var(--border); box-shadow: var(--shadow-md); border-radius: var(--radius-sm); z-index: 200; min-width: 140px; overflow: hidden; pointer-events: none; }
+        .item-menu { display: none; position: absolute; right: 0; top: 100%; background: var(--card-bg); border: 1px solid var(--border); box-shadow: var(--shadow-md); border-radius: var(--radius-sm); z-index: 200; min-width: 160px; overflow: hidden; pointer-events: none; }
         .item-menu.show { display: block; pointer-events: auto; }
         .menu-opt { display: block; width: 100%; padding: 10px 15px; text-align: left; background: none; border: none; cursor: pointer; font-size: 0.9rem; color: var(--text-color); transition: background 0.2s; white-space: nowrap;}
         .menu-opt:hover { background-color: var(--light-bg); }
@@ -595,7 +614,118 @@
                 padding: 0;
             }
 
-            /* Print Header */
+            /* INVOICE SPECIFIC STYLES */
+            .invoice-container {
+                width: 100%;
+                max-width: 800px;
+                margin: 0 auto;
+                border: 1px solid #ddd;
+                padding: 40px;
+                background: #fff;
+            }
+            .invoice-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                border-bottom: 2px solid #F36C21;
+                padding-bottom: 20px;
+                margin-bottom: 30px;
+            }
+            .invoice-logo {
+                width: 100px;
+                height: 100px;
+                object-fit: contain;
+            }
+            .invoice-title {
+                text-align: right;
+            }
+            .invoice-title h2 {
+                color: #F36C21;
+                margin: 0;
+                font-size: 24pt;
+                text-transform: uppercase;
+            }
+            .invoice-title p {
+                margin: 5px 0 0 0;
+                font-size: 10pt;
+                color: #666;
+            }
+
+            .invoice-info-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+                margin-bottom: 30px;
+            }
+            .info-box {
+                background: #f9f9f9;
+                padding: 15px;
+                border-radius: 5px;
+                border: 1px solid #eee;
+            }
+            .info-box h4 {
+                margin: 0 0 10px 0;
+                color: #333;
+                font-size: 12pt;
+                border-bottom: 1px solid #ccc;
+                padding-bottom: 5px;
+            }
+            .info-box p {
+                margin: 5px 0;
+                font-size: 11pt;
+            }
+
+            .invoice-table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-bottom: 30px;
+            }
+            .invoice-table th {
+                background: #f0f0f0;
+                padding: 10px;
+                text-align: left;
+                font-weight: bold;
+                border-bottom: 2px solid #333;
+            }
+            .invoice-table td {
+                padding: 10px;
+                border-bottom: 1px solid #eee;
+            }
+
+            .invoice-total {
+                text-align: right;
+                margin-top: 20px;
+            }
+            .total-highlight {
+                font-size: 18pt;
+                font-weight: bold;
+                color: #F36C21;
+                border: 2px solid #F36C21;
+                padding: 10px 20px;
+                display: inline-block;
+            }
+
+            .denomination-section {
+                margin-top: 30px;
+                border-top: 1px dashed #ccc;
+                padding-top: 20px;
+            }
+            .denomination-section h4 {
+                font-size: 12pt;
+                color: #555;
+                margin-bottom: 10px;
+            }
+
+            .invoice-footer {
+                margin-top: 50px;
+                text-align: center;
+                font-size: 10pt;
+                color: #777;
+                border-top: 1px solid #ddd;
+                padding-top: 20px;
+            }
+
+            /* REPORT VIEW SPECIFIC */
             .print-header {
                 display: flex !important;
                 flex-direction: column;
@@ -620,13 +750,12 @@
                 color: #555;
             }
 
-            /* Customer Sections */
             .customer-section {
                 border: 1px solid #ccc;
                 border-radius: 8px;
                 margin-bottom: 20px;
                 padding: 15px;
-                page-break-inside: avoid; /* Avoid cutting customer data across pages */
+                page-break-inside: avoid;
                 background: #fff;
             }
             .customer-header {
@@ -660,7 +789,6 @@
                 justify-content: space-between;
             }
 
-            /* Print Footer */
             .print-footer {
                 position: fixed;
                 bottom: 0;
@@ -1716,6 +1844,7 @@
                                 <div class="menu-container">
                                     <button class="btn-menu" onclick="app.toggleMenu(${r.id}, event)">⋮</button>
                                     <div class="item-menu" id="menu-${r.id}">
+                                        <button class="menu-opt" onclick="event.stopPropagation(); event.preventDefault(); app.downloadInvoice(${r.id})">📄 Download Invoice</button>
                                         <button class="menu-opt" onclick="event.stopPropagation(); event.preventDefault(); app.viewRecord(${r.id})">👁 View Details</button>
                                         <button class="menu-opt" onclick="event.stopPropagation(); event.preventDefault(); app.copyRecord(${r.id})">📋 Copy</button>
                                         <button class="menu-opt" onclick="event.stopPropagation(); event.preventDefault(); app.shareRecord(${r.id})">🔗 Share</button>
@@ -1727,6 +1856,101 @@
                         list.appendChild(li);
                     });
                 }
+            },
+            // NEW INVOICE DOWNLOAD FUNCTION
+            downloadInvoice: function(id) {
+                const r = this.state.records.find(rec => rec.id === id);
+                if(!r) return;
+
+                let breakdownHTML = '';
+                Object.keys(r.denominations).forEach(denom => {
+                    const count = r.denominations[denom];
+                    if(count > 0) breakdownHTML += `<tr><td>${r.symbol} ${denom}</td><td>x ${count}</td><td style="text-align:right">${r.symbol} ${(count*denom).toLocaleString()}</td></tr>`;
+                });
+                if(breakdownHTML === '') breakdownHTML = '<tr><td colspan="3" style="text-align:center">No breakdown</td></tr>';
+
+                const typeLabel = r.type === 'income' ? (r.status === 'Paid' ? 'Receipt (Received)' : 'Invoice (Receivable)') : (r.status === 'Paid' ? 'Receipt (Paid)' : 'Invoice (Payable)');
+                const inWords = this.numberToWords(r.total) + " " + r.currency;
+
+                const html = `
+                    <div class="invoice-container">
+                        <div class="invoice-header">
+                            <img src="https://z-cdn-media.chatglm.cn/files/af039fbb-879d-471f-a2d8-a6fbaac11f8b.png?auth_key=1868816468-3c27614d0d374d62a8d011ef8cc50a8f-0-db6fd19e4def068c453c4c8f2352a472" class="invoice-logo">
+                            <div class="invoice-title">
+                                <h2>${typeLabel}</h2>
+                                <p>ArthaNex v2.0.4</p>
+                                <p>Invoice #${r.id}</p>
+                                <p>Date: ${r.date} &bull; Time: ${r.time}</p>
+                            </div>
+                        </div>
+
+                        <div class="invoice-info-grid">
+                            <div class="info-box">
+                                <h4>Billed By</h4>
+                                <p><strong>ArthaNex</strong></p>
+                                <p>Company: Arthixa</p>
+                                <p>Website: arthixa.com</p>
+                            </div>
+                            <div class="info-box">
+                                <h4>Billed To</h4>
+                                <p><strong>${r.name}</strong></p>
+                                <p>${r.mobile ? 'Mobile: ' + r.mobile : ''}</p>
+                                <p>Location: ${r.country}</p>
+                            </div>
+                        </div>
+
+                        <table class="invoice-table">
+                            <thead>
+                                <tr>
+                                    <th width="40%">Description</th>
+                                    <th width="20%">Status</th>
+                                    <th width="40%" style="text-align:right">Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>${r.remarks || 'Cash Payment'}</td>
+                                    <td>${r.status}</td>
+                                    <td style="text-align:right">${r.symbol} ${r.total.toLocaleString()}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="invoice-total">
+                            <p>Total Amount: <span class="total-highlight">${r.symbol} ${r.total.toLocaleString()}</span></p>
+                            <p style="margin-top:5px; font-size: 11pt; font-style: italic;">(${inWords})</p>
+                        </div>
+
+                        <div class="denomination-section">
+                            <h4>Denomination Details</h4>
+                            <table class="invoice-table" style="font-size:10pt">
+                                <thead>
+                                    <tr>
+                                        <th>Denom</th>
+                                        <th>Qty</th>
+                                        <th style="text-align:right">Subtotal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${breakdownHTML}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="invoice-footer">
+                            <p>Thank you for your business!</p>
+                            <p>Generated by ArthaNex - Best Offline Khata Book</p>
+                        </div>
+                    </div>
+                `;
+
+                const list = document.getElementById('historyList');
+                const original = list.innerHTML;
+                list.innerHTML = html;
+                window.print();
+                setTimeout(() => {
+                    list.innerHTML = original;
+                }, 1000);
             },
             exportLast30Days: function() {
                 const today = new Date();
