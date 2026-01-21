@@ -261,7 +261,7 @@
            FORM STYLES
            -------------------------------------------------- */
         .card { background: var(--card-bg); border-radius: var(--radius-md); padding: 1.25rem; margin-bottom: 1rem; box-shadow: var(--shadow-sm); border: 1px solid var(--border); }
-        .form-group { margin-bottom: 1rem; }
+        .form-group { margin-bottom:1rem; }
         .form-group label { display: block; margin-bottom: 0.5rem; font-size: 0.85rem; color: var(--neutral); font-weight: 500; word-break: break-word; }
         .form-control { 
             width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: var(--radius-sm); 
@@ -1030,7 +1030,8 @@
                     name: "",
                     date: "",
                     amount: ""
-                }
+                },
+                isPrinting: false // Flag to prevent double restore
             },
 
             init: function() {
@@ -1057,6 +1058,17 @@
                     if (!e.target.closest('.menu-container')) this.closeAllMenus();
                     if (e.target.classList.contains('modal')) e.target.classList.remove('open');
                 });
+
+                // Print handling listeners to fix "spinning" issue
+                window.addEventListener('afterprint', this.restoreView.bind(this));
+                if (window.matchMedia) {
+                    const mediaQueryList = window.matchMedia('print');
+                    mediaQueryList.addListener((mql) => {
+                        if (!mql.matches) {
+                            this.restoreView();
+                        }
+                    });
+                }
 
                 const savedCurrency = localStorage.getItem('arthaNex_lastCountry');
                 if (savedCurrency) {
@@ -1294,7 +1306,7 @@
                 Object.keys(this.state.denominations).forEach(k => {
                     const count = this.state.denominations[k];
                     total += (k * count);
-                    if(count > 0) hasEntries = true;
+                    if(count >0) hasEntries = true;
                 });
                 if(!hasEntries) {
                     this.showToast("Denomination is Mandatory. Please enter at least one count.");
@@ -1567,16 +1579,16 @@
                 this.toggleModal('dateRangeModal');
             },
 
-            // UPDATED PROFESSIONAL INVOICE WITH COLOR LOGIC
+            // IMPROVED DOWNLOAD LOGIC
             downloadInvoice: function(id) {
                 const r = this.state.records.find(rec => rec.id === id);
                 if(!r) return;
+                
+                // Store original content to restore later
+                const list = document.getElementById('historyList');
+                this.state.printOriginalContent = list.innerHTML;
 
                 // STATUS COLOR LOGIC
-                // 1. If Due (Unpaid) -> Green
-                // 2. If Customer Paid (Income + Paid) -> Orange
-                // 3. If Paid to Customer (Expense + Paid) -> Red
-                
                 let statusStyle = '';
                 let statusText = '';
 
@@ -1584,12 +1596,11 @@
                     statusStyle = 'color: #2e7d32; font-weight:bold;'; // Green
                     statusText = 'UNPAID';
                 } else {
-                    // It is Paid
                     if (r.type === 'expense') {
-                        statusStyle = 'color: #c62828; font-weight:bold;'; // Red (I paid customer)
+                        statusStyle = 'color: #c62828; font-weight:bold;'; // Red
                         statusText = 'PAID OUT';
                     } else {
-                        statusStyle = 'color: #FF8A3D; font-weight:bold;'; // Orange (Customer paid)
+                        statusStyle = 'color: #FF8A3D; font-weight:bold;'; // Orange
                         statusText = 'PAID IN';
                     }
                 }
@@ -1607,6 +1618,7 @@
                     }
                 });
 
+                // Generate HTML
                 const html = `
                     <div class="invoice-paper">
                         <!-- Header -->
@@ -1726,13 +1738,30 @@
                     </div>
                 `;
 
-                const list = document.getElementById('historyList');
-                const original = list.innerHTML;
+                // Show loading toast immediately
+                this.showToast("Preparing Invoice...");
+                
+                // Inject HTML
                 list.innerHTML = html;
-                window.print();
+
+                // Set flag and print
+                this.state.isPrinting = true;
+                
+                // Use a timeout to allow UI to update (Toast to show)
                 setTimeout(() => {
-                    list.innerHTML = original;
-                }, 1000);
+                    window.print();
+                    // Note: We do NOT restore here. We restore on 'afterprint' event.
+                }, 100);
+            },
+
+            restoreView: function() {
+                if (!this.state.isPrinting) return;
+                
+                const list = document.getElementById('historyList');
+                if (this.state.printOriginalContent) {
+                    list.innerHTML = this.state.printOriginalContent;
+                }
+                this.state.isPrinting = false;
             },
 
             exportLast30Days: function() {
@@ -1758,7 +1787,7 @@
             },
             generatePrintView: function(records, titleText) {
                 const list = document.getElementById('historyList');
-                const originalContent = list.innerHTML;
+                this.state.printOriginalContent = list.innerHTML;
                 
                 let rowsHtml = '';
                 records.forEach((r, index) => {
@@ -1830,9 +1859,16 @@
                     </div>
                 `;
 
+                this.showToast("Generating Report...");
                 list.innerHTML = html;
-                const originalTitle = document.title; document.title = "ArthaNex_Report"; window.print();
-                setTimeout(() => { document.title = originalTitle; this.renderHistory(); }, 1000);
+                this.state.isPrinting = true;
+
+                setTimeout(() => {
+                    const originalTitle = document.title; document.title = "ArthaNex_Report"; 
+                    window.print();
+                    document.title = originalTitle;
+                    // Restore handled by afterprint listener
+                }, 100);
             },
             viewRecord: function(id) {
                 const r = this.state.records.find(rec => rec.id === id);
