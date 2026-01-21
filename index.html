@@ -9,7 +9,7 @@
     <meta name="apple-mobile-web-app-title" content="ArthaNex">
     
     <title>ArthaNex - Offline Khata Book</title>
-    <meta name="description" content="ArthaNex is best free offline Khata book and daily cash collection app. Manage small business ledger, party dues, and expenses without internet. Simple business calculator.">
+    <meta name="description" content="The ultimate Offline Khata Book & Daily Cash Collection App for small businesses. Track Income & Expenses, manage Party Ledger & Dues without internet. Best Billing & Collection Tracker for local shops.">
     <meta name="theme-color" content="#F36C21">
     
     <!-- Manifest Link -->
@@ -561,6 +561,122 @@
             text-decoration: none;
             font-weight: 600;
         }
+
+        /* --------------------------------------------------
+           PRINT STYLES (PDF EXPORT)
+           -------------------------------------------------- */
+        @media print {
+            body {
+                background: white;
+                color: black;
+                height: auto;
+                overflow: visible;
+                font-size: 12pt;
+            }
+            #app-container {
+                box-shadow: none;
+                max-width: 100%;
+                margin: 0;
+            }
+            /* Hide unnecessary elements */
+            header, nav, .dashboard-container, .filter-container, .btn, .modal, .menu-container, .pwa-content, #toast, #pwa-install-banner, .header-actions, .search-hint, .custom-select__search {
+                display: none !important;
+            }
+
+            main {
+                padding: 0;
+                overflow: visible;
+                position: static;
+            }
+
+            .card {
+                box-shadow: none;
+                border: none;
+                padding: 0;
+            }
+
+            /* Print Header */
+            .print-header {
+                display: flex !important;
+                flex-direction: column;
+                align-items: center;
+                border-bottom: 2px solid #F36C21;
+                padding-bottom: 20px;
+                margin-bottom: 30px;
+            }
+            .print-logo {
+                width: 80px;
+                height: 80px;
+                margin-bottom: 10px;
+            }
+            .print-title {
+                font-size: 24pt;
+                font-weight: bold;
+                color: #F36C21;
+                text-transform: uppercase;
+            }
+            .print-subtitle {
+                font-size: 14pt;
+                color: #555;
+            }
+
+            /* Customer Sections */
+            .customer-section {
+                border: 1px solid #ccc;
+                border-radius: 8px;
+                margin-bottom: 20px;
+                padding: 15px;
+                page-break-inside: avoid; /* Avoid cutting customer data across pages */
+                background: #fff;
+            }
+            .customer-header {
+                background: #f0f0f0;
+                padding: 8px;
+                border-bottom: 1px solid #ddd;
+                margin-bottom: 10px;
+                font-weight: bold;
+                font-size: 14pt;
+            }
+            .customer-table {
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 11pt;
+            }
+            .customer-table th, .customer-table td {
+                border-bottom: 1px solid #eee;
+                padding: 6px;
+                text-align: left;
+            }
+            .customer-table th {
+                color: #666;
+                font-weight: 600;
+            }
+            .print-total-row {
+                font-weight: bold;
+                border-top: 2px solid #333;
+                margin-top: 10px;
+                padding-top: 5px;
+                display: flex;
+                justify-content: space-between;
+            }
+
+            /* Print Footer */
+            .print-footer {
+                position: fixed;
+                bottom: 0;
+                width: 100%;
+                text-align: center;
+                border-top: 1px solid #ccc;
+                padding: 10px 0;
+                font-size: 9pt;
+                color: #555;
+                display: flex;
+                justify-content: space-around;
+            }
+            .print-footer span {
+                display: block;
+            }
+        }
     </style>
 </head>
 <body data-theme="light">
@@ -634,6 +750,11 @@
                         <h2 class="home-title">ArthaNex</h2>
                         <div class="home-subtitle">Best Offline Khata Book</div>
                         <p class="home-desc">The ultimate Offline Khata Book & Daily Cash Collection App for small businesses. Track Income & Expenses, manage Party Ledger & Dues without internet. Best Billing & Collection Tracker for local shops.</p>
+                        
+                        <!-- Added 50 Countries Support Text -->
+                        <p style="font-size: 0.85rem; font-weight: 600; background: rgba(255,255,255,0.2); display: inline-block; padding: 4px 12px; border-radius: 20px; margin-top: 15px; position: relative; z-index: 1;">
+                            🌍 Supports 50+ Countries & Currencies
+                        </p>
                     </div>
 
                     <!-- Features Grid -->
@@ -1100,6 +1221,15 @@
                     if (!e.target.closest('.menu-container')) this.closeAllMenus();
                     if (e.target.classList.contains('modal')) e.target.classList.remove('open');
                 });
+
+                // AUTO LOAD LAST COUNTRY
+                const savedCurrency = localStorage.getItem('arthaNex_lastCountry');
+                if (savedCurrency) {
+                    const foundCountry = this.state.config.find(c => c.currency === savedCurrency);
+                    if (foundCountry) {
+                        this.selectCountry(foundCountry);
+                    }
+                }
 
                 // Load Home View by default
                 this.switchTab('home');
@@ -1605,18 +1735,8 @@
                 const endISO = today.toISOString().split('T')[0];
                 const filtered = this.state.records.filter(r => r.date >= startISO && r.date <= endISO);
                 if(filtered.length === 0) return this.showToast("No records in last 30 days.");
-                const list = document.getElementById('historyList');
-                const originalContent = list.innerHTML;
-                list.innerHTML = filtered.map(r => `
-                    <li class="history-item">
-                        <div class="h-left"><span class="h-name">${r.name}</span><div class="h-details"><div class="h-detail-row"><span>Date:</span> <span>${r.date}</span></div></div></div>
-                        <div class="h-right"><span class="h-amount">${r.symbol} ${r.total.toLocaleString()}</span></div>
-                    </li>`).join('');
-                const originalTitle = document.title; document.title = "ArthaNex_Report"; window.print();
-                setTimeout(() => { document.title = originalTitle; this.renderHistory(); }, 1000);
-            },
-            openRangeModal: function() {
-                document.getElementById('rangeStart').value = ""; document.getElementById('rangeEnd').value = ""; this.toggleModal('dateRangeModal');
+                
+                this.generatePrintView(filtered, `Transactions: Last 30 Days (${startISO} to ${endISO})`);
             },
             executeRangeExport: function() {
                 const start = document.getElementById('rangeStart').value;
@@ -1626,14 +1746,93 @@
                 const filtered = this.state.records.filter(r => r.date >= start && r.date <= end);
                 if(filtered.length === 0) return this.showToast("No records found.");
 
+                this.generatePrintView(filtered, `Transactions: ${start} to ${end}`);
+                this.toggleModal('dateRangeModal');
+            },
+            generatePrintView: function(records, titleText) {
                 const list = document.getElementById('historyList');
-                list.innerHTML = filtered.map(r => `
-                    <li class="history-item">
-                        <div class="h-left"><span class="h-name">${r.name}</span><div class="h-details"><div class="h-detail-row"><span>Date:</span> <span>${r.date}</span></div></div></div>
-                        <div class="h-right"><span class="h-amount">${r.symbol} ${r.total.toLocaleString()}</span></div>
-                    </li>`).join('');
+                const originalContent = list.innerHTML;
+                
+                // Group by customer
+                const grouped = {};
+                records.forEach(r => {
+                    if (!grouped[r.name]) grouped[r.name] = [];
+                    grouped[r.name].push(r);
+                });
+
+                let html = `
+                    <div class="print-header">
+                        <img src="https://z-cdn-media.chatglm.cn/files/af039fbb-879d-471f-a2d8-a6fbaac11f8b.png?auth_key=1868816468-3c27614d0d374d62a8d011ef8cc50a8f-0-db6fd19e4def068c453c4c8f2352a472" class="print-logo">
+                        <div class="print-title">ArthaNex Report</div>
+                        <div class="print-subtitle">${titleText}</div>
+                    </div>
+                `;
+
+                // Iterate through grouped customers
+                Object.keys(grouped).sort().forEach(customerName => {
+                    const custRecs = grouped[customerName];
+                    // Sort records by date descending
+                    custRecs.sort((a,b) => new Date(b.date) - new Date(a.date));
+
+                    let totalRec = 0;
+                    let totalPaid = 0;
+
+                    let rowsHtml = '';
+                    custRecs.forEach(r => {
+                        if(r.type === 'income') totalRec += r.total;
+                        else totalPaid += r.total;
+
+                        const typeText = r.type === 'income' ? 'Received' : 'Paid';
+                        const colorClass = r.type === 'income' ? 'amount-income' : 'amount-expense';
+                        const statusText = r.status === 'Due' ? `(Due)` : '';
+
+                        rowsHtml += `
+                            <tr>
+                                <td>${r.date}</td>
+                                <td>${r.remarks || '-'}</td>
+                                <td>${typeText} ${statusText}</td>
+                                <td style="text-align:right; color: ${r.type === 'income' ? 'green' : 'red'}">${r.symbol} ${r.total.toLocaleString()}</td>
+                            </tr>
+                        `;
+                    });
+
+                    const net = totalRec - totalPaid;
+
+                    html += `
+                        <div class="customer-section">
+                            <div class="customer-header">Customer: ${customerName}</div>
+                            <table class="customer-table">
+                                <thead>
+                                    <tr>
+                                        <th width="25%">Date</th>
+                                        <th width="35%">Remarks</th>
+                                        <th width="20%">Type</th>
+                                        <th width="20%" style="text-align:right;">Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${rowsHtml}
+                                </tbody>
+                            </table>
+                            <div class="print-total-row">
+                                <span>Net Balance:</span>
+                                <span style="${net >= 0 ? 'color:green' : 'color:red'}">${net >= 0 ? 'To Collect' : 'To Pay'} ${Math.abs(net).toLocaleString()}</span>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                html += `
+                    <div class="print-footer">
+                        <span><strong>ArthaNex</strong> - Best Offline Khata Book</span>
+                        <span>Company: <strong>Arthixa</strong></span>
+                        <span>Website: https://arthixa.com</span>
+                    </div>
+                `;
+
+                list.innerHTML = html;
                 const originalTitle = document.title; document.title = "ArthaNex_Report"; window.print();
-                setTimeout(() => { document.title = originalTitle; this.renderHistory(); this.toggleModal('dateRangeModal'); }, 1000);
+                setTimeout(() => { document.title = originalTitle; this.renderHistory(); }, 1000);
             },
             viewRecord: function(id) {
                 const r = this.state.records.find(rec => rec.id === id);
@@ -1766,6 +1965,3 @@
     </script>
    </body>
 </html>
-
-
-
