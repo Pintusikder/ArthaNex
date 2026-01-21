@@ -79,7 +79,7 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            counter-reset: page; /* Fix for Page 0 issue */
+            counter-reset: page;
         }
 
         #app-container {
@@ -175,7 +175,6 @@
         .stat-card.balance { background-color: var(--bg-balance); border-color: var(--text-balance); }
         .stat-label { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; opacity: 0.8; margin-bottom:5px; color: var(--text-income); }
         
-        /* FIXED: Text overflow issues */
         .stat-val { 
             font-size:1rem; 
             font-weight: 700; 
@@ -183,7 +182,7 @@
             color: var(--text-income); 
             word-break: break-all; 
             overflow-wrap: break-word;
-            min-width: 0; /* Allows grid item to shrink below content size */
+            min-width: 0; 
         }
         
         .stat-card.expense .stat-label, .stat-card.expense .stat-val { color: var(--text-expense); }
@@ -239,7 +238,6 @@
             position: relative;
             overflow: hidden;
         }
-        /* Decorative circle behind */
         .home-hero::before {
             content: '';
             position: absolute;
@@ -357,7 +355,7 @@
         /* --------------------------------------------------
            OTHER STYLES
            -------------------------------------------------- */
-        .card { background: var(--card-bg); border-radius: var(--radius-md); padding: 1.25rem; margin-bottom: 1rem; box-shadow: var(--shadow-sm); border: 1px solid var(--border); }
+        .card { background: var(--card-bg); border-radius: var(--radius-md); padding: 1.25rem; margin-bottom:1rem; box-shadow: var(--shadow-sm); border: 1px solid var(--border); }
         .form-group { margin-bottom: 1rem; }
         .form-group label { display: block; margin-bottom: 0.5rem; font-size: 0.85rem; color: var(--neutral); font-weight: 500; word-break: break-word; }
         .form-control { 
@@ -383,7 +381,6 @@
             margin: 0; font-size: 0.9rem; font-weight: 500; color: var(--text-color); cursor: pointer; display: flex; align-items: center; gap: 6px;
         }
         
-        /* FIX: Specific styles for the Payable checkbox */
         #paidOptions .checkbox-wrapper {
             flex-wrap: nowrap !important;
             padding: 8px;
@@ -583,29 +580,24 @@
         }
 
         /* --------------------------------------------------
-           PRINT STYLES (PDF EXPORT) - UPDATED
+           PROFESSIONAL PRINT STYLES
            -------------------------------------------------- */
         @media print {
+            @page { margin: 10mm; size: A4; }
             body {
                 background: white;
                 color: black;
                 height: auto;
                 overflow: visible;
-                font-size: 10pt;
+                font-size: 11pt; /* Slightly larger for readability */
                 counter-reset: page;
+                font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Clean font */
             }
             
             /* Hide Ads and UI */
-            #app-container {
-                box-shadow: none;
-                max-width: 100%;
-                margin: 0;
-                background: white;
-            }
-            header, nav, .dashboard-container, .filter-container, .btn, .modal, .menu-container, .pwa-content, #toast, #pwa-install-banner, .header-actions, .search-hint, .custom-select__search {
+            #app-container, header, nav, .dashboard-container, .filter-container, .btn, .modal, .menu-container, .pwa-content, #toast, #pwa-install-banner, .header-actions, .search-hint, .custom-select__search {
                 display: none !important;
             }
-            /* FIX: STRICTLY HIDE ADS */
             .ad-container, div[style*="text-align: center"], div[style*="justify-content: center"], iframe {
                 display: none !important;
             }
@@ -617,83 +609,197 @@
                 background: white;
             }
 
-            /* Print Container */
             .print-container {
                 width: 100%;
                 max-width: 100%;
                 margin: 0;
-                padding: 20px;
+                padding: 0;
             }
 
-            /* Header */
-            .print-header {
-                display: flex !important;
+            /* --- INVOICE DESIGN --- */
+            .inv-doc {
+                width: 100%;
+                padding: 0;
+                color: #333;
+                display: flex;
                 flex-direction: column;
-                align-items: center;
-                border-bottom: 2px solid #F36C21;
-                padding-bottom: 20px;
-                margin-bottom: 20px;
-                page-break-after: avoid;
             }
-            .print-logo {
-                width: 80px;
-                height: 80px;
-                margin-bottom: 10px;
-                display: block;
+
+            /* Header: Logo Left, Invoice Details Right */
+            .inv-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                margin-bottom: 40px;
+                border-bottom: 2px solid #eee;
+                padding-bottom: 20px;
+            }
+
+            .inv-logo img {
+                height: 60px;
+                width: auto;
                 object-fit: contain;
             }
-            .print-title {
-                font-size: 20pt;
-                font-weight: bold;
-                color: #F36C21;
-                text-transform: uppercase;
-                margin: 0;
+
+            .inv-title-box {
+                text-align: right;
             }
-            .print-subtitle {
+
+            .inv-title {
+                font-size: 36px;
+                font-weight: 800;
+                color: #F36C21; /* Brand Color */
+                text-transform: uppercase;
+                letter-spacing: 2px;
+                margin-bottom: 5px;
+                line-height: 1;
+            }
+
+            .inv-meta {
+                font-size: 11pt;
+                color: #666;
+                line-height: 1.4;
+            }
+
+            /* Bill To Section */
+            .inv-grid {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 30px;
+            }
+
+            .inv-to {
+                width: 48%;
+            }
+
+            .inv-to h4 {
+                font-size: 10pt;
+                text-transform: uppercase;
+                color: #999;
+                border-bottom: 1px solid #eee;
+                padding-bottom: 5px;
+                margin-bottom: 10px;
+            }
+
+            .inv-to p {
                 font-size: 12pt;
-                color: #555;
-                margin: 5px 0 0 0;
+                color: #333;
+                margin: 2px 0;
+                line-height: 1.4;
+                font-weight: 500;
             }
 
             /* Table */
-            .print-table {
+            .inv-table {
                 width: 100%;
                 border-collapse: collapse;
                 margin-bottom: 20px;
-                font-size: 9pt;
             }
-            .print-table th, .print-table td {
-                border: 1px solid #000;
-                padding: 6px 4px;
-                text-align: left;
-                white-space: nowrap;
-            }
-            .print-table th {
-                background-color: #f0f0f0;
+
+            .inv-table th {
+                background-color: #f4f4f4;
+                color: #333;
                 font-weight: bold;
+                text-align: left;
+                padding: 10px 12px;
+                border-bottom: 2px solid #ddd;
+                font-size: 10pt;
                 text-transform: uppercase;
             }
 
-            /* Footer with Page No */
-            .print-footer {
-                position: fixed;
-                bottom: 0;
-                width: 100%;
-                text-align: center;
-                border-top: 1px solid #ccc;
-                padding: 10px 0;
-                font-size: 9pt;
-                color: #555;
+            .inv-table td {
+                padding: 12px;
+                border-bottom: 1px solid #eee;
+                font-size: 11pt;
+                color: #000;
+            }
+
+            .inv-right { text-align: right; }
+
+            /* Totals Box */
+            .inv-totals {
+                width: 40%;
+                margin-left: auto;
+                margin-bottom: 30px;
+            }
+
+            .inv-total-row {
                 display: flex;
                 justify-content: space-between;
-                padding-left: 20px;
-                padding-right: 20px;
+                padding: 8px 0;
+                border-bottom: 1px solid #eee;
             }
-            .print-footer span {
-                display: block;
+
+            .inv-total-row.final {
+                border-bottom: 2px solid #333;
+                font-weight: bold;
+                font-size: 14pt;
+                background-color: #fafafa;
+                padding: 10px;
+                border-radius: 4px;
             }
-            /* FIX: PAGE NUMBERING */
-            .page-number::before {
+
+            .inv-amount-col {
+                font-family: 'Roboto Mono', monospace;
+            }
+
+            .inv-words {
+                font-style: italic;
+                color: #666;
+                font-size: 10pt;
+                margin-top: 5px;
+            }
+
+            /* Denomination Box */
+            .inv-denom {
+                margin-top: 20px;
+                padding-top: 20px;
+                border-top: 1px dashed #ccc;
+            }
+
+            .inv-denom h4 {
+                font-size: 12pt;
+                color: #333;
+                margin-bottom: 10px;
+            }
+
+            .inv-denom table {
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 10pt;
+            }
+
+            .inv-denom th {
+                text-align: left;
+                padding: 5px;
+                border-bottom: 1px solid #ccc;
+            }
+            
+            .inv-denom td {
+                padding: 5px;
+                border-bottom: 1px solid #eee;
+            }
+
+            /* Footer */
+            .inv-footer {
+                margin-top: 50px;
+                text-align: center;
+                color: #888;
+                font-size: 9pt;
+                border-top: 1px solid #eee;
+                padding-top: 20px;
+                padding-bottom: 20px;
+            }
+
+            /* Page Number */
+            .page-number-container {
+                position: fixed;
+                bottom: 10px;
+                right: 10px;
+                font-size: 9pt;
+                color: #ccc;
+            }
+            .page-number-container::before {
                 content: "Page No. " counter(page);
             }
         }
@@ -1060,16 +1166,13 @@
                 </div>
                 
                 <div class="form-group">
-                    <!-- UPDATED CHECKBOX LAYOUT -->
                     <div class="checkbox-wrapper" style="display: flex; align-items: center; gap: 10px; padding: 5px 0; border: none; background: transparent;" onclick="app.toggleAutoDelete()">
                         <input type="checkbox" id="autoDeleteToggle" style="cursor: pointer;">
                         <label for="autoDeleteToggle" style="cursor: pointer; width: auto;">Auto-delete records older than 90 days</label>
                     </div>
-                    <!-- Description below checkbox -->
                     <div style="font-size: 0.75rem; color: var(--neutral); margin-top: 5px; margin-left: 24px;">When enabled, records older than 90 days are automatically deleted on app reload.</div>
                 </div>
 
-                <!-- Compact About Section for Settings -->
                 <hr style="margin: 1.5rem 0; border: 0; border-top: 1px solid var(--border);">
                 <div class="credits-container">
                     <h3>ArthaNex</h3>
@@ -1122,21 +1225,15 @@
         const closePrompt = document.getElementById('closePrompt');
 
         window.addEventListener('beforeinstallprompt', (e) => {
-            // Prevent mini-infobar from appearing on mobile
             e.preventDefault();
-            // Stash event so it can be triggered later.
             deferredPrompt = e;
-            // Update UI notify user they can add to home screen
             installBanner.style.display = 'flex';
         });
 
         installBtn.addEventListener('click', (e) => {
-            // Hide the app provided install promotion
             installBanner.style.display = 'none';
-            // Show the install prompt
             if (deferredPrompt) {
                 deferredPrompt.prompt();
-                // Wait for the user to respond to the prompt
                 deferredPrompt.userChoice.then((choiceResult) => {
                     if (choiceResult.outcome === 'accepted') {
                         console.log('User accepted A2HS prompt');
@@ -1243,7 +1340,6 @@
                     if (e.target.classList.contains('modal')) e.target.classList.remove('open');
                 });
 
-                // AUTO LOAD LAST COUNTRY
                 const savedCurrency = localStorage.getItem('arthaNex_lastCountry');
                 if (savedCurrency) {
                     const foundCountry = this.state.config.find(c => c.currency === savedCurrency);
@@ -1251,8 +1347,6 @@
                         this.selectCountry(foundCountry);
                     }
                 }
-
-                // Load Home View by default
                 this.switchTab('home');
             },
 
@@ -1767,70 +1861,99 @@
                 const typeLabel = r.type === 'income' ? (r.status === 'Paid' ? 'Receipt (Received)' : 'Invoice (Receivable)') : (r.status === 'Paid' ? 'Receipt (Paid)' : 'Invoice (Payable)');
                 const inWords = this.numberToWords(r.total) + " " + r.currency;
 
-                // COLOR LOGIC FOR STATUS
-                let statusStyle = '';
+                // COLOR LOGIC
+                let statusColor = '#333';
                 if (r.status === 'Due') {
-                    statusStyle = 'color: #2e7d32; font-weight:bold;'; // Green
+                    statusColor = '#2e7d32'; // Green
                 } else if (r.type === 'expense') {
-                    statusStyle = 'color: #FF8A3D; font-weight:bold;'; // Orange
+                    statusColor = '#FF8A3D'; // Orange
                 } else {
-                    statusStyle = 'color: #c62828; font-weight:bold;'; // Red
+                    statusColor = '#c62828'; // Red
                 }
 
                 const html = `
                     <div class="print-container">
-                        <div class="print-header">
-                            <img src="https://z-cdn-media.chatglm.cn/files/af039fbb-879d-471f-a2d8-a6fbaac11f8b.png?auth_key=1868816468-3c27614d0d374d62a8d011ef8cc50a8f-0-db6fd19e4def068c453c4c8f2352a472" class="print-logo">
-                            <div class="print-title">
-                                <h2>${typeLabel}</h2>
-                                <p>ArthaNex v2.0.4</p>
-                                <p>Invoice #${r.id}</p>
-                                <p>Date: ${r.date} &bull; Time: ${r.time}</p>
-                                <p style="margin-top: 5px;"><strong>Billed To:</strong> ${r.name}</p>
+                        <div class="inv-doc">
+                            <!-- Header -->
+                            <div class="inv-header">
+                                <div class="inv-logo">
+                                    <img src="https://z-cdn-media.chatglm.cn/files/af039fbb-879d-471f-a2d8-a6fbaac11f8b.png?auth_key=1868816468-3c27614d0d374d62a8d011ef8cc50a8f-0-db6fd19e4def068c453c4c8f2352a472" alt="Logo">
+                                </div>
+                                <div class="inv-title-box">
+                                    <div class="inv-title">${typeLabel}</div>
+                                    <div class="inv-meta">
+                                        <strong>Invoice #:</strong> ${r.id}<br>
+                                        <strong>Date:</strong> ${r.date}<br>
+                                        <strong>Time:</strong> ${r.time}
+                                    </div>
+                                </div>
                             </div>
-                        </div>
 
-                        <table class="invoice-table">
-                            <thead>
-                                <tr>
-                                    <th width="60%">Description</th>
-                                    <th width="20%">Status</th>
-                                    <th width="20%" style="text-align:right">Amount</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>${r.remarks || 'Cash Payment'}</td>
-                                    <td style="${statusStyle}">${r.status}</td>
-                                    <td style="text-align:right">${r.symbol} ${r.total.toLocaleString()}</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                            <!-- Bill To -->
+                            <div class="inv-grid">
+                                <div class="inv-to">
+                                    <h4>Bill To:</h4>
+                                    <p><strong>${r.name}</strong></p>
+                                    <p>${r.mobile ? 'Mobile: ' + r.mobile : ''}</p>
+                                    <p>${r.country}</p>
+                                </div>
+                                <div class="inv-to">
+                                    <h4>Payment Details:</h4>
+                                    <p><strong>Status:</strong> <span style="color:${statusColor}; font-weight:bold;">${r.status}</span></p>
+                                    <p><strong>Remarks:</strong> ${r.remarks || '-'}</p>
+                                </div>
+                            </div>
 
-                        <div class="invoice-total">
-                            <p>Total Amount: <span class="total-highlight">${r.symbol} ${r.total.toLocaleString()}</span></p>
-                            <p style="margin-top:5px; font-size: 11pt; font-style: italic;">(${inWords})</p>
-                        </div>
-
-                        <div class="denomination-section">
-                            <h4>Denomination Details</h4>
-                            <table class="invoice-table" style="font-size:10pt">
+                            <!-- Table -->
+                            <table class="inv-table">
                                 <thead>
                                     <tr>
-                                        <th>Denom</th>
-                                        <th>Qty</th>
-                                        <th style="text-align:right">Subtotal</th>
+                                        <th width="60%">Description</th>
+                                        <th width="20%" style="text-align:center;">Status</th>
+                                        <th width="20%" class="inv-right">Amount</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    ${breakdownHTML}
+                                    <tr>
+                                        <td>${r.remarks || 'Cash Payment'}</td>
+                                        <td style="text-align:center; color:${statusColor}; font-weight:bold;">${r.status}</td>
+                                        <td class="inv-right">${r.symbol} ${r.total.toLocaleString()}</td>
+                                    </tr>
                                 </tbody>
                             </table>
-                        </div>
 
-                        <div class="invoice-footer">
-                            <p>Thank you for your business!</p>
-                            <p>Generated by ArthaNex - Best Offline Khata Book</p>
+                            <!-- Totals -->
+                            <div class="inv-totals">
+                                <div class="inv-total-row">
+                                    <span>Total:</span>
+                                    <span class="inv-amount-col">${r.symbol} ${r.total.toLocaleString()}</span>
+                                </div>
+                            </div>
+                            <div class="inv-words">${inWords}</div>
+
+                            <!-- Denominations -->
+                            <div class="inv-denom">
+                                <h4>Payment Breakdown (Denominations)</h4>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Denomination</th>
+                                            <th>Quantity</th>
+                                            <th class="inv-right">Subtotal</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        ${breakdownHTML}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Footer -->
+                            <div class="inv-footer">
+                                <p>Thank you for your business!</p>
+                                <p>Generated by <strong>ArthaNex</strong> - Best Offline Khata Book</p>
+                                <p>www.arthixa.com</p>
+                            </div>
                         </div>
                     </div>
                 `;
@@ -1873,14 +1996,14 @@
                     const typeText = r.type === 'income' ? 'Received' : 'Paid';
                     const inWords = this.numberToWords(r.total) + " " + r.currency;
 
-                    // COLOR LOGIC FOR TABLE
-                    let colorClass = '';
+                    // COLOR LOGIC FOR REPORT TABLE
+                    let colorClass = '#000';
                     if (r.status === 'Due') {
-                        colorClass = '#2e7d32'; // Green
+                        colorClass = '#2e7d32';
                     } else if (r.type === 'expense') {
-                        colorClass = '#FF8A3D'; // Orange
+                        colorClass = '#FF8A3D';
                     } else {
-                        colorClass = '#c62828'; // Red
+                        colorClass = '#c62828';
                     }
 
                     rowsHtml += `
@@ -1900,38 +2023,44 @@
 
                 const html = `
                     <div class="print-container">
-                        <div class="print-header">
-                            <img src="https://z-cdn-media.chatglm.cn/files/af039fbb-879d-471f-a2d8-a6fbaac11f8b.png?auth_key=1868816468-3c27614d0d374d62a8d011ef8cc50a8f-0-db6fd19e4def068c453c4c8f2352a472" class="print-logo">
-                            <div class="print-title">ArthaNex Report</div>
-                            <div class="print-subtitle">${titleText}</div>
+                        <div class="inv-doc">
+                            <div class="inv-header">
+                                <div class="inv-logo">
+                                    <img src="https://z-cdn-media.chatglm.cn/files/af039fbb-879d-471f-a2d8-a6fbaac11f8b.png?auth_key=1868816468-3c27614d0d374d62a8d011ef8cc50a8f-0-db6fd19e4def068c453c4c8f2352a472" alt="Logo">
+                                </div>
+                                <div class="inv-title-box">
+                                    <div class="inv-title">ArthaNex Report</div>
+                                    <div class="inv-meta">${titleText}</div>
+                                </div>
+                            </div>
+
+                            <table class="inv-table">
+                                <thead>
+                                    <tr>
+                                        <th width="5%">Sl No</th>
+                                        <th width="12%">Date</th>
+                                        <th width="10%">Time</th>
+                                        <th width="15%">Name</th>
+                                        <th width="15%">Remarks</th>
+                                        <th width="13%">Transaction</th>
+                                        <th width="10%" class="inv-right">Total</th>
+                                        <th width="12%">In Words</th>
+                                        <th width="8%">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${rowsHtml}
+                                </tbody>
+                            </table>
+                            
+                            <div class="inv-footer">
+                                <p>Generated by <strong>ArthaNex</strong> - Best Offline Khata Book</p>
+                                <p>www.arthixa.com</p>
+                            </div>
                         </div>
-
-                        <table class="print-table">
-                            <thead>
-                                <tr>
-                                    <th width="5%">Sl No</th>
-                                    <th width="12%">Date</th>
-                                    <th width="10%">Time</th>
-                                    <th width="15%">Name</th>
-                                    <th width="15%">Remarks</th>
-                                    <th width="13%">Transaction</th>
-                                    <th width="10%" style="text-align:right">Total</th>
-                                    <th width="12%">In Words</th>
-                                    <th width="8%">Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${rowsHtml}
-                            </tbody>
-                        </table>
                     </div>
 
-                    <div class="print-footer">
-                        <span><strong>ArthaNex</strong> - Best Offline Khata Book</span>
-                        <span>Company: <strong>Arthixa</strong></span>
-                        <span>Website: https://arthixa.com</span>
-                        <span class="page-number"></span>
-                    </div>
+                    <div class="page-number-container"></div>
                 `;
 
                 list.innerHTML = html;
@@ -2043,7 +2172,6 @@
     </script>
     
     <script>
-        // Service Worker Registration Logic
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./sw.js')
