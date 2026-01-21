@@ -79,6 +79,7 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            counter-reset: page; /* Fix for Page 0 issue */
         }
 
         #app-container {
@@ -691,8 +692,9 @@
             .print-footer span {
                 display: block;
             }
+            /* FIX: PAGE NUMBERING */
             .page-number::before {
-                content: "Page " counter(page);
+                content: "Page No. " counter(page);
             }
         }
     </style>
@@ -1765,6 +1767,16 @@
                 const typeLabel = r.type === 'income' ? (r.status === 'Paid' ? 'Receipt (Received)' : 'Invoice (Receivable)') : (r.status === 'Paid' ? 'Receipt (Paid)' : 'Invoice (Payable)');
                 const inWords = this.numberToWords(r.total) + " " + r.currency;
 
+                // COLOR LOGIC FOR STATUS
+                let statusStyle = '';
+                if (r.status === 'Due') {
+                    statusStyle = 'color: #2e7d32; font-weight:bold;'; // Green
+                } else if (r.type === 'expense') {
+                    statusStyle = 'color: #FF8A3D; font-weight:bold;'; // Orange
+                } else {
+                    statusStyle = 'color: #c62828; font-weight:bold;'; // Red
+                }
+
                 const html = `
                     <div class="print-container">
                         <div class="print-header">
@@ -1774,36 +1786,22 @@
                                 <p>ArthaNex v2.0.4</p>
                                 <p>Invoice #${r.id}</p>
                                 <p>Date: ${r.date} &bull; Time: ${r.time}</p>
-                            </div>
-                        </div>
-
-                        <div class="invoice-info-grid">
-                            <div class="info-box">
-                                <h4>Billed By</h4>
-                                <p><strong>ArthaNex</strong></p>
-                                <p>Company: Arthixa</p>
-                                <p>Website: arthixa.com</p>
-                            </div>
-                            <div class="info-box">
-                                <h4>Billed To</h4>
-                                <p><strong>${r.name}</strong></p>
-                                <p>${r.mobile ? 'Mobile: ' + r.mobile : ''}</p>
-                                <p>Location: ${r.country}</p>
+                                <p style="margin-top: 5px;"><strong>Billed To:</strong> ${r.name}</p>
                             </div>
                         </div>
 
                         <table class="invoice-table">
                             <thead>
                                 <tr>
-                                    <th width="40%">Description</th>
+                                    <th width="60%">Description</th>
                                     <th width="20%">Status</th>
-                                    <th width="40%" style="text-align:right">Amount</th>
+                                    <th width="20%" style="text-align:right">Amount</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>${r.remarks || 'Cash Payment'}</td>
-                                    <td>${r.status}</td>
+                                    <td style="${statusStyle}">${r.status}</td>
                                     <td style="text-align:right">${r.symbol} ${r.total.toLocaleString()}</td>
                                 </tr>
                             </tbody>
@@ -1873,9 +1871,17 @@
                 let rowsHtml = '';
                 records.forEach((r, index) => {
                     const typeText = r.type === 'income' ? 'Received' : 'Paid';
-                    const colorClass = r.type === 'income' ? 'amount-income' : 'amount-expense';
-                    const statusText = r.status === 'Due' ? `(Due)` : '';
                     const inWords = this.numberToWords(r.total) + " " + r.currency;
+
+                    // COLOR LOGIC FOR TABLE
+                    let colorClass = '';
+                    if (r.status === 'Due') {
+                        colorClass = '#2e7d32'; // Green
+                    } else if (r.type === 'expense') {
+                        colorClass = '#FF8A3D'; // Orange
+                    } else {
+                        colorClass = '#c62828'; // Red
+                    }
 
                     rowsHtml += `
                         <tr>
@@ -1884,10 +1890,10 @@
                             <td>${r.time}</td>
                             <td>${r.name}</td>
                             <td>${r.remarks || '-'}</td>
-                            <td>${typeText} ${statusText}</td>
-                            <td style="text-align:right; color: ${r.type === 'income' ? 'green' : 'red'}">${r.symbol} ${r.total.toLocaleString()}</td>
+                            <td style="color: ${colorClass}; font-weight:bold;">${typeText} ${r.status === 'Due' ? '(Due)' : ''}</td>
+                            <td style="text-align:right;">${r.symbol} ${r.total.toLocaleString()}</td>
                             <td style="font-size: 8pt; color: #555;">${inWords}</td>
-                            <td>${r.status}</td>
+                            <td style="color: ${colorClass}; font-weight:bold;">${r.status}</td>
                         </tr>
                     `;
                 });
