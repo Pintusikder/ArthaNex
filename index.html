@@ -9,7 +9,7 @@
     <meta name="apple-mobile-web-app-title" content="ArthaNex">
     
     <title>ArthaNex - Offline Khata Book</title>
-    <meta name="description" content="The ultimate Offline Khata Book & Daily Cash Collection App for small businesses.">
+    <meta name="description" content="The ultimate Offline Khata Book & Daily Cash Collection App for small businesses. Track Income & Expenses, manage Party Ledger & Dues without internet. Best Billing & Collection Tracker for local shops.">
     <meta name="theme-color" content="#F36C21">
     
     <!-- Manifest Link -->
@@ -86,20 +86,19 @@
             counter-reset: page 1;
         }
 
-        /* Container to hold content for PDF generation (Fixed) */
+        /* Container to hold content for PDF generation (Fixed: Use Left -9999px) */
         #pdf-render-container {
-            position: fixed; 
+            position: absolute; /* Fixed on screen but off viewport */
+            left: -9999px; /* Offscreen */
             top: 0;
-            left: 0; 
-            width: 100%;
-            height: 100%;
+            width: 800px; /* Fixed width for layout calc */
+            min-height: 100vh; /* Ensure height */
             background: #fff;
             padding: 20px;
             color: #000;
             z-index: -1; 
-            opacity: 0; 
+            opacity: 1; /* Rendered but hidden */
             pointer-events: none; 
-            overflow: hidden; 
         }
 
         #app-container {
@@ -488,7 +487,6 @@
             margin: 0;
             line-height: 1.1;
             font-weight: 800;
-            letter-spacing: -0.5px;
         }
 
         .inv-brand-text p {
@@ -2114,7 +2112,7 @@
                 else { transactionText = (r.status === 'Paid') ? "Paid To" : "Payable To"; }
 
                 document.getElementById('detailContent').innerHTML = `
-                    <div class="detail-row" style="font-size:1rem; border-bottom: 2px solid var(--border); margin-bottom:12px;">
+                    <div class="detail-row" style="font-size:1rem; border-bottom:2px solid var(--border); margin-bottom:12px;">
                         <span>Transaction:</span> <span style="color:var(--primary); font-weight:700;">${transactionText} <span style="text-decoration:underline;">${r.name}</span></span>
                     </div>
                     <div class="detail-row"><span>Status:</span> <span>${typeBadge} ${statusBadge}</span></div>
