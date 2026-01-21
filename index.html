@@ -355,7 +355,7 @@
         /* --------------------------------------------------
            OTHER STYLES
            -------------------------------------------------- */
-        .card { background: var(--card-bg); border-radius: var(--radius-md); padding: 1.25rem; margin-bottom: 1rem; box-shadow: var(--shadow-sm); border: 1px solid var(--border); }
+        .card { background: var(--card-bg); border-radius: var(--radius-md); padding: 1.25rem; margin-bottom:1rem; box-shadow: var(--shadow-sm); border: 1px solid var(--border); }
         .form-group { margin-bottom: 1rem; }
         .form-group label { display: block; margin-bottom: 0.5rem; font-size: 0.85rem; color: var(--neutral); font-weight: 500; word-break: break-word; }
         .form-control { 
@@ -580,18 +580,20 @@
         }
 
         /* --------------------------------------------------
-           PROFESSIONAL PRINT STYLES (UPDATED)
+           PROFESSIONAL PRINT STYLES
            -------------------------------------------------- */
         @media print {
-            @page { margin: 10mm; size: A4; }
+            @page { margin: 5mm; size: A4; }
             body {
                 background: white;
                 color: black;
                 height: auto;
                 overflow: visible;
-                font-size: 11pt;
-                counter-reset: page; /* Reset counter */
-                font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                font-size: 11pt; /* Slightly larger for readability */
+                counter-reset: page 1; /* Starts from 1 */
+                font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Clean font */
+                margin: 0;
+                padding: 0;
             }
             
             /* Hide Ads and UI */
@@ -607,6 +609,7 @@
                 overflow: visible;
                 position: static;
                 background: white;
+                margin: 0;
             }
 
             .print-container {
@@ -614,7 +617,6 @@
                 max-width: 100%;
                 margin: 0;
                 padding: 0;
-                counter-increment: page; /* Start counting from 1 */
             }
 
             /* --- INVOICE DESIGN --- */
@@ -626,14 +628,14 @@
                 flex-direction: column;
             }
 
-            /* Header */
+            /* Header: Logo Left, Invoice Details Right */
             .inv-header {
                 display: flex;
                 justify-content: space-between;
                 align-items: flex-start;
-                margin-bottom: 40px;
+                margin-bottom: 20px; /* Reduced from 40px to reduce white box */
                 border-bottom: 2px solid #eee;
-                padding-bottom: 20px;
+                padding-bottom: 15px;
             }
 
             .inv-logo img {
@@ -647,9 +649,9 @@
             }
 
             .inv-title {
-                font-size: 36px;
+                font-size: 32px;
                 font-weight: 800;
-                color: #F36C21;
+                color: #F36C21; /* Brand Color */
                 text-transform: uppercase;
                 letter-spacing: 2px;
                 margin-bottom: 5px;
@@ -666,7 +668,7 @@
             .inv-grid {
                 display: flex;
                 justify-content: space-between;
-                margin-bottom: 30px;
+                margin-bottom: 20px;
             }
 
             .inv-to {
@@ -688,9 +690,7 @@
                 margin: 2px 0;
                 line-height: 1.4;
                 font-weight: 500;
-                /* FIX: Automatic line break for long text */
-                word-wrap: break-word;
-                white-space: normal;
+                word-wrap: break-word; /* Wrap remarks/address */
             }
 
             /* Table */
@@ -716,9 +716,7 @@
                 border-bottom: 1px solid #eee;
                 font-size: 11pt;
                 color: #000;
-                /* FIX: Automatic line break */
-                word-wrap: break-word;
-                white-space: normal;
+                word-wrap: break-word; /* Remarks wrap */
             }
 
             .inv-right { text-align: right; }
@@ -727,7 +725,7 @@
             .inv-totals {
                 width: 40%;
                 margin-left: auto;
-                margin-bottom: 30px;
+                margin-bottom: 20px;
             }
 
             .inv-total-row {
@@ -755,8 +753,6 @@
                 color: #666;
                 font-size: 10pt;
                 margin-top: 5px;
-                /* FIX: Wrap long words */
-                word-wrap: break-word;
             }
 
             /* Denomination Box */
@@ -791,20 +787,20 @@
 
             /* Footer */
             .inv-footer {
-                margin-top: 50px;
+                margin-top: 30px;
                 text-align: center;
                 color: #888;
                 font-size: 9pt;
                 border-top: 1px solid #eee;
-                padding-top: 20px;
-                padding-bottom: 20px;
+                padding-top: 15px;
+                padding-bottom: 10px;
             }
 
             /* Page Number */
             .page-number-container {
                 position: fixed;
-                bottom: 10px;
-                right: 10px;
+                bottom: 5mm;
+                right: 5mm;
                 font-size: 9pt;
                 color: #ccc;
             }
@@ -1172,7 +1168,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
                 </div>
                 
                 <div class="form-group">
@@ -1871,14 +1866,14 @@
                 const typeLabel = r.type === 'income' ? (r.status === 'Paid' ? 'Receipt (Received)' : 'Invoice (Receivable)') : (r.status === 'Paid' ? 'Receipt (Paid)' : 'Invoice (Payable)');
                 const inWords = this.numberToWords(r.total) + " " + r.currency;
 
-                // UPDATED STATUS COLOR LOGIC
+                // COLOR LOGIC UPDATED AS PER REQUEST
                 let statusColor = '#333';
                 if (r.status === 'Due') {
-                    statusColor = '#2e7d32'; // GREEN
-                } else if (r.type === 'expense') {
-                    statusColor = '#FF8A3D'; // ORANGE
+                    statusColor = '#2e7d32'; // Green (Due)
+                } else if (r.status === 'Paid' && r.type === 'income') {
+                    statusColor = '#FF8A3D'; // Orange (Customer Pays)
                 } else {
-                    statusColor = '#c62828'; // RED (Income)
+                    statusColor = '#c62828'; // Red (I Pay)
                 }
 
                 const html = `
@@ -1961,7 +1956,7 @@
                             <!-- Footer -->
                             <div class="inv-footer">
                                 <p>Thank you for your business!</p>
-                                <p>Generated by ArthaNex - Best Offline Khata Book</p>
+                                <p>Generated by <strong>ArthaNex</strong> - Best Offline Khata Book</p>
                                 <p>www.arthixa.com</p>
                             </div>
                         </div>
@@ -2006,13 +2001,14 @@
                     const typeText = r.type === 'income' ? 'Received' : 'Paid';
                     const inWords = this.numberToWords(r.total) + " " + r.currency;
 
+                    // COLOR LOGIC UPDATED AS PER REQUEST
                     let colorClass = '#000';
                     if (r.status === 'Due') {
-                        colorClass = '#2e7d32';
-                    } else if (r.type === 'expense') {
-                        colorClass = '#FF8A3D';
+                        colorClass = '#2e7d32'; // Green
+                    } else if (r.status === 'Paid' && r.type === 'income') {
+                        colorClass = '#FF8A3D'; // Orange
                     } else {
-                        colorClass = '#c62828';
+                        colorClass = '#c62828'; // Red
                     }
 
                     rowsHtml += `
@@ -2060,7 +2056,8 @@
                                 <tbody>
                                     ${rowsHtml}
                                 </tbody>
-                            </table>                            
+                            </table>
+                            
                             <div class="inv-footer">
                                 <p>Generated by <strong>ArthaNex</strong> - Best Offline Khata Book</p>
                                 <p>www.arthixa.com</p>
