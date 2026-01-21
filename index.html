@@ -1965,26 +1965,32 @@
 
                 const list = document.getElementById('historyList');
                 const original = list.innerHTML;
+                const logoUrl = "https://z-cdn-media.chatglm.cn/files/af039fbb-879d-471f-a2d8-a6fbaac11f8b.png?auth_key=1868816468-3c27614d0d374d62a8d011ef8cc50a8f-0-db6fd19e4def068c453c4c8f2352a472";
                 
-                // 1. Show Loading Message
-                this.showToast("Preparing Print Preview...");
-
-                // 2. Inject HTML
-                list.innerHTML = html;
-
-                // 3. Delay and Print
-                setTimeout(() => {
-                    window.print();
-                }, 300);
-
-                // 4. Restore on 'afterprint' event
-                const restoreFunc = () => {
-                    list.innerHTML = original;
-                    window.removeEventListener('afterprint', restoreFunc);
-                    // Also close the menu if open
-                    app.closeAllMenus();
+                // FIX: Preload Image to ensure PDF isn't blank
+                this.showToast("Preparing Invoice...");
+                
+                const img = new Image();
+                img.onload = function() {
+                    list.innerHTML = html;
+                    // Short delay to allow DOM paint
+                    setTimeout(() => {
+                        window.print();
+                        // Restore Logic with safety timeout
+                        const restoreFunc = () => {
+                            list.innerHTML = original;
+                            app.closeAllMenus();
+                            window.removeEventListener('afterprint', restoreFunc);
+                        };
+                        window.addEventListener('afterprint', restoreFunc);
+                        // Safety net: Force restore after 3 seconds if event doesn't fire
+                        setTimeout(restoreFunc, 3000); 
+                    }, 500);
                 };
-                window.addEventListener('afterprint', restoreFunc);
+                img.src = logoUrl; // Trigger load
+                
+                // Handle cache (already loaded)
+                if (img.complete) img.onload();
             },
             exportLast30Days: function() {
                 const today = new Date();
@@ -2010,6 +2016,7 @@
             generatePrintView: function(records, titleText) {
                 const list = document.getElementById('historyList');
                 const originalContent = list.innerHTML;
+                const logoUrl = "https://z-cdn-media.chatglm.cn/files/af039fbb-879d-471f-a2d8-a6fbaac11f8b.png?auth_key=1868816468-3c27614d0d374d62a8d011ef8cc50a8f-0-db6fd19e4def068c453c4c8f2352a472";
                 
                 let rowsHtml = '';
                 records.forEach((r, index) => {
@@ -2046,7 +2053,7 @@
                         <div class="inv-doc">
                             <div class="inv-header">
                                 <div class="inv-logo">
-                                    <img src="https://z-cdn-media.chatglm.cn/files/af039fbb-879d-471f-a2d8-a6fbaac11f8b.png?auth_key=1868816468-3c27614d0d374d62a8d011ef8cc50a8f-0-db6fd19e4def068c453c4c8f2352a472" alt="Logo">
+                                    <img src="${logoUrl}" alt="Logo">
                                 </div>
                                 <div class="inv-title-box">
                                     <div class="inv-title">ArthaNex Report</div>
@@ -2083,24 +2090,28 @@
                     <div class="page-number-container"></div>
                 `;
 
-                // 1. Show Loading Message
-                this.showToast("Preparing Print Preview...");
-
-                // 2. Inject HTML
-                list.innerHTML = html;
-
-                // 3. Delay and Print
-                setTimeout(() => {
-                    window.print();
-                }, 300);
-
-                // 4. Restore on 'afterprint' event
-                const restoreFunc = () => {
-                    list.innerHTML = originalContent;
-                    window.removeEventListener('afterprint', restoreFunc);
-                    this.renderHistory();
+                // FIX: Preload Image to ensure PDF isn't blank
+                this.showToast("Generating Report...");
+                
+                const img = new Image();
+                img.onload = function() {
+                    list.innerHTML = html;
+                    setTimeout(() => {
+                        window.print();
+                        const restoreFunc = () => {
+                            list.innerHTML = originalContent;
+                            app.renderHistory();
+                            window.removeEventListener('afterprint', restoreFunc);
+                        };
+                        window.addEventListener('afterprint', restoreFunc);
+                        // Safety net
+                        setTimeout(restoreFunc, 3000); 
+                    }, 500);
                 };
-                window.addEventListener('afterprint', restoreFunc);
+                img.src = logoUrl;
+                
+                // Handle cache
+                if (img.complete) img.onload();
             },
             viewRecord: function(id) {
                 const r = this.state.records.find(rec => rec.id === id);
