@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <!-- PWA Meta Tags for iOS -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="ArthaNex">
@@ -12,7 +11,6 @@
     <meta name="description" content="The ultimate Offline Khata Book & Daily Cash Collection App for small businesses. Track Income & Expenses, manage Party Ledger & Dues without internet. Best Billing & Collection Tracker for local shops.">
     <meta name="theme-color" content="#F36C21">
     
-    <!-- Manifest Link -->
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="https://z-cdn-media.chatglm.cn/files/af039fbb-879d-471f-a2d8-a6fbaac11f8b.png?auth_key=1868816468-3c27614d0d374d62a8d011ef8cc50a8f-0-db6fd19e4def068c453c4c8f2352a472">
     
@@ -20,7 +18,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-    <!-- HTML2PDF Library for Auto Download -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
     <style>
@@ -85,20 +82,19 @@
             counter-reset: page 1;
         }
 
-        /* Container to hold content for PDF generation (Hidden by default) */
-        /* Container to hold content for PDF generation */
-#pdf-render-container {
-    position: fixed;   /* absolute এর বদলে fixed ব্যবহার করুন */
-    left: 0;           /* -9999px এর বদলে 0 দিন */
-    top: 0;
-    width: 794px;      /* A4 সাইজের সঠিক পিক্সেল */
-    z-index: -9999;    /* মেইন অ্যাপের পেছনে লুকিয়ে রাখার জন্য */
-    background: #fff;
-    padding: 20px;
-    color: #000;
-    pointer-events: none; /* যাতে ইউজার ক্লিক করতে না পারে */
-    opacity: 0.01;     /* মানুষের চোখে দেখা যাবে না, কিন্তু PDF জেনারেটর দেখতে পাবে */
-}
+        /* FIXED: Container for PDF generation (Positioned on-screen but hidden) */
+        #pdf-render-container {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 794px; /* A4 Width in pixels */
+            z-index: -9999; /* Hidden behind everything */
+            background: #fff;
+            padding: 20px;
+            color: #000;
+            opacity: 0; /* Invisible */
+            pointer-events: none; /* No Interaction */
+        }
 
         #app-container {
             width: 100%;
@@ -311,7 +307,7 @@
         .denom-label { font-weight: 600; color: var(--neutral); font-size: 0.85rem; }
         .denom-input { 
             width: 100%; padding: 4px; text-align: center; border: 1px solid var(--border); border-radius: 4px; 
-            font-family: 'Roboto Mono', monospace; background-color: var(--input-bg); color: var(--text-color);          
+            font-family: 'Roboto Mono', monospace; background-color: var(--input-bg); color: var(--text-color);           
         }
         .denom-subtotal { font-size: 0.7rem; color: var(--primary); font-weight: 500; }
 
@@ -693,14 +689,13 @@
 
         @media print {
             body, #app-container { display: none !important; }
-            #pdf-render-container { position: static; left: auto; top: auto; width: 100%; display: block; padding: 0; }
+            #pdf-render-container { position: static; left: auto; top: auto; width: 100%; display: block; padding: 0; opacity: 1; z-index: 9999; }
             .pdf-paper { padding: 20px; }
         }
     </style>
 </head>
 <body data-theme="light">
 
-    <!-- Hidden Container for PDF Generation -->
     <div id="pdf-render-container"></div>
 
     <div id="app-container">
@@ -736,7 +731,6 @@
             </div>
         </div>
 
-        <!-- NAVIGATION -->
         <nav>
             <button class="nav-btn" onclick="app.switchTab('home')">Home</button>
             <button class="nav-btn" onclick="app.switchTab('entry')">Entry</button>
@@ -746,7 +740,6 @@
         </nav>
 
         <main>
-            <!-- HOME SECTION -->
             <section id="home" class="view active">
                 <div class="home-container">
                     
@@ -798,7 +791,6 @@
                 </div>
             </section>
 
-            <!-- SECTION 1: CASH ENTRY -->
             <section id="entry" class="view">
                 <div class="card">
                     <div class="form-group">
@@ -893,7 +885,6 @@
                 </div>
             </section>
 
-            <!-- SECTION 2: HISTORY -->
             <section id="history" class="view">
                 <div class="card">
                     <div class="filter-container">
@@ -927,7 +918,6 @@
                 </div>
             </section>
 
-            <!-- SECTION 3: OUTSTANDING / DUES -->
             <section id="outstanding" class="view">
                 <div class="card">
                     <h3 style="margin-bottom: 15px; color: var(--primary);">Outstanding Summary</h3>
@@ -955,7 +945,6 @@
                 </div>
             </section>
 
-            <!-- SECTION 4: PARTY LEDGER -->
             <section id="ledger" class="view">
                 <div class="card">
                     <label>Search Customer / Party</label>
@@ -999,7 +988,6 @@
             </section>
         </main>
 
-        <!-- Settings Modal -->
         <div id="settingsModal" class="modal">
             <div class="modal-content">
                 <button class="modal-close" onclick="app.toggleModal('settingsModal')">&times;</button>
@@ -1047,7 +1035,6 @@
             </div>
         </div>
 
-        <!-- Date Range Modal -->
         <div id="dateRangeModal" class="modal">
             <div class="modal-content">
                 <button class="modal-close" onclick="app.toggleModal('dateRangeModal')">&times;</button>
@@ -1058,7 +1045,6 @@
             </div>
         </div>
 
-        <!-- View Details Modal -->
         <div id="viewDetailModal" class="modal">
             <div class="modal-content">
                 <button class="modal-close" onclick="app.toggleModal('viewDetailModal')">&times;</button>
@@ -1069,7 +1055,6 @@
 
         <div id="toast">Message here</div>
         
-        <!-- PWA INSTALL BANNER UI -->
         <div id="pwa-install-banner">
             <div class="pwa-content">
                 <div class="pwa-title">Install as App</div>
@@ -1785,7 +1770,6 @@
                 // 4. HTML Template
                 const content = `
                     <div class="pdf-paper">
-                        <!-- Header -->
                         <div class="pdf-header">
                             <div class="pdf-brand">
                                 <img src="https://z-cdn-media.chatglm.cn/files/af039fbb-879d-471f-a2d8-a6fbaac11f8b.png?auth_key=1868816468-3c27614d0d374d62a8d011ef8cc50a8f-0-db6fd19e4def068c453c4c8f2352a472" class="pdf-logo" alt="Logo">
@@ -1802,7 +1786,6 @@
                             </div>
                         </div>
 
-                        <!-- Billing Info -->
                         <div class="pdf-info-grid">
                             <div class="pdf-info-box">
                                 <h3>Bill To</h3>
@@ -1822,7 +1805,6 @@
                             </div>
                         </div>
 
-                        <!-- Transaction Table -->
                         <table class="pdf-table">
                             <thead>
                                 <tr>
@@ -1845,7 +1827,6 @@
                             </tbody>
                         </table>
 
-                        <!-- Totals -->
                         <div class="pdf-totals-section">
                             <div class="pdf-totals-box">
                                 <div class="pdf-total-row">
@@ -1864,10 +1845,8 @@
                             </div>
                         </div>
 
-                        <!-- Denominations (Conditional) -->
                         ${denomSectionHtml}
 
-                        <!-- Footer -->
                         <div class="pdf-footer">
                             <div class="pdf-terms">
                                 <strong>Terms & Conditions</strong>
@@ -1897,13 +1876,12 @@
 
                 if (typeof html2pdf !== 'undefined') {
                     const opt = {
-    margin:       [10, 10, 10, 10],
-    filename:     `Report.pdf`,
-    image:        { type: 'jpeg', quality: 0.98 },
-    // নিচের লাইনে scrollY: 0 যোগ করা হয়েছে
-    html2canvas:  { scale: 2, useCORS: true, scrollY: 0 },
-    jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-};
+                        margin:       [10, 10, 10, 10],
+                        filename:     `ArthaNex_${r.name}_${r.id}.pdf`,
+                        image:        { type: 'jpeg', quality: 0.98 },
+                        html2canvas:  { scale: 2, useCORS: true, scrollY: 0 },
+                        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                    };
 
                     setTimeout(() => {
                         html2pdf().set(opt).from(container).save().then(() => {
@@ -2012,7 +1990,7 @@
                         margin:       [5, 5, 5, 5],
                         filename:     `Report.pdf`,
                         image:        { type: 'jpeg', quality: 0.98 },
-                        html2canvas:  { scale: 2, useCORS: true },
+                        html2canvas:  { scale: 2, useCORS: true, scrollY: 0 },
                         jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
                     };
                     setTimeout(() => {
