@@ -86,15 +86,19 @@
         }
 
         /* Container to hold content for PDF generation (Hidden by default) */
-        #pdf-render-container {
-            position: absolute;
-            left: -9999px;
-            top: 0;
-            width: 800px; /* Fixed width for PDF A4 simulation */
-            background: #fff;
-            padding: 20px;
-            color: #000;
-        }
+        /* Container to hold content for PDF generation */
+#pdf-render-container {
+    position: fixed;   /* absolute এর বদলে fixed ব্যবহার করুন */
+    left: 0;           /* -9999px এর বদলে 0 দিন */
+    top: 0;
+    width: 794px;      /* A4 সাইজের সঠিক পিক্সেল */
+    z-index: -9999;    /* মেইন অ্যাপের পেছনে লুকিয়ে রাখার জন্য */
+    background: #fff;
+    padding: 20px;
+    color: #000;
+    pointer-events: none; /* যাতে ইউজার ক্লিক করতে না পারে */
+    opacity: 0.01;     /* মানুষের চোখে দেখা যাবে না, কিন্তু PDF জেনারেটর দেখতে পাবে */
+}
 
         #app-container {
             width: 100%;
@@ -1893,12 +1897,13 @@
 
                 if (typeof html2pdf !== 'undefined') {
                     const opt = {
-                        margin:       [10, 10, 10, 10],
-                        filename:     `ArthaNex_${r.name}_${r.id}.pdf`,
-                        image:        { type: 'jpeg', quality: 0.98 },
-                        html2canvas:  { scale: 2, useCORS: true },
-                        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-                    };
+    margin:       [10, 10, 10, 10],
+    filename:     `Report.pdf`,
+    image:        { type: 'jpeg', quality: 0.98 },
+    // নিচের লাইনে scrollY: 0 যোগ করা হয়েছে
+    html2canvas:  { scale: 2, useCORS: true, scrollY: 0 },
+    jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+};
 
                     setTimeout(() => {
                         html2pdf().set(opt).from(container).save().then(() => {
