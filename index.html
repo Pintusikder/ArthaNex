@@ -1965,11 +1965,26 @@
 
                 const list = document.getElementById('historyList');
                 const original = list.innerHTML;
+                
+                // 1. Show Loading Message
+                this.showToast("Preparing Print Preview...");
+
+                // 2. Inject HTML
                 list.innerHTML = html;
-                window.print();
+
+                // 3. Delay and Print
                 setTimeout(() => {
+                    window.print();
+                }, 300);
+
+                // 4. Restore on 'afterprint' event
+                const restoreFunc = () => {
                     list.innerHTML = original;
-                }, 1000);
+                    window.removeEventListener('afterprint', restoreFunc);
+                    // Also close the menu if open
+                    app.closeAllMenus();
+                };
+                window.addEventListener('afterprint', restoreFunc);
             },
             exportLast30Days: function() {
                 const today = new Date();
@@ -2068,9 +2083,24 @@
                     <div class="page-number-container"></div>
                 `;
 
+                // 1. Show Loading Message
+                this.showToast("Preparing Print Preview...");
+
+                // 2. Inject HTML
                 list.innerHTML = html;
-                const originalTitle = document.title; document.title = "ArthaNex_Report"; window.print();
-                setTimeout(() => { document.title = originalTitle; this.renderHistory(); }, 1000);
+
+                // 3. Delay and Print
+                setTimeout(() => {
+                    window.print();
+                }, 300);
+
+                // 4. Restore on 'afterprint' event
+                const restoreFunc = () => {
+                    list.innerHTML = originalContent;
+                    window.removeEventListener('afterprint', restoreFunc);
+                    this.renderHistory();
+                };
+                window.addEventListener('afterprint', restoreFunc);
             },
             viewRecord: function(id) {
                 const r = this.state.records.find(rec => rec.id === id);
