@@ -79,7 +79,7 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            counter-reset: page;
+            counter-reset: page 1; /* Fix for Page 1 start */
         }
 
         #app-container {
@@ -220,140 +220,45 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* --------------------------------------------------
-           HOME PAGE (IMAGE/POSTER STYLE)
+           HOME PAGE
            -------------------------------------------------- */
-        .home-container {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
+        .home-container { display: flex; flex-direction: column; gap: 1.5rem; }
         .home-hero {
             background: linear-gradient(135deg, var(--primary), var(--accent));
-            color: #fff;
-            padding: 2.5rem 1.5rem;
-            border-radius: var(--radius-lg);
-            text-align: center;
-            box-shadow: 0 8px 20px rgba(243, 108, 33, 0.3);
-            position: relative;
-            overflow: hidden;
+            color: #fff; padding: 2.5rem 1.5rem; border-radius: var(--radius-lg); text-align: center;
+            box-shadow: 0 8px 20px rgba(243, 108, 33, 0.3); position: relative; overflow: hidden;
         }
         .home-hero::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
-            z-index: 0;
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%); z-index: 0;
         }
-
         .home-logo-big {
-            width: 80px;
-            height: 80px;
-            background: #fff;
-            border-radius: 16px;
-            padding: 10px;
-            margin: 0 auto 1rem auto;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            position: relative;
-            z-index: 1;
+            width: 80px; height: 80px; background: #fff; border-radius: 16px; padding: 10px;
+            margin: 0 auto 1rem auto; box-shadow: 0 4px 12px rgba(0,0,0,0.2); position: relative; z-index: 1;
         }
-        .home-logo-big img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        .home-title {
-            font-size: 2rem;
-            font-weight: 800;
-            margin-bottom: 0.5rem;
-            position: relative;
-            z-index: 1;
-            letter-spacing: -0.5px;
-        }
-
-        .home-subtitle {
-            font-size: 1.1rem;
-            font-weight: 500;
-            opacity: 0.95;
-            position: relative;
-            z-index: 1;
-            margin-bottom: 1.5rem;
-        }
-
-        .home-desc {
-            font-size: 0.95rem;
-            line-height: 1.6;
-            opacity: 0.9;
-            position: relative;
-            z-index: 1;
-            max-width: 80%;
-            margin: 0 auto;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
-        
+        .home-logo-big img { width: 100%; height: 100%; object-fit: contain; }
+        .home-title { font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem; position: relative; z-index: 1; letter-spacing: -0.5px; }
+        .home-subtitle { font-size: 1.1rem; font-weight: 500; opacity: 0.95; position: relative; z-index: 1; margin-bottom: 1.5rem; }
+        .home-desc { font-size: 0.95rem; line-height: 1.6; opacity: 0.9; position: relative; z-index: 1; max-width: 80%; margin: 0 auto; }
+        .features-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
         .feature-poster {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            padding: 1.5rem 1rem;
-            border-radius: var(--radius-md);
-            text-align: center;
-            box-shadow: var(--shadow-sm);
-            transition: transform 0.2s;
+            background: var(--card-bg); border: 1px solid var(--border); padding: 1.5rem 1rem; border-radius: var(--radius-md);
+            text-align: center; box-shadow: var(--shadow-sm); transition: transform 0.2s;
         }
         .feature-poster:active { transform: scale(0.98); }
-        .feature-icon-lg {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            display: block;
-        }
-        .feature-poster h4 {
-            color: var(--text-color);
-            font-size: 0.9rem;
-            font-weight: 700;
-            margin-bottom: 0.25rem;
-        }
-        .feature-poster p {
-            color: var(--neutral);
-            font-size: 0.75rem;
-            line-height: 1.3;
-            margin: 0;
-        }
-
+        .feature-icon-lg { font-size: 2.5rem; margin-bottom: 0.5rem; display: block; }
+        .feature-poster h4 { color: var(--text-color); font-size: 0.9rem; font-weight: 700; margin-bottom: 0.25rem; }
+        .feature-poster p { color: var(--neutral); font-size: 0.75rem; line-height: 1.3; margin: 0; }
         .home-credits {
-            text-align: center;
-            margin-top: 2rem;
-            padding: 1rem;
-            background: var(--card-bg);
-            border-radius: var(--radius-md);
-            border: 1px solid var(--border);
+            text-align: center; margin-top: 2rem; padding: 1rem; background: var(--card-bg);
+            border-radius: var(--radius-md); border: 1px solid var(--border);
         }
-        .home-credits h3 {
-            color: var(--primary);
-            font-size: 1rem;
-            margin-bottom: 0.2rem;
-        }
-        .home-credits p {
-            color: var(--neutral);
-            font-size: 0.75rem;
-            margin: 0;
-        }
-        .home-credits a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
-        }
+        .home-credits h3 { color: var(--primary); font-size: 1rem; margin-bottom: 0.2rem; }
+        .home-credits p { color: var(--neutral); font-size: 0.75rem; margin: 0; }
+        .home-credits a { color: var(--primary); text-decoration: none; font-weight: 600; }
 
         /* --------------------------------------------------
-           OTHER STYLES
+           FORM STYLES
            -------------------------------------------------- */
         .card { background: var(--card-bg); border-radius: var(--radius-md); padding: 1.25rem; margin-bottom: 1rem; box-shadow: var(--shadow-sm); border: 1px solid var(--border); }
         .form-group { margin-bottom: 1rem; }
@@ -368,36 +273,15 @@
         input[type="date"]::-webkit-calendar-picker-indicator { cursor: pointer; color: var(--primary); opacity: 1; }
 
         .radio-group, .checkbox-wrapper {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-            padding: 10px;
-            background: var(--light-bg);
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border);
-            flex-wrap: wrap;
+            display: flex; gap: 15px; align-items: center; padding: 10px; background: var(--light-bg);
+            border-radius: var(--radius-sm); border: 1px solid var(--border); flex-wrap: wrap;
         }
         .radio-group label, .checkbox-wrapper label {
             margin: 0; font-size: 0.9rem; font-weight: 500; color: var(--text-color); cursor: pointer; display: flex; align-items: center; gap: 6px;
         }
-        
-        #paidOptions .checkbox-wrapper {
-            flex-wrap: nowrap !important;
-            padding: 8px;
-            background: transparent;
-            border: none;
-        }
-        #paidOptions .checkbox-wrapper input {
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-            margin: 0;
-        }
-        #paidOptions .checkbox-wrapper label {
-            width: auto;
-            cursor: pointer;
-        }
-
+        #paidOptions .checkbox-wrapper { flex-wrap: nowrap !important; padding: 8px; background: transparent; border: none; }
+        #paidOptions .checkbox-wrapper input { width: 20px; height: 20px; cursor: pointer; margin: 0; }
+        #paidOptions .checkbox-wrapper label { width: auto; cursor: pointer; }
         .checkbox-wrapper { cursor: pointer; }
         .checkbox-wrapper label { cursor: pointer; width: 100%; }
 
@@ -477,39 +361,15 @@
         
         /* PWA INSTALL BANNER */
         #pwa-install-banner {
-            display: none;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background-color: var(--primary);
-            color: #fff;
-            padding: 1rem;
-            box-shadow: 0 -4px 12px rgba(0,0,0,0.15);
-            z-index: 9999;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-            animation: slideUp 0.5s ease-out;
+            display: none; position: fixed; bottom: 0; left: 0; right: 0; background-color: var(--primary);
+            color: #fff; padding: 1rem; box-shadow: 0 -4px 12px rgba(0,0,0,0.15); z-index: 9999;
+            align-items: center; justify-content: space-between; gap: 1rem; animation: slideUp 0.5s ease-out;
         }
         @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-
         .pwa-content { flex: 1; display: flex; flex-direction: column; justify-content: center; }
         .pwa-title { font-weight: 700; font-size: 1rem; margin-bottom: 2px; }
         .pwa-desc { font-size: 0.8rem; opacity: 0.9; }
-
-        .btn-install {
-            background-color: #fff;
-            color: var(--primary);
-            border: none;
-            padding: 8px 16px;
-            border-radius: var(--radius-sm);
-            font-weight: 600;
-            cursor: pointer;
-            font-size: 0.9rem;
-            white-space: nowrap;
-            flex-shrink: 0;
-        }
+        .btn-install { background-color: #fff; color: var(--primary); border: none; padding: 8px 16px; border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; font-size: 0.9rem; white-space: nowrap; flex-shrink: 0; }
         .btn-close-pwa { background: none; border: none; color: #fff; font-size: 1.2rem; cursor: pointer; padding: 0; line-height: 1; }
 
         .filter-container { display: flex; flex-direction: column; gap: 10px; }
@@ -557,256 +417,111 @@
         .open .arrow::after { left: 3px; transform: rotate(-45deg); }
         .search-hint { font-size: 0.75rem; color: var(--neutral); margin-top: 5px; font-style: italic; }
 
-        .credits-container {
-            text-align: center;
-            margin-top: 1.5rem;
-            padding-top: 0.5rem;
-        }
-        .credits-container h3 {
-            color: var(--primary);
-            font-size: 1.1rem;
-            margin-bottom: 0.2rem;
-        }
-        .credits-container p {
-            font-size: 0.9rem;
-            color: var(--neutral);
-            margin: 0.2rem 0;
-        }
-        .credits-container a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
-        }
+        .credits-container { text-align: center; margin-top: 1.5rem; padding-top: 0.5rem; }
+        .credits-container h3 { color: var(--primary); font-size: 1.1rem; margin-bottom: 0.2rem; }
+        .credits-container p { font-size: 0.9rem; color: var(--neutral); margin: 0.2rem 0; }
+        .credits-container a { color: var(--primary); text-decoration: none; font-weight: 600; }
 
         /* --------------------------------------------------
-           PROFESSIONAL PRINT STYLES (INVOICE)
+           PROFESSIONAL PRINT STYLES (INVOICE & REPORTS)
            -------------------------------------------------- */
         @media print {
             body {
-                background: #fff;
-                color: #000;
-                height: auto;
-                overflow: visible;
-                font-size: 12pt;
-                -webkit-print-color-adjust: exact;
+                background: #fff; color: #000; height: auto; overflow: visible; font-size: 12pt;
+                -webkit-print-color-adjust: exact; margin: 0; padding: 0; width: 100%;
             }
             
             /* Hide UI Elements */
-            #app-container {
-                box-shadow: none;
-                max-width: 100%;
-                margin: 0;
-                background: #fff;
-            }
-            header, nav, .dashboard-container, .filter-container, .btn, .modal, .menu-container, .pwa-content, #toast, #pwa-install-banner, .header-actions, .search-hint, .custom-select__search, .ad-container, iframe {
+            #app-container, header, nav, .dashboard-container, .filter-container, .btn, .modal, 
+            .menu-container, .pwa-content, #toast, #pwa-install-banner, .header-actions, 
+            .search-hint, .custom-select__search, .ad-container, iframe {
                 display: none !important;
             }
             
-            main {
-                padding: 0;
-                overflow: visible;
-                position: static;
-                background: #fff;
+            main { padding: 0; overflow: visible; position: static; background: #fff; }
+
+            /* General Print Layout */
+            .invoice-paper, .print-container {
+                width: 100%; max-width: 100%; margin: 0 auto; padding: 0;
+                background: transparent; box-shadow: none; border: none;
             }
 
-            /* Professional Invoice Layout */
-            .invoice-paper {
-                width: 100%;
-                max-width: 800px;
-                margin: 0 auto;
-                font-family: 'Helvetica', 'Arial', sans-serif;
-                color: #333;
-                border: none;
+            /* Fix for long text wrapping in tables */
+            .print-table td, .invoice-table td, .print-table th, .invoice-table th {
+                word-wrap: break-word;
+                word-break: break-word;
+                hyphens: auto;
             }
 
+            /* Invoice Styles */
             .invoice-header {
-                display: flex;
-                justify-content: space-between;
-                align-items: flex-start;
-                padding-bottom: 20px;
-                border-bottom: 2px solid #F36C21;
-                margin-bottom: 30px;
+                display: flex; justify-content: space-between; align-items: flex-start;
+                padding-bottom: 20px; border-bottom: 2px solid #F36C21; margin-bottom: 30px;
             }
-
-            .inv-brand {
-                display: flex;
-                align-items: center;
-                gap: 15px;
-            }
-            .inv-logo {
-                width: 60px;
-                height: 60px;
-                object-fit: contain;
-            }
-            .inv-company h1 {
-                font-size: 24pt;
-                color: #F36C21;
-                margin: 0;
-                line-height: 1;
-            }
-            .inv-company p {
-                margin: 5px 0 0 0;
-                font-size: 10pt;
-                color: #666;
-            }
-
-            .inv-title-box {
-                text-align: right;
-            }
+            .inv-brand { display: flex; align-items: center; gap: 15px; }
+            .inv-logo { width: 60px; height: 60px; object-fit: contain; }
+            .inv-company h1 { font-size: 24pt; color: #F36C21; margin: 0; line-height: 1; }
+            .inv-company p { margin: 5px 0 0 0; font-size: 10pt; color: #666; }
+            .inv-title-box { text-align: right; }
             .inv-title-box h2 {
-                font-size: 32pt;
-                color: #333;
-                text-transform: uppercase;
-                margin: 0;
-                letter-spacing: 2px;
+                font-size: 32pt; color: #333; text-transform: uppercase; margin: 0; letter-spacing: 2px;
             }
-            .inv-meta {
-                margin-top: 10px;
-                text-align: right;
-                font-size: 11pt;
-            }
-            .inv-meta div {
-                margin-bottom: 4px;
-            }
-            .inv-meta strong {
-                display: inline-block;
-                width: 100px;
-                color: #555;
-            }
+            .inv-meta { margin-top: 10px; text-align: right; font-size: 11pt; }
+            .inv-meta div { margin-bottom: 4px; }
+            .inv-meta strong { display: inline-block; width: 100px; color: #555; }
 
-            /* Bill To Section */
-            .bill-to-section {
-                display: flex;
-                justify-content: space-between;
-                margin-bottom: 30px;
-            }
-            .bill-to, .ship-to {
-                width: 48%;
-            }
+            .bill-to-section { display: flex; justify-content: space-between; margin-bottom: 30px; }
+            .bill-to, .ship-to { width: 48%; }
             .section-label {
-                font-size: 10pt;
-                font-weight: bold;
-                color: #777;
-                text-transform: uppercase;
-                border-bottom: 1px solid #ddd;
-                padding-bottom: 5px;
-                margin-bottom: 10px;
-                display: block;
+                font-size: 10pt; font-weight: bold; color: #777; text-transform: uppercase;
+                border-bottom: 1px solid #ddd; padding-bottom: 5px; margin-bottom: 10px; display: block;
             }
-            .bill-content {
-                font-size: 11pt;
-                line-height: 1.5;
-            }
+            .bill-content { font-size: 11pt; line-height: 1.5; }
 
-            /* Main Invoice Table */
             .invoice-table {
-                width: 100%;
-                border-collapse: collapse;
-                margin-bottom: 20px;
+                width: 100%; border-collapse: collapse; margin-bottom: 20px;
             }
             .invoice-table th {
-                background-color: #F36C21;
-                color: #fff;
-                padding: 12px 10px;
-                text-align: left;
-                font-size: 10pt;
-                text-transform: uppercase;
+                background-color: #F36C21; color: #fff; padding: 12px 10px;
+                text-align: left; font-size: 10pt; text-transform: uppercase;
             }
             .invoice-table td {
-                border-bottom: 1px solid #eee;
-                padding: 12px 10px;
-                font-size: 11pt;
+                border-bottom: 1px solid #eee; padding: 12px 10px; font-size: 11pt;
+                word-wrap: break-word; /* Critical for Remarks */
             }
             .invoice-table td.text-right { text-align: right; }
             .invoice-table td.text-center { text-align: center; }
 
-            /* Totals Section */
-            .invoice-totals {
-                display: flex;
-                justify-content: flex-end;
-                margin-bottom: 30px;
-            }
-            .totals-box {
-                width: 40%;
-            }
-            .total-row {
-                display: flex;
-                justify-content: space-between;
-                padding: 8px 0;
-                border-bottom: 1px solid #eee;
-            }
+            .invoice-totals { display: flex; justify-content: flex-end; margin-bottom: 30px; }
+            .totals-box { width: 40%; }
+            .total-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eee; }
             .total-row.final {
-                border-top: 2px solid #333;
-                border-bottom: none;
-                font-weight: bold;
-                font-size: 14pt;
-                margin-top: 10px;
-                padding-top: 10px;
+                border-top: 2px solid #333; border-bottom: none; font-weight: bold;
+                font-size: 14pt; margin-top: 10px; padding-top: 10px;
             }
 
-            /* Denomination Section */
             .denom-section {
-                margin-bottom: 40px;
-                border: 1px solid #eee;
-                padding: 20px;
-                background-color: #f9f9f9;
+                margin-bottom: 40px; border: 1px solid #eee; padding: 20px; background-color: #f9f9f9;
             }
-            .denom-section h3 {
-                font-size: 12pt;
-                margin-bottom: 15px;
-                color: #555;
-            }
-            .denom-print-table {
-                width: 100%;
-                border-collapse: collapse;
-            }
+            .denom-section h3 { font-size: 12pt; margin-bottom: 15px; color: #555; }
+            .denom-print-table { width: 100%; border-collapse: collapse; }
             .denom-print-table th, .denom-print-table td {
-                padding: 8px;
-                border: 1px solid #ddd;
-                text-align: center;
-                font-size: 10pt;
+                padding: 8px; border: 1px solid #ddd; text-align: center; font-size: 10pt;
             }
-            .denom-print-table th {
-                background-color: #eee;
-            }
+            .denom-print-table th { background-color: #eee; }
 
-            /* Footer & Signature */
             .invoice-footer {
-                display: flex;
-                justify-content: space-between;
-                align-items: flex-end;
-                margin-top: 50px;
-                padding-top: 20px;
-                border-top: 1px solid #ddd;
+                display: flex; justify-content: space-between; align-items: flex-end;
+                margin-top: 50px; padding-top: 20px; border-top: 1px solid #ddd;
             }
-            .terms {
-                width: 60%;
-                font-size: 9pt;
-                color: #777;
-                line-height: 1.4;
-            }
-            .signature-box {
-                width: 30%;
-                text-align: center;
-            }
-            .sign-line {
-                margin-top: 40px;
-                border-top: 1px solid #000;
-                padding-top: 5px;
-                font-size: 10pt;
-                font-weight: bold;
-            }
+            .terms { width: 60%; font-size: 9pt; color: #777; line-height: 1.4; }
+            .signature-box { width: 30%; text-align: center; }
+            .sign-line { margin-top: 40px; border-top: 1px solid #000; padding-top: 5px; font-size: 10pt; font-weight: bold; }
 
-            /* Page Number */
+            /* Footer Page Number */
             .print-footer {
-                position: fixed;
-                bottom: 0;
-                width: 100%;
-                text-align: center;
-                border-top: 1px solid #ccc;
-                padding: 10px 0;
-                font-size: 9pt;
-                color: #555;
+                position: fixed; bottom: 0; width: 100%; text-align: center;
+                border-top: 1px solid #ccc; padding: 10px 0; font-size: 9pt; color: #555;
             }
             .page-number::before {
                 content: "Page No. " counter(page);
@@ -1852,10 +1567,32 @@
                 this.toggleModal('dateRangeModal');
             },
 
-            // UPDATED PROFESSIONAL INVOICE FUNCTION
+            // UPDATED PROFESSIONAL INVOICE WITH COLOR LOGIC
             downloadInvoice: function(id) {
                 const r = this.state.records.find(rec => rec.id === id);
                 if(!r) return;
+
+                // STATUS COLOR LOGIC
+                // 1. If Due (Unpaid) -> Green
+                // 2. If Customer Paid (Income + Paid) -> Orange
+                // 3. If Paid to Customer (Expense + Paid) -> Red
+                
+                let statusStyle = '';
+                let statusText = '';
+
+                if (r.status === 'Due') {
+                    statusStyle = 'color: #2e7d32; font-weight:bold;'; // Green
+                    statusText = 'UNPAID';
+                } else {
+                    // It is Paid
+                    if (r.type === 'expense') {
+                        statusStyle = 'color: #c62828; font-weight:bold;'; // Red (I paid customer)
+                        statusText = 'PAID OUT';
+                    } else {
+                        statusStyle = 'color: #FF8A3D; font-weight:bold;'; // Orange (Customer paid)
+                        statusText = 'PAID IN';
+                    }
+                }
 
                 const typeLabel = r.type === 'income' ? (r.status === 'Paid' ? 'RECEIPT' : 'INVOICE') : (r.status === 'Paid' ? 'PAYMENT RECEIPT' : 'PAYMENT INVOICE');
                 const inWords = this.numberToWords(r.total) + " " + r.currency;
@@ -1904,7 +1641,7 @@
                             <div class="ship-to">
                                 <span class="section-label">Payment Details:</span>
                                 <div class="bill-content">
-                                    <strong>Status:</strong> ${r.status.toUpperCase()}<br>
+                                    <strong>Status:</strong> <span style="${statusStyle}">${statusText}</span><br>
                                     ${r.type === 'income' ? 'Type: Credit / Receivable' : 'Type: Debit / Payable'}<br>
                                     Currency: ${r.currency}
                                 </div>
@@ -1975,8 +1712,8 @@
                             <div class="terms">
                                 <strong>Terms & Conditions:</strong>
                                 <p>1. This is a computer generated invoice.</p>
-                                <p>2. Please check the denomination details carefully.</p>
-                                <p>3. For queries, please contact the vendor.</p>
+                                <p>2. Please check denomination details carefully.</p>
+                                <p>3. For queries, please contact to vendor.</p>
                             </div>
                             <div class="signature-box">
                                 <div class="sign-line">Authorized Signature</div>
@@ -2027,10 +1764,16 @@
                 records.forEach((r, index) => {
                     const typeText = r.type === 'income' ? 'Received' : 'Paid';
                     const inWords = this.numberToWords(r.total) + " " + r.currency;
+
+                    // UPDATED COLOR LOGIC FOR REPORT
                     let colorClass = '';
-                    if (r.status === 'Due') colorClass = '#2e7d32';
-                    else if (r.type === 'expense') colorClass = '#FF8A3D';
-                    else colorClass = '#c62828';
+                    if (r.status === 'Due') {
+                        colorClass = '#2e7d32'; // Green (Unpaid)
+                    } else if (r.type === 'expense') {
+                        colorClass = '#c62828'; // Red (Paid to customer)
+                    } else {
+                        colorClass = '#FF8A3D'; // Orange (Customer Paid)
+                    }
 
                     rowsHtml += `
                         <tr>
@@ -2041,7 +1784,7 @@
                             <td>${r.remarks || '-'}</td>
                             <td style="color: ${colorClass}; font-weight:bold;">${typeText} ${r.status === 'Due' ? '(Due)' : ''}</td>
                             <td style="text-align:right;">${r.symbol} ${r.total.toLocaleString()}</td>
-                            <td style="font-size: 8pt; color: #555;">${inWords}</td>
+                            <td style="font-size: 8pt; color: #555; word-break: break-word;">${inWords}</td>
                             <td style="color: ${colorClass}; font-weight:bold;">${r.status}</td>
                         </tr>
                     `;
@@ -2049,10 +1792,14 @@
 
                 const html = `
                     <div class="print-container">
-                        <div class="print-header">
-                            <img src="https://z-cdn-media.chatglm.cn/files/af039fbb-879d-471f-a2d8-a6fbaac11f8b.png?auth_key=1868816468-3c27614d0d374d62a8d011ef8cc50a8f-0-db6fd19e4def068c453c4c8f2352a472" class="print-logo">
-                            <div class="print-title">ArthaNex Report</div>
-                            <div class="print-subtitle">${titleText}</div>
+                        <div class="invoice-header" style="margin-bottom: 20px; border: none;">
+                             <div class="inv-brand">
+                                <img src="https://z-cdn-media.chatglm.cn/files/af039fbb-879d-471f-a2d8-a6fbaac11f8b.png?auth_key=1868816468-3c27614d0d374d62a8d011ef8cc50a8f-0-db6fd19e4def068c453c4c8f2352a472" class="inv-logo" style="width: 40px; height: 40px;">
+                                <div class="inv-company">
+                                    <h1 style="font-size: 18pt;">ArthaNex Report</h1>
+                                    <p style="font-size: 9pt;">${titleText}</p>
+                                </div>
+                            </div>
                         </div>
 
                         <table class="print-table">
@@ -2062,11 +1809,11 @@
                                     <th width="12%">Date</th>
                                     <th width="10%">Time</th>
                                     <th width="15%">Name</th>
-                                    <th width="15%">Remarks</th>
+                                    <th width="20%">Remarks</th>
                                     <th width="13%">Transaction</th>
                                     <th width="10%" style="text-align:right">Total</th>
-                                    <th width="12%">In Words</th>
-                                    <th width="8%">Status</th>
+                                    <th width="10%">In Words</th>
+                                    <th width="5%">Status</th>
                                 </tr>
                             </thead>
                             <tbody>
