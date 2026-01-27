@@ -2022,6 +2022,13 @@
                 this.state.records.push(record);
                 localStorage.setItem('arthaNex_records', JSON.stringify(this.state.records));
                 this.updateDashboard();
+
+                // Auto-refresh Outstanding if currently visible
+                const outstandingSection = document.getElementById('outstanding');
+                if (outstandingSection && outstandingSection.classList.contains('active')) {
+                    this.renderOutstanding('all');
+                }
+
                 this.showToast("Record Saved Successfully!");
                 this.resetForm();
             },
