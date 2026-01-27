@@ -2020,8 +2020,34 @@
                 };
 
                 this.state.records.push(record);
-                localStorage.setItem('arthaNex_records', JSON.stringify(this.state.records));
+                this.state.records[this.state.records.length - 1].profileId = this.state.currentProfileId;
+
+                // Encrypt if PIN is set, otherwise plain
+                if (window.currentPin && typeof CryptoUtil !== 'undefined') {
+                    try {
+                        const encrypted = CryptoUtil.encrypt(this.state.records, window.currentPin);
+                        localStorage.setItem('arthaNex_records', 'ENC:' + encrypted);
+                    } catch(e) {
+                        localStorage.setItem('arthaNex_records', JSON.stringify(this.state.records));
+                    }
+                } else {
+                    localStorage.setItem('arthaNex_records', JSON.stringify(this.state.records));
+                }
+
+                // Immediate refresh of all displays
                 this.updateDashboard();
+
+                // Refresh Outstanding if active
+                const outTab = document.getElementById('outstanding');
+                if (outTab && outTab.classList.contains('active')) {
+                    this.renderOutstanding('all');
+                }
+
+                // Refresh History if active
+                const histTab = document.getElementById('history');
+                if (histTab && histTab.classList.contains('active')) {
+                    this.renderHistory();
+                }
 
                 // Auto-refresh Outstanding if currently visible
                 const outstandingSection = document.getElementById('outstanding');
@@ -2855,10 +2881,12 @@ Download App: https://arthixa.com  `;
             },
 
             showSetupPin() {
+                // Only show from Settings, not on first load
                 const setupHtml = `
-                    <div id="pinSetupModal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--light-bg); z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px;">
-                        <div style="background: var(--card-bg); padding: 2rem; border-radius: var(--radius-lg); max-width: 400px; width: 100%; box-shadow: var(--shadow-md); border: 1px solid var(--primary);">
-                            <h2 style="color: var(--primary); margin-bottom: 1rem; text-align: center;">🔒 Security Setup</h2>
+                    <div id="pinSetupModal" class="modal open" style="z-index: 10000;">
+                        <div class="modal-content" style="max-width: 420px;">
+                            <button class="modal-close" onclick="document.getElementById('pinSetupModal').remove()">&times;</button>
+                            <h2 style="color: var(--primary); margin-bottom: 1rem; text-align: center;">🔒 Set PIN</h2>
                             <p style="margin-bottom: 1.5rem; text-align: center; color: var(--neutral); font-size: 0.9rem;">
                                 Protect your data with a PIN code
                             </p>
@@ -3350,18 +3378,13 @@ Download App: https://arthixa.com  `;
         app.init = async function() {
             // Check if PIN is set
             const hasPin = localStorage.getItem('arthaNex_pinHash');
-            const skipped = localStorage.getItem('arthaNex_pinSkipped');
 
             if (hasPin) {
-                // Wait for unlock before loading data
-                PinLock.init();
-                this.loadSettings();
-            } else if (!skipped) {
-                // First time setup
+                // PIN is set - show lock screen
                 PinLock.init();
                 this.loadSettings();
             } else {
-                // No PIN, proceed normally
+                // No PIN - start app directly (no lock, no setup)
                 this.fullInit();
             }
         };
